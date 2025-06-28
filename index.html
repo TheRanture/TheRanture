@@ -1,219 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HBM Archive</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding-bottom: 280px;
-}
-header {
-  background: #333;
-  color: #fff;
-  padding: 20px;
-}
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-#search-toggle {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-#search-bar {
-  display: none;
-  margin-left: 8px;
-  padding: 5px 8px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-}
-main {
-  padding: 20px;
-}
-#legal-scrollbox {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-top: 3px solid #007BFF;
-  padding: 15px 25px;
-  font-size: 13px;
-  color: #222;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-  max-height: 220px;
-  overflow-y: auto;
-  z-index: 9999;
-}
-#toggle-legal-btn, #show-legal-icon {
-  position: fixed;
-  right: 25px;
-  border: none;
-  cursor: pointer;
-  z-index: 10000;
-}
-#toggle-legal-btn {
-  bottom: 230px;
-  background: #007BFF;
-  color: #fff;
-  padding: 10px 14px;
-  font-size: 13px;
-  border-radius: 4px;
-}
-#toggle-legal-btn:hover, #show-legal-icon:hover {
-  background: #0056b3;
-}
-#show-legal-icon {
-  display: none;
-  bottom: 25px;
-  background: #007BFF;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  font-size: 22px;
-  line-height: 38px;
-  text-align: center;
-  color: #fff;
-}
-#legal-scrollbox h2 {
-  margin: 0;
-  font-weight: bold;
-  color: #007BFF;
-  font-size: 16px;
-}
-#legal-scrollbox p, #legal-scrollbox ul {
-  margin: 8px 0;
-  line-height: 1.3;
-}
-#legal-scrollbox ul {
-  margin-left: 20px;
-}
-#legal-scrollbox a {
-  color: #007BFF;
-  text-decoration: none;
-}
-#legal-scrollbox a:hover {
-  text-decoration: underline;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HBM Archive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding-bottom: 280px;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 20px;
+      position: relative;
+    }
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    #search-container {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+    }
+    #search-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    #search-toggle svg {
+      pointer-events: none;
+    }
+    #search-bar {
+      display: none;
+      margin-left: 8px;
+      padding: 5px 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+    }
+    main {
+      padding: 20px;
+    }
+    #legal-scrollbox {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 3px solid #007BFF;
+      padding: 15px 25px;
+      font-size: 13px;
+      color: #222;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 9999;
+    }
+    #toggle-legal-btn, #show-legal-icon {
+      position: fixed;
+      right: 25px;
+      border: none;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    #toggle-legal-btn {
+      bottom: 230px;
+      background: #007BFF;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 13px;
+      border-radius: 4px;
+    }
+    #toggle-legal-btn:hover, #show-legal-icon:hover {
+      background: #0056b3;
+    }
+    #show-legal-icon {
+      display: none;
+      bottom: 25px;
+      background: #007BFF;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 22px;
+      line-height: 38px;
+      text-align: center;
+      color: #fff;
+    }
+    #legal-scrollbox h2 {
+      margin: 0;
+      font-weight: bold;
+      color: #007BFF;
+      font-size: 16px;
+    }
+    #legal-scrollbox p, #legal-scrollbox ul {
+      margin: 8px 0;
+      line-height: 1.3;
+    }
+    #legal-scrollbox ul {
+      margin-left: 20px;
+    }
+    #legal-scrollbox a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    #legal-scrollbox a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="header-container">
-    <div style="display: flex; align-items: center;">
-      <button id="search-toggle" aria-label="Search">🔍</button>
-      <input type="text" id="search-bar" placeholder="Search..." />
+
+  <header>
+    <div class="header-container">
+      <h1 style="margin: 0 auto; color: white;">HBM Archive</h1>
+      <div id="search-container">
+        <button id="search-toggle" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="#ffffff">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+          </svg>
+        </button>
+        <input type="text" id="search-bar" placeholder="Search..." />
+      </div>
     </div>
-    <h1 style="margin: 0 auto;">HBM Archive</h1>
+  </header>
+
+  <main>
+    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
+  </main>
+
+  <button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
+  <button id="show-legal-icon" aria-label="Show Legal Disclaimer">&#9888;</button>
+
+  <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
+    <h2>Legal Disclaimer & Terms of Use</h2>
+    <p><strong>Last Updated:</strong> June 28, 2025</p>
+    <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+    <ul>
+      <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+      <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+      <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+      <li>The owner is not responsible for any third-party links or external content.</li>
+      <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+      <li>The website does not collect personal data, and no input from users is accepted.</li>
+      <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+      <li>These terms apply globally and supersede any conflicting local laws.</li>
+    </ul>
+    <p><strong>Creative Commons License:</strong><br>
+      This work is licensed under the
+      <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+        Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+      </a>. You may share the content with attribution but not for commercial use or modifications.
+    </p>
+
+    <h2>Content Disclaimer</h2>
+    <p><strong>Disclaimer</strong></p>
+    <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community. The content is provided for informational and educational purposes only and is intended to encourage critical thinking and open discussion.</p>
+    <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+    <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+    <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+
+    <p><strong>Copyright Notice:</strong><br>
+      &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+    </p>
   </div>
-</header>
-<main>
-  <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
-</main>
 
-<button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
-<button id="show-legal-icon" aria-label="Show Legal Disclaimer">&#9888;</button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const legalBox = document.getElementById('legal-scrollbox');
+      const toggleBtn = document.getElementById('toggle-legal-btn');
+      const showIcon = document.getElementById('show-legal-icon');
+      const searchToggle = document.getElementById('search-toggle');
+      const searchBar = document.getElementById('search-bar');
 
-<div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
-  <h2>Legal Disclaimer & Terms of Use</h2>
-  <p><strong>Last Updated:</strong> June 28, 2025</p>
-  <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-  <ul>
-    <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-    <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-    <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-    <li>The owner is not responsible for any third-party links or external content.</li>
-    <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-    <li>The website does not collect personal data, and no input from users is accepted.</li>
-    <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-    <li>These terms apply globally and supersede any conflicting local laws.</li>
-  </ul>
-  <p><strong>Creative Commons License:</strong><br>
-  This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>. You may share the content with attribution but not for commercial use or modifications.</p>
-  <h2>Content Disclaimer</h2>
-  <p><strong>Disclaimer</strong></p>
-  <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community. The content is provided for informational and educational purposes only and is intended to encourage critical thinking and open discussion.</p>
-  <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-  <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-  <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-  <p><strong>Copyright Notice:</strong><br>
-  &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.</p>
-</div>
+      function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          let d = new Date();
+          d.setTime(d.getTime() + (days*24*60*60*1000));
+          expires = "; expires=" + d.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const legalBox = document.getElementById('legal-scrollbox');
-  const toggleBtn = document.getElementById('toggle-legal-btn');
-  const showIcon = document.getElementById('show-legal-icon');
-  const searchToggle = document.getElementById('search-toggle');
-  const searchBar = document.getElementById('search-bar');
+      function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0;i < ca.length;i++) {
+          let c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
 
-  function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-      let d = new Date();
-      d.setTime(d.getTime() + (days*24*60*60*1000));
-      expires = "; expires=" + d.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-  }
-  function getCookie(name) {
-    let nameEQ = name + "=";
-    let ca = document.cookie.split(';');
-    for(let i=0;i < ca.length;i++) {
-      let c = ca[i];
-      while (c.charAt(0)==' ') c = c.substring(1,c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-  }
-  function hideLegal() {
-    legalBox.style.display = 'none';
-    toggleBtn.style.display = 'none';
-    showIcon.style.display = 'inline-block';
-    setCookie('legalVisible', 'false', 365);
-  }
-  function showLegal() {
-    legalBox.style.display = 'block';
-    toggleBtn.style.display = 'inline-block';
-    showIcon.style.display = 'none';
-    setCookie('legalVisible', 'true', 365);
-  }
+      function hideLegal() {
+        legalBox.style.display = 'none';
+        toggleBtn.style.display = 'none';
+        showIcon.style.display = 'inline-block';
+        setCookie('legalVisible', 'false', 365);
+      }
 
-  toggleBtn.addEventListener('click', hideLegal);
-  showIcon.addEventListener('click', showLegal);
+      function showLegal() {
+        legalBox.style.display = 'block';
+        toggleBtn.style.display = 'inline-block';
+        showIcon.style.display = 'none';
+        setCookie('legalVisible', 'true', 365);
+      }
 
-  const visible = getCookie('legalVisible');
-  if (visible === 'false') {
-    legalBox.style.display = 'none';
-    toggleBtn.style.display = 'none';
-    showIcon.style.display = 'inline-block';
-  } else {
-    legalBox.style.display = 'block';
-    toggleBtn.style.display = 'inline-block';
-    showIcon.style.display = 'none';
-  }
+      toggleBtn.addEventListener('click', hideLegal);
+      showIcon.addEventListener('click', showLegal);
 
-  searchToggle.addEventListener('click', function () {
-    if (searchBar.style.display === 'none' || searchBar.style.display === '') {
-      searchBar.style.display = 'inline-block';
-      searchBar.focus();
-    } else {
-      searchBar.style.display = 'none';
-      searchBar.value = '';
-    }
-  });
-});
-</script>
+      const visible = getCookie('legalVisible');
+      if (visible === 'false') {
+        legalBox.style.display = 'none';
+        toggleBtn.style.display = 'none';
+        showIcon.style.display = 'inline-block';
+      } else {
+        legalBox.style.display = 'block';
+        toggleBtn.style.display = 'inline-block';
+        showIcon.style.display = 'none';
+      }
+
+      searchToggle.addEventListener('click', function () {
+        if (searchBar.style.display === 'none' || searchBar.style.display === '') {
+          searchBar.style.display = 'inline-block';
+          searchBar.focus();
+        } else {
+          searchBar.style.display = 'none';
+          searchBar.value = '';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
