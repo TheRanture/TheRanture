@@ -95,15 +95,14 @@ header {
 /* Position search container top-left, absolute so it does not push header text */
 /* Position search container top-left, absolute so it does not push header text */
 /* Search container now lives between header and toolbar, aligned left */
-#search-container {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 20px 0 20px; /* some space from header */
-  margin-top: -6px;
-  position: relative;
-  z-index: 11001;
-}
+   #search-container {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+    }
 
 /* Magnifier button */
 #search-toggle {
