@@ -21,8 +21,8 @@
       user-select: auto;
     }
 
-    /* Displacement Pixel Glitch Effect for header */
-    .glitch-pixel {
+    /* Glitch effect for header */
+    .glitch {
       position: relative;
       color: white;
       font-size: 2.4em;
@@ -30,38 +30,39 @@
       letter-spacing: 3px;
       user-select: none;
       background: #333;
-      padding: 10px 20px;
       display: inline-block;
+      padding: 10px 20px;
     }
 
-    .glitch-pixel::before,
-    .glitch-pixel::after {
+    .glitch::before,
+    .glitch::after {
       content: attr(data-text);
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
+      color: inherit;
+      background: #333;
       overflow: hidden;
-      clip-path: inset(0 0 0 0);
-      animation: glitch-pixel 2s infinite;
+      clip-path: inset(0);
       mix-blend-mode: screen;
     }
 
-    .glitch-pixel::before {
-      animation-delay: 0s;
-      color: #0ff;
-      clip-path: inset(0 0 70% 0);
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #0ff;
+      animation: glitch-anim-1 2s infinite linear alternate-reverse;
     }
 
-    .glitch-pixel::after {
-      animation-delay: 1s;
-      color: #f0f;
-      clip-path: inset(70% 0 0 0);
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 #f0f;
+      animation: glitch-anim-2 2s infinite linear alternate-reverse;
     }
 
-    @keyframes glitch-pixel {
+    @keyframes glitch-anim-1 {
       0% {
-        clip-path: inset(0 0 70% 0);
+        clip-path: inset(0 0 80% 0);
         transform: translate(0);
       }
       20% {
@@ -77,11 +78,38 @@
         transform: translate(-3px, 5px);
       }
       80% {
-        clip-path: inset(0 0 70% 0);
+        clip-path: inset(0 0 80% 0);
         transform: translate(0);
       }
       100% {
-        clip-path: inset(0 0 70% 0);
+        clip-path: inset(0 0 80% 0);
+        transform: translate(0);
+      }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% {
+        clip-path: inset(80% 0 0 0);
+        transform: translate(0);
+      }
+      20% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(5px, -3px);
+      }
+      40% {
+        clip-path: inset(40% 0 30% 0);
+        transform: translate(-5px, 3px);
+      }
+      60% {
+        clip-path: inset(50% 0 20% 0);
+        transform: translate(3px, -5px);
+      }
+      80% {
+        clip-path: inset(80% 0 0 0);
+        transform: translate(0);
+      }
+      100% {
+        clip-path: inset(80% 0 0 0);
         transform: translate(0);
       }
     }
@@ -259,7 +287,7 @@
       </button>
       <input type="text" id="search-bar" placeholder="Search..." />
     </div>
-    <h1 class="glitch-pixel" data-text="HBM Archive">HBM Archive</h1>
+    <h1 class="glitch" data-text="HBM Archive">HBM Archive</h1>
   </header>
 
   <main>
