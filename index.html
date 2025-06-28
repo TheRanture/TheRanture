@@ -609,20 +609,6 @@ if (page === 'articles') {
           konamiPosition = 0;
         }
       });
-
-      // *** RESPONSIVE MAIN CONTENT PADDING FIX ***
-      function adjustMainPadding() {
-        const wrapper = document.getElementById('header-toolbar-wrapper');
-        const main = document.getElementById('main-content');
-        if (wrapper && main) {
-          const height = wrapper.offsetHeight;
-          main.style.paddingTop = height + 'px';
-        }
-      }
-      window.addEventListener('resize', adjustMainPadding);
-      window.addEventListener('load', adjustMainPadding);
-      adjustMainPadding();
-    });
   </script>
 </body>
 </html>
