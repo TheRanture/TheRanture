@@ -21,41 +21,34 @@
       user-select: auto;
     }
 
-    /* Glitch effect for header */
+    /* Improved glitch effect using clip-path */
     @keyframes glitch {
       0% {
-        clip: rect(0, 9999px, 0, 0);
+        clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
         transform: translate(0);
-      }
-      5% {
-        clip: rect(10px, 9999px, 80px, 0);
-        transform: translate(-2px, -2px);
-      }
-      10% {
-        clip: rect(0, 9999px, 10px, 0);
-        transform: translate(2px, 2px);
-      }
-      15% {
-        clip: rect(60px, 9999px, 90px, 0);
-        transform: translate(-2px, 0);
       }
       20% {
-        clip: rect(10px, 9999px, 40px, 0);
+        clip-path: polygon(0 15%, 100% 15%, 100% 20%, 0 20%);
+        transform: translate(-2px, -2px);
+      }
+      40% {
+        clip-path: polygon(0 35%, 100% 35%, 100% 40%, 0 40%);
+        transform: translate(2px, 2px);
+      }
+      60% {
+        clip-path: polygon(0 55%, 100% 55%, 100% 60%, 0 60%);
+        transform: translate(-2px, 0);
+      }
+      80% {
+        clip-path: polygon(0 75%, 100% 75%, 100% 80%, 0 80%);
         transform: translate(2px, -2px);
       }
-      25% {
-        clip: rect(0, 9999px, 100px, 0);
-        transform: translate(0);
-      }
-      30% {
-        clip: rect(0, 9999px, 0, 0);
-        transform: translate(0);
-      }
       100% {
-        clip: rect(0, 9999px, 0, 0);
+        clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
         transform: translate(0);
       }
     }
+
     .glitch {
       position: relative;
       color: white;
@@ -64,25 +57,29 @@
       letter-spacing: 3px;
       user-select: none;
     }
+
     .glitch::before,
     .glitch::after {
       content: attr(data-text);
       position: absolute;
+      top: 0;
       left: 0;
-      right: 0;
-      opacity: 0.8;
-      clip: rect(0, 900px, 0, 0);
+      width: 100%;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); /* start clipped */
       animation: glitch 2s infinite linear alternate-reverse;
     }
+
     .glitch::before {
-      animation-delay: -0.2s;
-      color: #f0f;
-      z-index: -1;
+      left: 2px;
+      text-shadow: -2px 0 #f0f;
+      animation-delay: -0.3s;
     }
+
     .glitch::after {
-      animation-delay: 0.1s;
-      color: #0ff;
-      z-index: -2;
+      left: -2px;
+      text-shadow: -2px 0 #0ff;
+      animation-delay: 0.3s;
     }
 
     /* Header styles */
