@@ -98,44 +98,59 @@ body.dark-mode #clear-search {
     }
 
     /* Search container in header */
-    #search-container {
+   #search-container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
-    #search-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      color: #fff;
-      font-size: 22px;
-    }
 
-   #search-bar {
+#search-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+  font-size: 22px;
+}
+
+#search-bar {
+  position: absolute;
+  top: 120%;
+  left: 0;
   display: none;
-  padding: 5px 28px 5px 8px; /* space for the clear button */
+  width: 200px;
+  padding: 6px 28px 6px 8px;
   font-size: 14px;
   border: none;
   border-radius: 3px;
   outline: none;
+  background: #fff;
+  color: #000;
+  z-index: 1000;
 }
+
+body.dark-mode #search-bar {
+  background: #333;
+  color: #fff;
+}
+
 #clear-search {
-  display: none;
   position: absolute;
-  right: 0;
-  margin-right: 6px;
+  top: 120%;
+  right: 6px;
+  display: none;
   background: transparent;
   border: none;
   color: black;
   font-size: 18px;
   cursor: pointer;
-  top: 50%;
-  transform: translateY(-50%);
-  line-height: 1;
+  transform: translateY(50%);
 }
 
 body.dark-mode #clear-search {
   color: white;
 }
+
     #search-funny {
       position: absolute;
       top: 36px;
@@ -339,9 +354,9 @@ body.dark-mode #clear-search {
     <header>
 <div id="search-container">
   <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
-    <!-- magnifier icon SVG -->
+    <!-- magnifier icon -->
     <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+      <path d="..." />
     </svg>
   </button>
   <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
