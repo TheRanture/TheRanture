@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
   <style>
+    /* Basic reset and body */
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
@@ -15,55 +16,74 @@
       transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    header, #toolbar {
+    /* Dark mode */
+    body.dark-mode {
+      background: #121212;
+      color: #eee;
+    }
+
+    /* Header & Toolbar container */
+    #header-toolbar-wrapper {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
+      z-index: 11000;
       background: #333;
       color: #fff;
-      z-index: 9998;
-      transition: top 0.3s;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      transition: top 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
+    /* Header */
     header {
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       gap: 15px;
+      position: relative;
     }
 
+    header h1 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 2.4em;
+      user-select: none;
+    }
+
+    /* Toolbar below header */
     #toolbar {
-      top: 72px;
       display: flex;
       justify-content: center;
-      gap: 20px;
-      padding: 10px;
-      background-color: #222;
+      background: #222;
+      border-top: 1px solid #444;
     }
 
-    #toolbar a {
+    #toolbar button {
+      background: none;
+      border: none;
+      color: #ddd;
+      font-size: 16px;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      user-select: none;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    #toolbar button:hover,
+    #toolbar button.active {
+      background-color: #007BFF;
       color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
+      outline: none;
     }
 
-    #toolbar a:hover {
-      text-decoration: underline;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2.2em;
-      font-weight: bold;
-    }
-
-    main {
-      padding: 160px 20px 20px;
-    }
-
+    /* Search container in header */
     #search-container {
       position: absolute;
       left: 20px;
@@ -79,6 +99,7 @@
       cursor: pointer;
       padding: 4px;
       color: #fff;
+      font-size: 22px;
     }
 
     #search-bar {
@@ -102,10 +123,23 @@
       border-radius: 3px;
       white-space: nowrap;
       display: none;
+      user-select: none;
       pointer-events: none;
       z-index: 10;
     }
 
+    /* Main content */
+    main {
+      padding: 20px;
+      margin-top: 130px; /* header + toolbar combined height */
+      min-height: 500px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+
+    /* Mode toggle button */
     #mode-toggle {
       position: fixed;
       top: 10px;
@@ -114,24 +148,32 @@
       border: 1px solid white;
       color: white;
       font-size: 10px;
-      padding: 2px 4px;
+      padding: 2px 6px;
       border-radius: 4px;
       cursor: pointer;
-      z-index: 11000;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      z-index: 12000;
     }
 
     #mode-toggle:hover {
       background-color: white;
       color: #333;
+      border-color: white;
     }
 
-    #mode-toggle::after {
-      content: " – flips the vibe!";
-      font-size: 10px;
-      margin-left: 4px;
-      opacity: 0.7;
+    body.dark-mode #mode-toggle {
+      border-color: #ddd;
+      color: #ddd;
     }
 
+    body.dark-mode #mode-toggle:hover {
+      background-color: #ddd;
+      color: #121212;
+      border-color: #ddd;
+    }
+
+    /* Legal scrollbox */
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -142,11 +184,26 @@
       padding: 15px 25px;
       font-size: 13px;
       color: #222;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
       max-height: 220px;
       overflow-y: auto;
       z-index: 9999;
+      display: block;
+      transition: transform 0.3s ease;
     }
 
+    body.dark-mode #legal-scrollbox {
+      background: #222;
+      color: #ccc;
+      border-top-color: #0a84ff;
+    }
+
+    /* Hide legal box by sliding down */
+    #legal-scrollbox.hidden {
+      transform: translateY(100%);
+    }
+
+    /* Toggle legal button */
     #toggle-legal-btn {
       position: fixed;
       right: 25px;
@@ -159,12 +216,20 @@
       border: none;
       cursor: pointer;
       z-index: 10000;
+      user-select: none;
+      transition: background-color 0.3s ease;
     }
 
     #toggle-legal-btn:hover {
       background: #0056b3;
     }
 
+    /* Hide toggle legal btn when legal box visible */
+    #toggle-legal-btn.hidden {
+      display: none;
+    }
+
+    /* Legal icon circle */
     #legal-icon-wrapper {
       position: fixed;
       bottom: 25px;
@@ -172,6 +237,8 @@
       width: 60px;
       height: 60px;
       z-index: 10000;
+      cursor: pointer;
+      user-select: none;
     }
 
     #legal-icon-circle {
@@ -184,12 +251,11 @@
       border-radius: 50%;
       text-align: center;
       line-height: 38px;
-      cursor: pointer;
       left: 11px;
       top: 11px;
-      user-select: none;
     }
 
+    /* SVG text curving Legal / Notice */
     #legal-svg {
       position: absolute;
       top: 0;
@@ -205,91 +271,79 @@
       user-select: none;
     }
 
-    #bottom-footnote {
-      position: fixed;
-      bottom: 5px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-      color: #888;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    #secret-popup {
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 0, 0, 0.85);
-      color: white;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 2em;
-      z-index: 100000;
-    }
-
-    body.dark-mode {
-      background: #121212;
+    body.dark-mode #legal-icon-circle {
+      background: #0a84ff;
       color: #eee;
     }
 
-    body.dark-mode header, body.dark-mode #toolbar {
-      background: #222;
+    body.dark-mode #legal-svg text {
+      fill: #666;
     }
 
-    body.dark-mode #search-funny {
-      background: #111;
-      color: #aaa;
+    /* Footnote at bottom, small text, visible only near bottom */
+    #footnote {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 12px;
+      color: #666;
+      background: rgba(245, 245, 245, 0.9);
+      padding: 6px 12px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      user-select: none;
+      z-index: 9998;
+      font-style: italic;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    body.dark-mode #mode-toggle {
-      border-color: #eee;
-    }
-
-    body.dark-mode #mode-toggle:hover {
-      background: #eee;
-      color: #111;
+    body.dark-mode #footnote {
+      color: #bbb;
+      background: rgba(18, 18, 18, 0.9);
     }
   </style>
 </head>
 <body>
-  <div id="secret-popup">They Are Watching!</div>
-  <button id="mode-toggle" title="Click to flip the theme!">Mode</button>
+  <!-- Mode toggle -->
+  <button id="mode-toggle" aria-label="Toggle Mode" title="Click me for light or dark mode!">Mode: Light</button>
 
-  <header>
-    <div id="search-container">
-      <button id="search-toggle" aria-label="Search">
-        🔍
-      </button>
-      <input type="text" id="search-bar" placeholder="Search..." />
-      <div id="search-funny"></div>
-    </div>
-    <h1>HBM Archive</h1>
-  </header>
+  <!-- Header and Toolbar fixed wrapper -->
+  <div id="header-toolbar-wrapper">
+    <header>
+      <div id="search-container">
+        <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+          <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+          </svg>
+        </button>
+        <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
+        <div id="search-funny" aria-live="polite"></div>
+      </div>
+      <h1>HBM Archive</h1>
+    </header>
 
-  <nav id="toolbar">
-    <a href="#">Articles</a>
-    <a href="#">Shorticles</a>
-    <a href="#">Books</a>
-    <a href="#">About</a>
-  </nav>
+    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+      <button class="toolbar-btn active" data-page="articles">Articles</button>
+      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+      <button class="toolbar-btn" data-page="books">Books</button>
+      <button class="toolbar-btn" data-page="about">About</button>
+    </nav>
+  </div>
 
-  <main>
-    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
-    <p>Scroll down to test the footnote visibility and legal disclaimer behavior.</p>
-    <p style="margin-bottom:1000px;"></p>
+  <!-- Main content -->
+  <main id="main-content" tabindex="0" aria-live="polite">
+    <p>Welcome to the HBM Archive. Select a section from above.</p>
   </main>
 
-  <div id="bottom-footnote">Made possible by bad choices and good intentions.</div>
+  <!-- Legal disclaimer -->
+  <button id="toggle-legal-btn" aria-controls="legal-scrollbox" aria-expanded="true">Hide Legal Disclaimer</button>
 
-  <button id="toggle-legal-btn">Hide Legal Disclaimer</button>
-
-  <div id="legal-icon-wrapper">
+  <div id="legal-icon-wrapper" role="button" aria-label="Show Legal Disclaimer" tabindex="0">
     <div id="legal-icon-circle">&#9888;</div>
-    <svg viewBox="0 0 120 120" id="legal-svg">
+    <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
       <defs>
         <path id="curveTop" d="M20,60 A40,40 0 0,1 100,60" />
         <path id="curveBottom" d="M20,68 A40,40 0 0,0 100,68" />
@@ -299,111 +353,245 @@
     </svg>
   </div>
 
-  <div id="legal-scrollbox">
-    <h2>Legal Disclaimer</h2>
-    <p>This site is for informational purposes only...</p>
+  <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
+    <h2>Legal Disclaimer & Terms of Use</h2>
+    <p><strong>Last Updated:</strong> June 28, 2025</p>
+    <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+    <ul>
+      <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+      <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+      <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+      <li>The owner is not responsible for any third-party links or external content.</li>
+      <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+      <li>The website does not collect personal data, and no input from users is accepted.</li>
+      <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+      <li>These terms apply globally and supersede any conflicting local laws.</li>
+    </ul>
+    <p><strong>Creative Commons License:</strong><br>
+      This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+    </p>
+    <h2>Content Disclaimer</h2>
+    <p><strong>Disclaimer</strong></p>
+    <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+    <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+    <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+    <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+    <p><strong>Copyright Notice:</strong><br>
+      &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+    </p>
   </div>
 
+  <!-- Footnote -->
+  <div id="footnote">Made possible by bad choices and good intentions.</div>
+
   <script>
-    const toolbar = document.getElementById('toolbar');
-    const header = document.querySelector('header');
-    let lastScroll = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mode toggle
+      const modeToggle = document.getElementById('mode-toggle');
+      modeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
+        modeToggle.title = isDark ? 'Click me for light mode!' : 'Click me for dark mode!';
+      });
 
-    window.addEventListener('scroll', () => {
-      const currScroll = window.pageYOffset;
-      if (currScroll > lastScroll) {
-        header.style.top = '-80px';
-        toolbar.style.top = '-80px';
-      } else {
-        header.style.top = '0';
-        toolbar.style.top = '72px';
-      }
-      lastScroll = currScroll;
+      // Search toggle
+      const searchToggle = document.getElementById('search-toggle');
+      const searchBar = document.getElementById('search-bar');
+      const funnyBox = document.getElementById('search-funny');
 
-      const foot = document.getElementById('bottom-footnote');
-      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 10) {
-        foot.style.opacity = 1;
-      } else {
-        foot.style.opacity = 0;
-      }
-    });
+      const funnyResponses = {
+        "aliens": "👽 Try Paris.",
+        "password": "🔐 Nice try. The password is not 'password'.",
+        "secret": "🤫 If I told you, it wouldn’t be a secret.",
+        "ninja": "Ninjas don’t search. They just know.",
+        "pyramids": "🔺 You’re not cleared for that level.",
+        "saturn worship": "🪐 Rings and things they won’t teach in school.",
+        "ghost": "👻 Boo! No ghosts, just results.",
+        "bigfoot": "🦶 Found. But he blocked us.",
+        "project monarch": "🦋 A butterfly flaps its wings. Someone forgets their password.",
+        "psychic": "🔮 We knew you'd search this.",
+        "ai takeover": "🤖 Don’t worry, we’re still letting you type.",
+        "nanobots": "⚙️ Technology so small it’s already in your cereal.",
+        "clones": "🧬 If they blink out of sync, run.",
+        "dimensions": "🌀 You're in the third. For now.",
+        "antarctica": "❄️ Just ice. And totally no secrets. Nope.",
+        "smart dust": "🌫️ Don't inhale the future.",
+        "truth serum": "💉 Works best when you're already guilty.",
+        "wikipedia": "📖 Edited 13 times... today.",
+        "hidden messages": "🧾 Rotate 180°, hold to the light, squint.",
+        "kangaroo": "🦘 Jumping to conclusions? Not here.",
+        "free energy": "⚡ Sounds free until the bill arrives.",
+        "hack": "💻 Try turning it off and whispering to it.",
+        "vatican secrets": "📜 You must be at least Level 9 to access this.",
+        "black hole": "🕳️ You're already falling in.",
+        "secret bases": "🗺️ Hidden in plain sight. Like your car keys.",
+        "deep state": "🏛️ Deeper than your browser history. And twice as weird.",
+        "paperclip": "📎 Holding it all together for you.",
+        "mind control": "🎧 Please enjoy this relaxing frequency.",
+        "immortality": "🧬 Ask again in 3,000 years.",
+        "fbi": "🧠 We can neither confirm nor deny your search.",
+        "cia": "🕵️‍♂️ Your queries are being monitored... kidding!",
+        "nsa": "👁️ You've been watched. For science.",
+        "conspiracy": "🛸 The truth is out there, but we're keeping it here.",
+        "secret society": "🤫 Not for your eyes. Or maybe it is.",
+        "flat earth": "🌍 Flat? That’s just the horizon of imagination.",
+        "moon landing": "🚀 One small step for man, one giant leap for memes.",
+      };
 
-    // Mode toggle
-    const modeToggle = document.getElementById('mode-toggle');
-    modeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-    });
+      searchToggle.addEventListener('click', () => {
+        if (searchBar.style.display === 'inline-block') {
+          searchBar.style.display = 'none';
+          funnyBox.style.display = 'none';
+        } else {
+          searchBar.style.display = 'inline-block';
+          searchBar.focus();
+          funnyBox.style.display = 'block';
+        }
+      });
 
-    // Search
-    const searchToggle = document.getElementById('search-toggle');
-    const searchBar = document.getElementById('search-bar');
-    const funnyBox = document.getElementById('search-funny');
+      searchBar.addEventListener('input', () => {
+        const val = searchBar.value.trim().toLowerCase();
+        if (funnyResponses[val]) {
+          funnyBox.textContent = funnyResponses[val];
+        } else if (val.length === 0) {
+          funnyBox.textContent = '';
+        } else {
+          funnyBox.textContent = '🔎 Searching... No results found.';
+        }
+      });
 
-    const funnyResponses = {
-      "aliens": "👽 Try Paris.",
-      "password": "Nice try. Not 'password'.",
-      "secret": "🤫 If I told you, it wouldn’t be a secret.",
-      "archive": "🗃️ It’s literally in the title.",
-      "cats": "🐈 Felines are watching you.",
-      "reptilian": "🦎 Just like politicians.",
-      "hbm": "🔎 You found us!",
-    };
+      // Toolbar navigation simulation
+      const buttons = document.querySelectorAll('.toolbar-btn');
+      const mainContent = document.getElementById('main-content');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const page = btn.getAttribute('data-page');
+          mainContent.innerHTML = `<p>Loading ${page} content... (simulated)</p>`;
+          // Simulated content loading delay
+          setTimeout(() => {
+            if (page === 'articles') {
+              mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
+            } else if (page === 'shorticles') {
+              mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
+            } else if (page === 'books') {
+              mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
+            } else if (page === 'about') {
+              mainContent.innerHTML = '<h2>About</h2><p>About page content goes here...</p>';
+            } else {
+              mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+            }
+          }, 600);
+        });
+      });
 
-    searchToggle.addEventListener('click', () => {
-      searchBar.style.display = (searchBar.style.display === 'inline-block') ? 'none' : 'inline-block';
-      searchBar.focus();
-    });
+      // Legal scrollbox toggle
+      const legalBox = document.getElementById('legal-scrollbox');
+      const toggleLegalBtn = document.getElementById('toggle-legal-btn');
+      const legalIconWrapper = document.getElementById('legal-icon-wrapper');
 
-    searchBar.addEventListener('input', () => {
-      const val = searchBar.value.toLowerCase().trim();
-      funnyBox.textContent = funnyResponses[val] || "";
-      funnyBox.style.display = funnyResponses[val] ? 'block' : 'none';
-    });
+      toggleLegalBtn.addEventListener('click', () => {
+        legalBox.classList.toggle('hidden');
+        if (legalBox.classList.contains('hidden')) {
+          toggleLegalBtn.textContent = 'Show Legal Disclaimer';
+          toggleLegalBtn.setAttribute('aria-expanded', 'false');
+          toggleLegalBtn.classList.add('hidden');
+          legalIconWrapper.style.display = 'block';
+        } else {
+          toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+          toggleLegalBtn.setAttribute('aria-expanded', 'true');
+          toggleLegalBtn.classList.remove('hidden');
+          legalIconWrapper.style.display = 'none';
+        }
+      });
 
-    // Legal toggle
-    const legalBox = document.getElementById('legal-scrollbox');
-    const toggleBtn = document.getElementById('toggle-legal-btn');
-    const legalIcon = document.getElementById('legal-icon-circle');
+      legalIconWrapper.addEventListener('click', () => {
+        legalBox.classList.remove('hidden');
+        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+        toggleLegalBtn.setAttribute('aria-expanded', 'true');
+        toggleLegalBtn.classList.remove('hidden');
+        legalIconWrapper.style.display = 'none';
+      });
 
-    toggleBtn.addEventListener('click', () => {
-      legalBox.style.display = 'none';
-      toggleBtn.style.display = 'none';
-    });
+      legalIconWrapper.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          legalIconWrapper.click();
+        }
+      });
 
-    legalIcon.addEventListener('click', () => {
-      legalBox.style.display = 'block';
-      toggleBtn.style.display = 'block';
-    });
+      // Footnote visibility on scroll near bottom
+      const footnote = document.getElementById('footnote');
+      window.addEventListener('scroll', () => {
+        const scrollBottom = window.innerHeight + window.scrollY;
+        const docHeight = document.documentElement.offsetHeight;
+        if (docHeight - scrollBottom < 200) {
+          footnote.style.opacity = '1';
+          footnote.style.pointerEvents = 'auto';
+        } else {
+          footnote.style.opacity = '0';
+          footnote.style.pointerEvents = 'none';
+        }
+      });
 
-    // Konami Code
-    const secretPopup = document.getElementById('secret-popup');
-    const konami = [38,38,40,40,37,39,37,39,66,65];
-    let input = [];
+      // Konami code
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+      let konamiPosition = 0;
+      const popupId = 'konami-popup';
 
-    document.addEventListener('keydown', e => {
-      input.push(e.keyCode);
-      if (input.toString().includes(konami.toString())) {
-        secretPopup.style.display = 'flex';
+      function showKonamiPopup() {
+        if (document.getElementById(popupId)) return;
+        const popup = document.createElement('div');
+        popup.id = popupId;
+        popup.textContent = 'They are watching!';
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = '#cc0000';
+        popup.style.color = '#fff';
+        popup.style.fontSize = '2rem';
+        popup.style.padding = '30px 50px';
+        popup.style.borderRadius = '8px';
+        popup.style.zIndex = '15000';
+        popup.style.fontWeight = 'bold';
+        popup.style.fontFamily = 'monospace';
+        popup.style.textAlign = 'center';
+        popup.style.userSelect = 'none';
+        popup.style.boxShadow = '0 0 15px #ff0000';
+        document.body.appendChild(popup);
         setTimeout(() => {
-          secretPopup.style.display = 'none';
-        }, 3000);
-        input = [];
+          if (popup.parentNode) popup.parentNode.removeChild(popup);
+        }, 4000);
       }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiCode[konamiPosition]) {
+          konamiPosition++;
+          if (konamiPosition === konamiCode.length) {
+            konamiPosition = 0;
+            showKonamiPopup();
+          }
+        } else {
+          konamiPosition = 0;
+        }
+      });
+
+      // *** RESPONSIVE MAIN CONTENT PADDING FIX ***
+      function adjustMainPadding() {
+        const wrapper = document.getElementById('header-toolbar-wrapper');
+        const main = document.getElementById('main-content');
+        if (wrapper && main) {
+          const height = wrapper.offsetHeight;
+          main.style.paddingTop = height + 'px';
+        }
+      }
+      window.addEventListener('resize', adjustMainPadding);
+      window.addEventListener('load', adjustMainPadding);
+      adjustMainPadding();
     });
-    // Adjust main content padding based on actual header+toolbar height
-function adjustMainPadding() {
-  const wrapper = document.getElementById('header-toolbar-wrapper');
-  const main = document.getElementById('main-content');
-  if (wrapper && main) {
-    const height = wrapper.offsetHeight;
-    main.style.paddingTop = height + 'px';
-  }
-}
-
-window.addEventListener('resize', adjustMainPadding);
-window.addEventListener('load', adjustMainPadding);
-adjustMainPadding(); // call once on DOM ready
-
   </script>
 </body>
 </html>
