@@ -53,57 +53,28 @@ body.dark-mode #clear-search {
     }
 
     /* Header */
-    header {
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      position: relative;
-    }
-
-    header h1 {
-      margin: 0;
-      font-weight: bold;
-      font-size: 2.4em;
-      user-select: none;
-    }
-
-    /* Toolbar below header */
-    #toolbar {
-      display: flex;
-      justify-content: center;
-      background: #222;
-      border-top: 1px solid #444;
-    }
-
-    #toolbar button {
-      background: none;
-      border: none;
-      color: #ddd;
-      font-size: 16px;
-      padding: 14px 22px;
-      cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease;
-      user-select: none;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-    }
-
-    #toolbar button:hover,
-    #toolbar button.active {
-      background-color: #007BFF;
-      color: white;
-      outline: none;
-    }
-
-    /* Search container in header */
-   #search-container {
-  position: relative;
+header {
+  position: relative; /* for absolute children */
+  padding: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 
+/* Position search container top-left, absolute so it does not push header text */
+#search-container {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 11001;
+}
+
+/* magnifier button styling */
 #search-toggle {
   background: none;
   border: none;
@@ -111,12 +82,11 @@ body.dark-mode #clear-search {
   padding: 4px;
   color: #fff;
   font-size: 22px;
+  user-select: none;
 }
 
+/* The search bar, hidden by default, inline next to magnifier */
 #search-bar {
-  position: absolute;
-  top: 120%;
-  left: 0;
   display: none;
   width: 200px;
   padding: 6px 28px 6px 8px;
@@ -126,25 +96,32 @@ body.dark-mode #clear-search {
   outline: none;
   background: #fff;
   color: #000;
-  z-index: 1000;
+  position: relative;
+  z-index: 11000;
 }
 
+/* Dark mode search bar */
 body.dark-mode #search-bar {
   background: #333;
   color: #fff;
 }
 
+/* Clear (×) button, positioned relative, overlapping right inside input */
 #clear-search {
-  position: absolute;
-  top: 120%;
-  right: 6px;
+  position: relative;
+  top: auto;
+  right: auto;
+  transform: none;
   display: none;
   background: transparent;
   border: none;
   color: black;
   font-size: 18px;
   cursor: pointer;
-  transform: translateY(50%);
+  user-select: none;
+  z-index: 11002;
+  margin-left: -28px;
+  padding: 0 6px 0 6px;
 }
 
 body.dark-mode #clear-search {
@@ -355,8 +332,8 @@ body.dark-mode #clear-search {
 <div id="search-container">
   <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
     <!-- magnifier icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
-      <path d="..." />
+    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
     </svg>
   </button>
   <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
@@ -399,6 +376,7 @@ body.dark-mode #clear-search {
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
       const funnyBox = document.getElementById('search-funny');
+      const clearSearch = document.getElementById('clear-search');
 
       const funnyResponses = {
         "aliens": "👽 Try Paris.",
@@ -443,13 +421,13 @@ body.dark-mode #clear-search {
   if (searchBar.style.display === 'inline-block') {
     searchBar.style.display = 'none';
     funnyBox.style.display = 'none';
-    clearSearch.style.display = 'none'; // ✅ Hide the "×" button when search closes
+    clearSearch.style.display = 'none'; // Hide the "×" button when search closes
   } else {
     searchBar.style.display = 'inline-block';
     searchBar.focus();
     funnyBox.style.display = 'block';
     
-    // ✅ Show the "×" button if input already has content
+    // Show the "×" button if input already has content
     if (searchBar.value.trim().length) {
       clearSearch.style.display = 'inline';
     }
@@ -458,6 +436,8 @@ body.dark-mode #clear-search {
 
       searchBar.addEventListener('input', () => {
         const val = searchBar.value.trim().toLowerCase();
+        clearSearch.style.display = val.length ? 'inline' : 'none';
+
         if (funnyResponses[val]) {
           funnyBox.textContent = funnyResponses[val];
         } else if (val.length === 0) {
@@ -466,27 +446,14 @@ body.dark-mode #clear-search {
           funnyBox.textContent = 'Searching... No results found.';
         }
       });
-const clearSearch = document.getElementById('clear-search');
 
-searchBar.addEventListener('input', () => {
-  const val = searchBar.value.trim().toLowerCase();
-  clearSearch.style.display = val.length ? 'inline' : 'none';
+      clearSearch.addEventListener('click', () => {
+        searchBar.value = '';
+        funnyBox.textContent = '';
+        clearSearch.style.display = 'none';
+        searchBar.focus();
+      });
 
-  if (funnyResponses[val]) {
-    funnyBox.textContent = funnyResponses[val];
-  } else if (val.length === 0) {
-    funnyBox.textContent = '';
-  } else {
-    funnyBox.textContent = 'Searching... No results found.';
-  }
-});
-
-clearSearch.addEventListener('click', () => {
-  searchBar.value = '';
-  funnyBox.textContent = '';
-  clearSearch.style.display = 'none';
-  searchBar.focus();
-});
       // Toolbar navigation simulation
       const buttons = document.querySelectorAll('.toolbar-btn');
       const mainContent = document.getElementById('main-content');
