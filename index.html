@@ -140,15 +140,62 @@
 </div>
 
 <script>
-  const legalBox = document.getElementById('legal-scrollbox');
-  const toggleBtn = document.getElementById('toggle-legal-btn');
-  const showIcon = document.getElementById('show-legal-icon');
+  // Wait until DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const legalBox = document.getElementById('legal-scrollbox');
+    const toggleBtn = document.getElementById('toggle-legal-btn');
+    const showIcon = document.getElementById('show-legal-icon');
 
-  function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-      let d = new Date();
-      d.setTime(d.getTime() + (days*24*60*60*1000));
-      expires = "; expires=" + d.toUTCString();
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let d = new Date();
+        d.setTime(d.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + d.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "")  + expires + "; path=/";
     }
-    document.cookie = name + "=" + (valu
+
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for(let i=0;i < ca.length;i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    function hideLegal() {
+      legalBox.style.display = 'none';
+      toggleBtn.style.display = 'none';
+      showIcon.style.display = 'inline-block';
+      setCookie('legalVisible', 'false', 365);
+    }
+
+    function showLegal() {
+      legalBox.style.display = 'block';
+      toggleBtn.style.display = 'inline-block';
+      showIcon.style.display = 'none';
+      setCookie('legalVisible', 'true', 365);
+    }
+
+    toggleBtn.addEventListener('click', hideLegal);
+    showIcon.addEventListener('click', showLegal);
+
+    const visible = getCookie('legalVisible');
+    if (visible === 'false') {
+      legalBox.style.display = 'none';
+      toggleBtn.style.display = 'none';
+      showIcon.style.display = 'inline-block';
+    } else {
+      legalBox.style.display = 'block';
+      toggleBtn.style.display = 'inline-block';
+      showIcon.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
