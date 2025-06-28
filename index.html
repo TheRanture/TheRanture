@@ -1,68 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HBM Archive</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding-bottom: 220px;
-    }
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    main {
-      padding: 20px;
-    }
-    #legal-scrollbox {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-top: 2px solid #007BFF;
-      padding: 15px 25px;
-      font-size: 12px;
-      color: #222;
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-      transition: max-height 0.3s ease;
-      z-index: 9999;
-      cursor: pointer;
-      /* Removed max-height here, handled on legal-content */
-    }
-    #legal-scrollbox h2 {
-      margin-top: 0;
-      font-size: 14px;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    #legal-scrollbox .toggle-text {
-      font-weight: normal;
-      font-size: 12px;
-      color: #555;
-    }
-    #legal-scrollbox a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-    #legal-scrollbox a:hover {
-      text-decoration: underline;
-    }
-    #legal-scrollbox .legal-content {
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      max-height: 1000px; /* default expanded max height */
-    }
-    #legal-scrollbox.collapsed .legal-content {
-      max-height: 0;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HBM Archive</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding-bottom: 280px;
+  }
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  main {
+    padding: 20px;
+  }
+  #legal-scrollbox {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 3px solid #007BFF;
+    padding: 15px 25px;
+    font-size: 13px;
+    color: #222;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+  #toggle-legal-btn {
+    position: fixed;
+    bottom: 230px;
+    right: 25px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 10000;
+  }
+  #toggle-legal-btn:hover {
+    background: #0056b3;
+  }
+  #legal-scrollbox h2 {
+    margin-top: 0;
+    font-weight: bold;
+    color: #007BFF;
+    font-size: 16px;
+  }
+  #legal-scrollbox p {
+    margin: 8px 0;
+    line-height: 1.3;
+  }
+  #legal-scrollbox ul {
+    margin: 8px 0 8px 20px;
+  }
+  #legal-scrollbox a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  #legal-scrollbox a:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
 
@@ -74,30 +83,42 @@
   <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
 </main>
 
-<div id="legal-scrollbox" title="Click to hide/show legal info">
-  <h2>Website Notice <span class="toggle-text">(click to hide/show)</span></h2>
-  <div class="legal-content" style="margin-top:10px;">
-    <p><em>Last Updated: June 28, 2025</em></p>
+<button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox">
+  Hide Legal Disclaimer
+</button>
 
-    <p><strong>Use of this website</strong> is subject to terms and disclaimers. The owner is not liable for any harm, misunderstanding, or misuse of the content provided here. All visitors assume full responsibility for how they interpret and use the material.</p>
+<div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
+  <h2>Legal Disclaimer & Terms of Use</h2>
 
-    <p><strong>Copyright Notice:</strong><br>
-    &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission from the owner.</p>
+  <p><strong>Last Updated:</strong> June 28, 2025</p>
 
-    <p><strong>Creative Commons License:</strong><br>
-    This work is licensed under a 
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-      Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-    </a>.
-    </p>
+  <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
 
-    <p>You are free to share the content with attribution, but not for commercial use or with modifications.</p>
-  </div>
+  <ul>
+    <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+    <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+    <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+    <li>The owner is not responsible for any third-party links or external content.</li>
+    <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+    <li>The website does not collect personal data, and no input from users is accepted.</li>
+    <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+    <li>These terms apply globally and supersede any conflicting local laws.</li>
+  </ul>
+
+  <p><strong>Copyright Notice:</strong><br>
+  &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.</p>
+
+  <p><strong>Creative Commons License:</strong><br>
+  This work is licensed under the
+  <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+  </a>.
+  You may share the content with attribution but not for commercial use or modifications.</p>
 </div>
 
 <script>
   const legalBox = document.getElementById('legal-scrollbox');
-  const legalContent = legalBox.querySelector('.legal-content');
+  const toggleBtn = document.getElementById('toggle-legal-btn');
 
   function setCookie(name, value, days) {
     let expires = "";
@@ -114,4 +135,41 @@
     let ca = document.cookie.split(';');
     for(let i=0;i < ca.length;i++) {
       let c = ca[i];
-      while (c.charAt(0)==' ') c = c.substri
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+
+  function toggleLegal() {
+    if (legalBox.style.display === 'none') {
+      legalBox.style.display = 'block';
+      toggleBtn.textContent = 'Hide Legal Disclaimer';
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      setCookie('legalVisible', 'true', 365);
+    } else {
+      legalBox.style.display = 'none';
+      toggleBtn.textContent = 'Show Legal Disclaimer';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      setCookie('legalVisible', 'false', 365);
+    }
+  }
+
+  window.onload = () => {
+    const visible = getCookie('legalVisible');
+    if (visible === 'false') {
+      legalBox.style.display = 'none';
+      toggleBtn.textContent = 'Show Legal Disclaimer';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      legalBox.style.display = 'block';
+      toggleBtn.textContent = 'Hide Legal Disclaimer';
+      toggleBtn.setAttribute('aria-expanded', 'true');
+    }
+  };
+
+  toggleBtn.addEventListener('click', toggleLegal);
+</script>
+
+</body>
+</html>
