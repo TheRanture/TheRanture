@@ -85,7 +85,7 @@ body.dark-mode #clear-search {
     /* Header */
 header {
   position: relative; /* for absolute children */
-  padding: 9px 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,7 +174,7 @@ body.dark-mode #clear-search {
     /* Main content */
     main {
       padding: 20px;
-      margin-top: 110px; /* header + toolbar combined height */
+      margin-top: 116px; /* header + toolbar combined height */
       min-height: 500px;
       max-width: 900px;
       margin-left: auto;
@@ -398,6 +398,19 @@ body.dark-mode #clear-search {
         modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
         modeToggle.title = isDark ? 'Click me for light mode!' : 'Click me for dark mode!';
       });
+      document.addEventListener('click', (event) => {
+  const searchContainer = document.getElementById('search-container');
+  const searchBar = document.getElementById('search-bar');
+  const clearBtn = document.getElementById('clear-search');
+  const funnyBox = document.getElementById('search-funny');
+
+  // If click is outside the search container, close the search bar
+  if (!searchContainer.contains(event.target)) {
+    searchBar.style.display = 'none';
+    clearBtn.style.display = 'none';
+    funnyBox.style.display = 'none';
+  }
+});
 
       // Search toggle
       const searchToggle = document.getElementById('search-toggle');
@@ -445,22 +458,21 @@ body.dark-mode #clear-search {
       };
 
    searchToggle.addEventListener('click', () => {
-  if (searchBar.style.display === 'inline-block') {
+     event.stopPropagation();
+ if (searchBar.style.display === 'inline-block') {
     searchBar.style.display = 'none';
     funnyBox.style.display = 'none';
-    clearSearch.style.display = 'none'; // Hide the "×" button when search closes
+    clearSearch.style.display = 'none';
   } else {
     searchBar.style.display = 'inline-block';
     searchBar.focus();
     funnyBox.style.display = 'block';
-    
-    // Show the "×" button if input already has content
+
     if (searchBar.value.trim().length) {
       clearSearch.style.display = 'inline';
     }
   }
 });
-
       searchBar.addEventListener('input', () => {
         const val = searchBar.value.trim().toLowerCase();
         clearSearch.style.display = val.length ? 'inline' : 'none';
