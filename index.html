@@ -93,9 +93,10 @@ header {
 }
 
 /* Position search container top-left, absolute so it does not push header text */
+/* Position search container top-left, absolute so it does not push header text */
 #search-container {
   position: absolute;
-  top: 50%;
+  top: 42%; /* slightly above center */
   left: 20px;
   transform: translateY(-50%);
   display: flex;
@@ -104,7 +105,7 @@ header {
   z-index: 11001;
 }
 
-/* magnifier button styling */
+/* Magnifier button styling (left of input) */
 #search-toggle {
   background: none;
   border: none;
@@ -113,11 +114,9 @@ header {
   color: #fff;
   font-size: 22px;
   user-select: none;
-  position: relative; /* keep relative to contain absolute children */
-  z-index: 11002;
 }
 
-/* The search bar, hidden by default, positioned absolutely below the toggle */
+/* The search bar, inline next to magnifier */
 #search-bar {
   display: none;
   width: 200px;
@@ -128,11 +127,8 @@ header {
   outline: none;
   background: #fff;
   color: #000;
-  position: absolute;
-  top: 140%;       /* move a bit lower below the toggle */
-  left: 0;         /* align left edge with container */
+  position: relative;
   z-index: 11000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* Dark mode search bar */
@@ -141,12 +137,10 @@ body.dark-mode #search-bar {
   color: #fff;
 }
 
-/* Clear (×) button, absolutely positioned inside the search container */
+/* Clear (×) button, overlaps right inside input */
 #clear-search {
-  position: absolute;
-  top: 140%;       /* same vertical as search bar */
-  right: 6px;      /* inside right edge of search bar */
-  display: none;
+  position: relative;
+  margin-left: -28px;
   background: transparent;
   border: none;
   color: black;
@@ -155,16 +149,17 @@ body.dark-mode #search-bar {
   user-select: none;
   z-index: 11002;
   padding: 0 6px;
+  display: none;
 }
 
 body.dark-mode #clear-search {
   color: white;
 }
 
-/* Funny search message */
+/* Funny message */
 #search-funny {
   position: absolute;
-  top: 180%;       /* slightly below the search bar */
+  top: 120%; /* just below the search bar */
   left: 0;
   background: #333;
   color: #ccc;
@@ -175,7 +170,7 @@ body.dark-mode #clear-search {
   display: none;
   user-select: none;
   pointer-events: none;
-  z-index: 11003;
+  z-index: 10;
 }
 
 /* Dark mode search bar */
