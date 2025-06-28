@@ -501,9 +501,6 @@ body.dark-mode #search-funny {
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const page = btn.getAttribute('data-page');
-          mainContent.innerHTML = `<p>Loading ${page} content... (simulated)</p>`;
-          // Simulated content loading delay
-          setTimeout(() => {
 if (page === 'articles') {
   mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
 } else if (page === 'shorticles') {
