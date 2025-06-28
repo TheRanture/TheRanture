@@ -25,8 +25,8 @@
       align-items: center;
       user-select: none;
       gap: 15px;
-      top: -10px; /* moved header slightly up */
-      position: relative; /* re-affirm relative for top */
+      top: -10px;
+      position: relative;
     }
 
     h1 {
@@ -38,7 +38,7 @@
     #search-container {
       position: absolute;
       left: 20px;
-      top: 40%;  /* moved search box higher */
+      top: 40%;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
@@ -62,10 +62,9 @@
       outline: none;
     }
 
-    /* New: funny search suggestion box */
     #search-funny {
       position: absolute;
-      top: 36px; /* just below search box */
+      top: 36px;
       left: 60px;
       background: #333;
       color: #ccc;
@@ -293,6 +292,30 @@
     body.secret-doc #legal-scrollbox a {
       color: #5b472d;
     }
+
+    /* Konami overlay style */
+    #konami-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #cc0000;
+      color: white;
+      font-size: 3em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 12000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #konami-overlay.visible {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -356,6 +379,9 @@
       &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
     </p>
   </div>
+
+  <!-- Konami message overlay -->
+  <div id="konami-overlay">They are watching!</div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -455,24 +481,43 @@
         legalIcon.style.display = 'none';
       });
 
-      // Initially show legal box and toggle button, hide icon
       legalBox.style.display = 'block';
       toggleBtn.style.display = 'inline-block';
       legalIcon.style.display = 'none';
 
+      // Mode toggle logic
+      const modeToggle = document.getElementById('mode-toggle');
+
+      function updateModeButton() {
+        modeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Mode: Dark' : 'Mode: Light';
+      }
+
+      modeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        updateModeButton();
+      });
+
+      updateModeButton();
+
       // Konami code setup
-      const konamiCode = [38,38,40,40,37,39,37,39,66,65]; // up up down down left right left right B A
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
       let konamiIndex = 0;
+      const konamiOverlay = document.getElementById('konami-overlay');
 
       window.addEventListener('keydown', (e) => {
         if (e.keyCode === konamiCode[konamiIndex]) {
           konamiIndex++;
           if (konamiIndex === konamiCode.length) {
             konamiIndex = 0;
-            alert("They are watching!");
+            // Show the overlay with the message
+            konamiOverlay.classList.add('visible');
+            // Hide after 3 seconds
+            setTimeout(() => {
+              konamiOverlay.classList.remove('visible');
+            }, 3000);
           }
         } else {
-          konamiIndex = 0; // reset if wrong key
+          konamiIndex = 0;
         }
       });
     });
