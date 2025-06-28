@@ -19,50 +19,57 @@
       background: #333;
       color: #fff;
       padding: 20px;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       user-select: none;
       gap: 15px;
-      top: -10px;
-      position: relative;
+      z-index: 11000;
+      transition: top 0.3s ease;
+      will-change: top;
+    }
+
+    #toolbar {
+      background: #222;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 10px 0;
+      position: fixed;
+      top: 64px; /* header height approx */
+      left: 0;
+      right: 0;
+      user-select: none;
+      z-index: 10999;
+      transition: top 0.3s ease;
+      will-change: top;
+    }
+
+    #toolbar button {
+      background: none;
+      border: none;
+      color: #eee;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    #toolbar button:hover {
+      background-color: #007bff;
     }
 
     h1 {
       margin: 0;
       font-weight: bold;
       font-size: 2.4em;
-    }
-
-    #toolbar {
-      position: sticky;
-      top: 60px; /* just below header */
-      background: #222;
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      padding: 10px 0;
-      user-select: none;
-      z-index: 11000;
-      border-bottom: 2px solid #007BFF;
-    }
-
-    #toolbar button {
-      background: transparent;
-      border: none;
-      color: #eee;
-      font-size: 16px;
-      padding: 8px 14px;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    #toolbar button:hover,
-    #toolbar button.active {
-      background-color: #007BFF;
-      color: #fff;
     }
 
     #search-container {
@@ -109,12 +116,11 @@
     }
 
     main {
-      padding: 20px;
-      max-width: 900px;
+      padding: 110px 20px 20px; /* header + toolbar height for spacing */
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    /* Legal disclaimer styling */
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -237,28 +243,10 @@
       border-color: white;
     }
 
-    /* Footnote styling */
-    #footnote {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #222;
-      color: #eee;
-      font-size: 12px;
-      text-align: center;
-      padding: 5px 0;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-      z-index: 12000;
-    }
-    #footnote.visible {
-      opacity: 1;
-      pointer-events: auto;
+    #mode-toggle[title] {
+      cursor: help;
     }
 
-    /* Dark mode styles */
     body.dark-mode {
       background: #121212;
       color: #eee;
@@ -296,10 +284,104 @@
     body.dark-mode #legal-svg text {
       fill: #666;
     }
+
+    body.secret-doc {
+      background: #f5f0e6;
+      color: #3e2f1c;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 0.7px;
+    }
+
+    body.secret-doc header {
+      background: #d9cbbf;
+      color: #3e2f1c;
+    }
+
+    body.secret-doc #search-toggle {
+      color: #3e2f1c;
+    }
+
+    body.secret-doc #legal-scrollbox {
+      background: #eae3d7;
+      color: #4b3a1b;
+      border-top-color: #3e2f1c;
+    }
+
+    body.secret-doc #toggle-legal-btn {
+      background: #3e2f1c;
+      color: #f5f0e6;
+      font-weight: bold;
+    }
+
+    body.secret-doc #toggle-legal-btn:hover {
+      background: #5b472d;
+      color: #fff;
+    }
+
+    body.secret-doc #legal-icon-circle {
+      background: #3e2f1c;
+      color: #f5f0e6;
+      font-weight: bold;
+    }
+
+    body.secret-doc #legal-svg text {
+      fill: #5b472d;
+    }
+
+    body.secret-doc #legal-scrollbox h2 {
+      color: #3e2f1c;
+    }
+
+    body.secret-doc #legal-scrollbox a {
+      color: #5b472d;
+    }
+
+    /* Footnote styling */
+    #footnote {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.7);
+      color: #ddd;
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+      padding: 6px 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+      z-index: 12000;
+      user-select: none;
+    }
+
+    #footnote.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Konami popup */
+    #konami-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #b30000;
+      color: white;
+      font-size: 26px;
+      padding: 30px 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #ff0000aa;
+      z-index: 13000;
+      display: none;
+      user-select: none;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <button id="mode-toggle" aria-label="Toggle Mode" title="Toggle light/dark mode">Mode: Light</button>
+  <button id="mode-toggle" aria-label="Toggle Mode" title="Toggle light/dark mode. Because who needs consistency?">Mode: Light</button>
 
   <header>
     <div id="search-container">
@@ -314,30 +396,15 @@
     <h1>HBM Archive</h1>
   </header>
 
-  <nav id="toolbar" role="navigation" aria-label="Main navigation">
-    <button data-page="articles" class="active">Articles</button>
-    <button data-page="shorticles">Shorticles</button>
-    <button data-page="books">Books</button>
-    <button data-page="about">About</button>
+  <nav id="toolbar" aria-label="Main Navigation Toolbar">
+    <button data-page="articles.html">Articles</button>
+    <button data-page="shorticles.html">Shorticles</button>
+    <button data-page="books.html">Books</button>
+    <button data-page="about.html">About</button>
   </nav>
 
-  <main id="content">
-    <section data-page="articles" class="page-section">
-      <h2>Articles</h2>
-      <p>Welcome to the Articles section. Content coming soon!</p>
-    </section>
-    <section data-page="shorticles" class="page-section" style="display:none;">
-      <h2>Shorticles</h2>
-      <p>Welcome to the Shorticles section. Content coming soon!</p>
-    </section>
-    <section data-page="books" class="page-section" style="display:none;">
-      <h2>Books</h2>
-      <p>Welcome to the Books section. Content coming soon!</p>
-    </section>
-    <section data-page="about" class="page-section" style="display:none;">
-      <h2>About</h2>
-      <p>This is the About section. Learn more about HBM Archive here.</p>
-    </section>
+  <main>
+    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
   </main>
 
   <button id="toggle-legal-btn" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
@@ -382,19 +449,25 @@
     </p>
   </div>
 
-  <div id="footnote">Footnote 33: Remember, the cake is a lie. 🍰</div>
+  <div id="footnote">Made possible by bad choices and good intentions.</div>
+  <div id="konami-popup">They Are Watching!</div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Dark mode toggle
+      // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
-      modeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        modeToggle.textContent = isDark ? 'Mode: Dark' : 'Mode: Light';
-      });
+      const body = document.body;
 
-      // Search toggle and funny messages
+      function updateModeText() {
+        modeToggle.textContent = body.classList.contains('dark-mode') ? 'Mode: Dark' : 'Mode: Light';
+      }
+      modeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        updateModeText();
+      });
+      updateModeText();
+
+      // Search toggle
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
       const funnyBox = document.getElementById('search-funny');
@@ -417,31 +490,12 @@
         "antarctica": "❄️ Just ice. And totally no secrets. Nope.",
         "smart dust": "🌫️ Don't inhale the future.",
         "truth serum": "💉 Works best when you're already guilty.",
-        "wikipedia": "📖 Edited 13 times... today.",
-        "hidden messages": "🧾 Rotate 180°, hold to the light, squint.",
-        "kangaroo": "🦘 Jumping to conclusions? Not here.",
-        "free energy": "⚡ Sounds free until the bill arrives.",
-        "hack": "💻 Try turning it off and whispering to it.",
-        "vatican secrets": "📜 You must be at least Level 9 to access this.",
-        "black hole": "🕳️ You're already falling in.",
-        "secret bases": "🗺️ Hidden in plain sight. Like your car keys.",
-        "deep state": "🏛️ Deeper than your browser history. And twice as weird.",
-        "paperclip": "📎 Holding it all together for you.",
-        "mind control": "🎧 Please enjoy this relaxing frequency.",
-        "immortality": "🧬 Ask again in 3,000 years.",
-        "fbi": "🧠 We can neither confirm nor deny your curiosity.",
-        "404": "🚫 This search returns more nothing than a black hole.",
-        "chemtrails": "☁️ Just clouds. Or are they? (They are. But are they?)",
-        "matrix": "💊 Red or blue? Doesn’t matter, you’re already in.",
-        "hbm": "🔎 You found us! No need to search further.",
-        "reptilian": "🦎 Cold-blooded and power-hungry. Just like politicians.",
-        "flat earth": "🌍 It's a sphere. But we admire your commitment to creative cartography.",
-        "archive": "🗃️ It’s *literally* in the title.",
-        "ufo": "🛸 Did you mean weather balloons?",
-        "coffee": "☕ Yes. Always a good idea.",
-        "marshmallow": "🔥 Soft answers for a hard question.",
-        "socks": "🧦 Missing one? Find it here!",
-        "cats": "🐈 Felines are watching you search."
+        "wikipedia": "📚 Look it up yourself.",
+        "privacy": "🔒 We’re watching. Just kidding. Or are we?",
+        "hacker": "👾 I'm sorry, Dave. I'm afraid I can't do that.",
+        "cookie": "🍪 This site runs on cookies. Sweet and crunchy.",
+        "404": "🤷‍♂️ Lost in space.",
+        "illegal": "🚫 Sorry, no can do.",
       };
 
       searchToggle.addEventListener('click', () => {
@@ -456,67 +510,115 @@
       });
 
       searchBar.addEventListener('input', () => {
-        const val = searchBar.value.toLowerCase();
-        if (val && funnyResponses[val]) {
+        const val = searchBar.value.toLowerCase().trim();
+        if (funnyResponses[val]) {
           funnyBox.textContent = funnyResponses[val];
           funnyBox.style.display = 'block';
         } else {
           funnyBox.style.display = 'none';
+          funnyBox.textContent = '';
         }
       });
 
       // Legal disclaimer toggle
-      const legalBox = document.getElementById('legal-scrollbox');
+      const legalScrollbox = document.getElementById('legal-scrollbox');
       const toggleLegalBtn = document.getElementById('toggle-legal-btn');
-      const legalIcon = document.getElementById('legal-icon-circle');
+      const legalIconCircle = document.getElementById('legal-icon-circle');
 
       toggleLegalBtn.addEventListener('click', () => {
-        legalBox.style.display = 'none';
-        toggleLegalBtn.style.display = 'none';
-        legalIcon.style.display = 'block';
+        if (legalScrollbox.style.display === 'none' || legalScrollbox.style.display === '') {
+          legalScrollbox.style.display = 'block';
+          toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+          legalIconCircle.style.display = 'none';
+        } else {
+          legalScrollbox.style.display = 'none';
+          toggleLegalBtn.textContent = 'Show Legal Disclaimer';
+          legalIconCircle.style.display = 'block';
+        }
       });
 
-      legalIcon.addEventListener('click', () => {
-        legalBox.style.display = 'block';
-        toggleLegalBtn.style.display = 'inline-block';
-        legalIcon.style.display = 'none';
+      legalIconCircle.addEventListener('click', () => {
+        legalScrollbox.style.display = 'block';
+        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+        legalIconCircle.style.display = 'none';
       });
 
-      // Initialize legal icon hidden because legal box shown initially
-      legalIcon.style.display = 'none';
+      // Initialize legal disclaimer visible
+      legalScrollbox.style.display = 'block';
+      toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+      legalIconCircle.style.display = 'none';
 
-      // Toolbar page switching
+      // Toolbar navigation (simulate SPA by loading content from files)
       const toolbarButtons = document.querySelectorAll('#toolbar button');
-      const pageSections = document.querySelectorAll('.page-section');
+      const mainContent = document.querySelector('main');
 
       toolbarButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-          // Remove active from all buttons
-          toolbarButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+          const page = btn.getAttribute('data-page');
+          if (!page) return;
 
-          const target = btn.getAttribute('data-page');
-          pageSections.forEach(section => {
-            if (section.getAttribute('data-page') === target) {
-              section.style.display = '';
-            } else {
-              section.style.display = 'none';
-            }
-          });
-          // Scroll to top on page switch
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          fetch(page)
+            .then(resp => {
+              if (!resp.ok) throw new Error('Page not found');
+              return resp.text();
+            })
+            .then(html => {
+              mainContent.innerHTML = html;
+              window.scrollTo(0, 0);
+            })
+            .catch(() => {
+              mainContent.innerHTML = `<p>Sorry, the page <strong>${page}</strong> could not be loaded.</p>`;
+            });
         });
       });
 
-      // Footnote show on scroll bottom
-      const footnote = document.getElementById('footnote');
+      // Hide header and toolbar on scroll down, show on scroll up
+      let lastScroll = window.pageYOffset;
+      const header = document.querySelector('header');
+      const toolbar = document.getElementById('toolbar');
+
       window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY + window.innerHeight;
-        const nearBottom = document.body.scrollHeight - 150;
-        if (scrollPosition >= nearBottom) {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > lastScroll && currentScroll > 80) {
+          // scroll down - hide
+          header.style.top = '-64px';
+          toolbar.style.top = '-48px';
+        } else {
+          // scroll up - show
+          header.style.top = '0';
+          toolbar.style.top = '64px';
+        }
+        lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+
+        // Show footnote when near bottom
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const footnote = document.getElementById('footnote');
+        if (scrollableHeight - scrolled < 50) {
           footnote.classList.add('visible');
         } else {
           footnote.classList.remove('visible');
+        }
+      });
+
+      // Konami code implementation
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+      let konamiIndex = 0;
+      const konamiPopup = document.getElementById('konami-popup');
+
+      window.addEventListener('keydown', e => {
+        if (e.keyCode === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            // Show popup
+            konamiPopup.style.display = 'block';
+            setTimeout(() => {
+              konamiPopup.style.display = 'none';
+            }, 3500);
+            konamiIndex = 0;
+          }
+        } else {
+          konamiIndex = 0;
         }
       });
     });
