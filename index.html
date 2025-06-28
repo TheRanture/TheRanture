@@ -14,64 +14,61 @@
       overflow-x: hidden;
       transition: background-color 0.5s ease, color 0.5s ease;
     }
-
     header {
       background: #333;
       color: #fff;
-      padding: 20px;
+      padding: 60px 20px 20px;
       position: relative;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       user-select: none;
-      gap: 15px;
     }
-
     h1 {
       margin: 0;
       font-weight: bold;
       font-size: 2.4em;
     }
-
     #search-container {
       position: absolute;
+      top: 10px;
       left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      flex-direction: row;
+      z-index: 1;
     }
-
     #search-toggle {
       background: none;
       border: none;
       cursor: pointer;
       padding: 4px;
+      margin-right: 6px;
       color: #fff;
     }
-
     #search-bar {
       display: none;
-      margin-top: 8px;
       padding: 5px 8px;
       font-size: 14px;
       border: none;
       border-radius: 3px;
       outline: none;
     }
-
     #search-funny {
       display: none;
-      color: #999;
+      position: absolute;
+      top: 42px;
+      left: 20px;
+      background-color: #333;
+      color: #ccc;
       font-size: 12px;
-      margin-top: 5px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      z-index: 2;
     }
-
     main {
       padding: 20px;
     }
-
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -87,7 +84,6 @@
       overflow-y: auto;
       z-index: 9999;
     }
-
     #toggle-legal-btn {
       position: fixed;
       right: 25px;
@@ -101,11 +97,9 @@
       cursor: pointer;
       z-index: 10000;
     }
-
     #toggle-legal-btn:hover {
       background: #0056b3;
     }
-
     #legal-icon-wrapper {
       position: fixed;
       bottom: 25px;
@@ -114,7 +108,6 @@
       height: 60px;
       z-index: 10000;
     }
-
     #legal-icon-circle {
       position: absolute;
       width: 38px;
@@ -130,7 +123,6 @@
       top: 11px;
       user-select: none;
     }
-
     #legal-svg {
       position: absolute;
       top: 0;
@@ -139,158 +131,38 @@
       height: 60px;
       pointer-events: none;
     }
-
     #legal-svg text {
       font-size: 13px;
       fill: #aaa;
       user-select: none;
     }
-
     #legal-scrollbox h2 {
       margin: 0;
       font-weight: bold;
       color: #007BFF;
       font-size: 16px;
     }
-
-    #legal-scrollbox p,
-    #legal-scrollbox ul {
+    #legal-scrollbox p, #legal-scrollbox ul {
       margin: 8px 0;
       line-height: 1.3;
     }
-
     #legal-scrollbox ul {
       margin-left: 20px;
     }
-
     #legal-scrollbox a {
       color: #007BFF;
       text-decoration: none;
     }
-
     #legal-scrollbox a:hover {
       text-decoration: underline;
-    }
-
-    #mode-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      border: 1px solid white;
-      color: white;
-      font-size: 10px;
-      padding: 2px 4px;
-      border-radius: 4px;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      z-index: 11000;
-    }
-
-    #mode-toggle:hover {
-      background-color: white;
-      color: #333;
-      border-color: white;
-    }
-
-    body.dark-mode {
-      background: #121212;
-      color: #eee;
-    }
-
-    body.dark-mode header {
-      background: #222;
-      color: #eee;
-    }
-
-    body.dark-mode #search-toggle {
-      color: #eee;
-    }
-
-    body.dark-mode #legal-scrollbox {
-      background: #222;
-      color: #ccc;
-      border-top-color: #0a84ff;
-    }
-
-    body.dark-mode #toggle-legal-btn {
-      background: #0a84ff;
-      color: #eee;
-    }
-
-    body.dark-mode #toggle-legal-btn:hover {
-      background: #065bb5;
-    }
-
-    body.dark-mode #legal-icon-circle {
-      background: #0a84ff;
-      color: #eee;
-    }
-
-    body.dark-mode #legal-svg text {
-      fill: #666;
-    }
-
-    body.secret-doc {
-      background: #f5f0e6;
-      color: #3e2f1c;
-      font-family: 'Courier New', Courier, monospace;
-      letter-spacing: 0.7px;
-    }
-
-    body.secret-doc header {
-      background: #d9cbbf;
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #search-toggle {
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #legal-scrollbox {
-      background: #eae3d7;
-      color: #4b3a1b;
-      border-top-color: #3e2f1c;
-    }
-
-    body.secret-doc #toggle-legal-btn {
-      background: #3e2f1c;
-      color: #f5f0e6;
-      font-weight: bold;
-    }
-
-    body.secret-doc #toggle-legal-btn:hover {
-      background: #5b472d;
-      color: #fff;
-    }
-
-    body.secret-doc #legal-icon-circle {
-      background: #3e2f1c;
-      color: #f5f0e6;
-      font-weight: bold;
-    }
-
-    body.secret-doc #legal-svg text {
-      fill: #5b472d;
-    }
-
-    body.secret-doc #legal-scrollbox h2 {
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #legal-scrollbox a {
-      color: #5b472d;
     }
   </style>
 </head>
 <body>
-  <button id="mode-toggle" aria-label="Toggle Mode">Mode: Light</button>
-
   <header>
     <div id="search-container">
       <button id="search-toggle" aria-label="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="#ffffff">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
         </svg>
       </button>
@@ -299,13 +171,10 @@
     </div>
     <h1>HBM Archive</h1>
   </header>
-
   <main>
     <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
   </main>
-
   <button id="toggle-legal-btn" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
-
   <div id="legal-icon-wrapper">
     <div id="legal-icon-circle">&#9888;</div>
     <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
@@ -317,19 +186,35 @@
       <text><textPath href="#curveBottom" startOffset="50%" text-anchor="middle">Notice</textPath></text>
     </svg>
   </div>
-
   <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
     <h2>Legal Disclaimer & Terms of Use</h2>
     <p><strong>Last Updated:</strong> June 28, 2025</p>
-    <p>This website and its content are provided "as is" without warranties of any kind, express or implied...</p>
-    <!-- [Legal disclaimer text continues...] -->
+    <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+    <ul>
+      <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+      <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+      <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+      <li>The owner is not responsible for any third-party links or external content.</li>
+      <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+      <li>The website does not collect personal data, and no input from users is accepted.</li>
+      <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+      <li>These terms apply globally and supersede any conflicting local laws.</li>
+    </ul>
+    <p><strong>Creative Commons License:</strong><br>
+      This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+    </p>
+    <h2>Content Disclaimer</h2>
+    <p><strong>Disclaimer</strong></p>
+    <p>The views, opinions, and information expressed on this website are those of the author alone...</p>
   </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
       const funnyBox = document.getElementById('search-funny');
+      const legalBox = document.getElementById('legal-scrollbox');
+      const toggleBtn = document.getElementById('toggle-legal-btn');
+      const legalIcon = document.getElementById('legal-icon-circle');
 
       const funnyResponses = {
         "aliens": "👽 Try Paris.",
@@ -344,12 +229,11 @@
       };
 
       searchToggle.addEventListener('click', () => {
-        if (searchBar.style.display === 'none' || searchBar.style.display === '') {
-          searchBar.style.display = 'inline-block';
-          funnyBox.style.display = 'none';
+        const isVisible = searchBar.style.display === 'inline-block';
+        searchBar.style.display = isVisible ? 'none' : 'inline-block';
+        if (!isVisible) {
           searchBar.focus();
         } else {
-          searchBar.style.display = 'none';
           searchBar.value = '';
           funnyBox.style.display = 'none';
         }
@@ -365,10 +249,6 @@
         }
       });
 
-      const legalBox = document.getElementById('legal-scrollbox');
-      const toggleBtn = document.getElementById('toggle-legal-btn');
-      const legalIcon = document.getElementById('legal-icon-circle');
-
       toggleBtn.addEventListener('click', () => {
         legalBox.style.display = 'none';
         toggleBtn.style.display = 'none';
@@ -377,17 +257,6 @@
       legalIcon.addEventListener('click', () => {
         legalBox.style.display = 'block';
         toggleBtn.style.display = 'inline-block';
-      });
-
-      const modeToggle = document.getElementById('mode-toggle');
-      const modes = ['light', 'dark-mode', 'secret-doc'];
-      let modeIndex = 0;
-
-      modeToggle.addEventListener('click', () => {
-        document.body.classList.remove(...modes);
-        modeIndex = (modeIndex + 1) % modes.length;
-        if (modeIndex > 0) document.body.classList.add(modes[modeIndex]);
-        modeToggle.textContent = `Mode: ${modes[modeIndex].replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
       });
     });
   </script>
