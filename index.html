@@ -303,19 +303,6 @@
     <h2>Legal Disclaimer</h2>
     <p>This site is for informational purposes only...</p>
   </div>
-// Adjust main content padding based on actual header+toolbar height
-function adjustMainPadding() {
-  const wrapper = document.getElementById('header-toolbar-wrapper');
-  const main = document.getElementById('main-content');
-  if (wrapper && main) {
-    const height = wrapper.offsetHeight;
-    main.style.paddingTop = height + 'px';
-  }
-}
-
-window.addEventListener('resize', adjustMainPadding);
-window.addEventListener('load', adjustMainPadding);
-adjustMainPadding(); // call once on DOM ready
 
   <script>
     const toolbar = document.getElementById('toolbar');
@@ -403,6 +390,20 @@ adjustMainPadding(); // call once on DOM ready
         input = [];
       }
     });
+    // Adjust main content padding based on actual header+toolbar height
+function adjustMainPadding() {
+  const wrapper = document.getElementById('header-toolbar-wrapper');
+  const main = document.getElementById('main-content');
+  if (wrapper && main) {
+    const height = wrapper.offsetHeight;
+    main.style.paddingTop = height + 'px';
+  }
+}
+
+window.addEventListener('resize', adjustMainPadding);
+window.addEventListener('load', adjustMainPadding);
+adjustMainPadding(); // call once on DOM ready
+
   </script>
 </body>
 </html>
