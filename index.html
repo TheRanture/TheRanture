@@ -577,3 +577,210 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HBM Archive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding-bottom: 280px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    header {
+      background: #333;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      user-select: none;
+      gap: 15px;
+      top: -10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 2.4em;
+    }
+
+    /* Toolbar */
+    nav#toolbar {
+      background: #444;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    nav#toolbar button {
+      background: none;
+      border: none;
+      color: #eee;
+      font-size: 16px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    nav#toolbar button:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      min-height: 300px;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Other styles preserved… */
+    #mode-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 11000;
+    }
+
+    #mode-toggle:hover {
+      background-color: white;
+      color: #333;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #eee;
+    }
+
+    body.dark-mode header,
+    body.dark-mode nav#toolbar {
+      background: #222;
+    }
+
+    body.secret-doc {
+      background: #f5f0e6;
+      color: #3e2f1c;
+    }
+
+    body.secret-doc header,
+    body.secret-doc nav#toolbar {
+      background: #d9cbbf;
+      color: #3e2f1c;
+    }
+
+    body.secret-doc nav#toolbar button {
+      color: #3e2f1c;
+    }
+
+    body.secret-doc nav#toolbar button:hover {
+      color: #000;
+    }
+
+    /* Include any other existing CSS here, such as for legal box, search, etc. */
+  </style>
+</head>
+<body>
+  <button id="mode-toggle" title="Click to change the mood 🎭">Mode: Light</button>
+
+  <header>
+    <h1>HBM Archive</h1>
+  </header>
+
+  <nav id="toolbar">
+    <button onclick="loadPage('articles')">Articles</button>
+    <button onclick="loadPage('shorticles')">Shorticles</button>
+    <button onclick="loadPage('books')">Books</button>
+    <button onclick="loadPage('about')">About</button>
+  </nav>
+
+  <main id="main-content">
+    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
+  </main>
+
+  <!-- (Legal section, search box, and other components would go here, omitted for brevity) -->
+
+  <script>
+    const main = document.getElementById('main-content');
+
+    const pages = {
+      articles: `<h2>Articles</h2><p>Explore long-form written articles by the site owner.</p>`,
+      shorticles: `<h2>Shorticles</h2><p>Bite-sized insights, ideas, or creative thoughts.</p>`,
+      books: `<h2>Books</h2><p>Download or view full-length publications shared here.</p>`,
+      about: `<h2>About</h2><p>The HBM Archive is a secure and curated personal publishing platform.</p>`
+    };
+
+    function loadPage(page) {
+      if (pages[page]) {
+        main.style.opacity = 0;
+        setTimeout(() => {
+          main.innerHTML = pages[page];
+          main.style.opacity = 1;
+        }, 200);
+      }
+    }
+
+    // Mode toggle
+    const toggleBtn = document.getElementById('mode-toggle');
+    toggleBtn.addEventListener('click', () => {
+      const body = document.body;
+      if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        body.classList.remove('secret-doc');
+        toggleBtn.textContent = 'Mode: Light';
+      } else if (!body.classList.contains('secret-doc')) {
+        body.classList.add('dark-mode');
+        toggleBtn.textContent = 'Mode: Dark';
+      } else {
+        body.classList.remove('secret-doc');
+        body.classList.add('dark-mode');
+        toggleBtn.textContent = 'Mode: Dark';
+      }
+    });
+
+    // Konami code easter egg (if not already included)
+    const konami = [38,38,40,40,37,39,37,39,66,65];
+    let input = [];
+    window.addEventListener('keydown', e => {
+      input.push(e.keyCode);
+      if (input.toString().indexOf(konami) >= 0) {
+        input = [];
+        document.body.style.background = 'red';
+        const popup = document.createElement('div');
+        popup.textContent = "They are watching!";
+        popup.style.cssText = `
+          position: fixed; top: 40%; left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 28px; background: #000;
+          color: red; padding: 20px 40px;
+          border: 3px solid red; z-index: 99999;
+          box-shadow: 0 0 12px red;
+        `;
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          popup.remove();
+          document.body.style.background = '';
+        }, 4000);
+      }
+    });
+  </script>
+</body>
+</html>
+
