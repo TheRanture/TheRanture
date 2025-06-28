@@ -173,6 +173,113 @@
       border-color: #ddd;
     }
 
+    /* Legal scrollbox */
+    #legal-scrollbox {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 3px solid #007BFF;
+      padding: 15px 25px;
+      font-size: 13px;
+      color: #222;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 9999;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    body.dark-mode #legal-scrollbox {
+      background: #222;
+      color: #ccc;
+      border-top-color: #0a84ff;
+    }
+
+    /* Hide legal box by sliding down */
+    #legal-scrollbox.hidden {
+      transform: translateY(100%);
+    }
+
+    /* Toggle legal button */
+    #toggle-legal-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 230px;
+      background: #007BFF;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      z-index: 10000;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #toggle-legal-btn:hover {
+      background: #0056b3;
+    }
+
+    /* Hide toggle legal btn when legal box visible */
+    #toggle-legal-btn.hidden {
+      display: none;
+    }
+
+    /* Legal icon circle */
+    #legal-icon-wrapper {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      z-index: 10000;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #legal-icon-circle {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      background: #007BFF;
+      color: #fff;
+      font-size: 22px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 38px;
+      left: 11px;
+      top: 11px;
+    }
+
+    /* SVG text curving Legal / Notice */
+    #legal-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 60px;
+      pointer-events: none;
+    }
+
+    #legal-svg text {
+      font-size: 13px;
+      fill: #aaa;
+      user-select: none;
+    }
+
+    body.dark-mode #legal-icon-circle {
+      background: #0a84ff;
+      color: #eee;
+    }
+
+    body.dark-mode #legal-svg text {
+      fill: #666;
+    }
+
     /* Footnote at bottom, small text, visible only near bottom */
     #footnote {
       position: fixed;
@@ -308,70 +415,64 @@
         } else if (val.length === 0) {
           funnyBox.textContent = '';
         } else {
-          funnyBox.textContent = '🔎 Searching... No results found.';
+          funnyBox.textContent = 'Searching... No results found.';
         }
       });
 
-      // Toolbar navigation simulation, now with ToS page
+      // Toolbar navigation simulation
       const buttons = document.querySelectorAll('.toolbar-btn');
       const mainContent = document.getElementById('main-content');
-
-      // Full ToS text (same as previous legal-scrollbox content)
-      const tosHTML = `
-        <h2>Legal Disclaimer & Terms of Use</h2>
-        <p><strong>Last Updated:</strong> June 28, 2025</p>
-        <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-        <ul>
-          <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-          <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-          <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-          <li>The owner is not responsible for any third-party links or external content.</li>
-          <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-          <li>The website does not collect personal data, and no input from users is accepted.</li>
-          <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-          <li>These terms apply globally and supersede any conflicting local laws.</li>
-        </ul>
-        <p><strong>Creative Commons License:</strong><br>
-          This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
-        </p>
-        <h2>Content Disclaimer</h2>
-        <p><strong>Disclaimer</strong></p>
-        <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-        <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-        <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-        <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-        <p><strong>Copyright Notice:</strong><br>
-          &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-        </p>
-      `;
-
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const page = btn.getAttribute('data-page');
-
-          // Hide search funny box and search bar when switching pages
-          searchBar.style.display = 'none';
-          funnyBox.style.display = 'none';
-          searchBar.value = '';
-
-          if (page === 'articles') {
-            mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
-          } else if (page === 'shorticles') {
-            mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
-          } else if (page === 'books') {
-            mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
-          } else if (page === 'about') {
-            mainContent.innerHTML = '<h2>About</h2><p>This website is written by Karlos Hayden, a self proclaimed synchromancer.</p>';
-          } else if (page === 'tos') {
-            mainContent.innerHTML = tosHTML;
-          } else {
-            mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
-          }
+          mainContent.innerHTML = `<p>Loading ${page} content... (simulated)</p>`;
+          // Simulated content loading delay
+          setTimeout(() => {
+if (page === 'articles') {
+  mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
+} else if (page === 'shorticles') {
+  mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
+} else if (page === 'books') {
+  mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
+} else if (page === 'about') {
+  mainContent.innerHTML = '<h2>About</h2><p>About page content goes here...</p>';
+} else if (page === 'tos') {
+  mainContent.innerHTML = `
+    <h2>Legal Disclaimer & Terms of Use</h2>
+<p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+    <ul>
+      <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+      <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+      <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+      <li>The owner is not responsible for any third-party links or external content.</li>
+      <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+      <li>The website does not collect personal data, and no input from users is accepted.</li>
+      <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+      <li>These terms apply globally and supersede any conflicting local laws.</li>
+    </ul>
+    <p><strong>Creative Commons License:</strong><br>
+      This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+    </p>
+    <h2>Content Disclaimer</h2>
+    <p><strong>Disclaimer</strong></p>
+    <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+    <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+    <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+    <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+    <p><strong>Copyright Notice:</strong><br>
+      &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+    </p>
+  `;
+} else {
+  mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+}
+            }
+          }, 600);
         });
       });
-
+    
       // Footnote visibility on scroll near bottom
       const footnote = document.getElementById('footnote');
       window.addEventListener('scroll', () => {
@@ -399,4 +500,49 @@
         popup.style.position = 'fixed';
         popup.style.top = '50%';
         popup.style.left = '50%';
-        popup.style.transform
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = '#cc0000';
+        popup.style.color = '#fff';
+        popup.style.fontSize = '2rem';
+        popup.style.padding = '30px 50px';
+        popup.style.borderRadius = '8px';
+        popup.style.zIndex = '15000';
+        popup.style.fontWeight = 'bold';
+        popup.style.fontFamily = 'monospace';
+        popup.style.textAlign = 'center';
+        popup.style.userSelect = 'none';
+        popup.style.boxShadow = '0 0 15px #ff0000';
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          if (popup.parentNode) popup.parentNode.removeChild(popup);
+        }, 4000);
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiCode[konamiPosition]) {
+          konamiPosition++;
+          if (konamiPosition === konamiCode.length) {
+            konamiPosition = 0;
+            showKonamiPopup();
+          }
+        } else {
+          konamiPosition = 0;
+        }
+      });
+
+      // *** RESPONSIVE MAIN CONTENT PADDING FIX ***
+      function adjustMainPadding() {
+        const wrapper = document.getElementById('header-toolbar-wrapper');
+        const main = document.getElementById('main-content');
+        if (wrapper && main) {
+          const height = wrapper.offsetHeight;
+          main.style.paddingTop = height + 'px';
+        }
+      }
+      window.addEventListener('resize', adjustMainPadding);
+      window.addEventListener('load', adjustMainPadding);
+      adjustMainPadding();
+    });
+  </script>
+</body>
+</html>
