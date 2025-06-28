@@ -6,7 +6,6 @@
   <meta name="google-site-verification" content="V79ZyUx1q2uleVZO70OvVgJQYJZSNdPmw3pFeDYcCDM" />
   <title>HBM Archive</title>
   <style>
-    /* General Styles */
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
@@ -20,101 +19,6 @@
       pointer-events: auto;
       user-select: auto;
     }
-
-    /* Glitch effect for header */
-    .glitch {
-      position: relative;
-      color: white;
-      font-size: 2.4em;
-      font-weight: bold;
-      letter-spacing: 3px;
-      user-select: none;
-      background: #333;
-      display: inline-block;
-      padding: 10px 20px;
-    }
-
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      color: inherit;
-      background: #333;
-      overflow: hidden;
-      clip-path: inset(0);
-      mix-blend-mode: screen;
-    }
-
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 #0ff;
-      animation: glitch-anim-1 2s infinite linear alternate-reverse;
-    }
-
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 #f0f;
-      animation: glitch-anim-2 2s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitch-anim-1 {
-      0% {
-        clip-path: inset(0 0 80% 0);
-        transform: translate(0);
-      }
-      20% {
-        clip-path: inset(10% 0 60% 0);
-        transform: translate(-5px, 3px);
-      }
-      40% {
-        clip-path: inset(30% 0 40% 0);
-        transform: translate(5px, -3px);
-      }
-      60% {
-        clip-path: inset(20% 0 50% 0);
-        transform: translate(-3px, 5px);
-      }
-      80% {
-        clip-path: inset(0 0 80% 0);
-        transform: translate(0);
-      }
-      100% {
-        clip-path: inset(0 0 80% 0);
-        transform: translate(0);
-      }
-    }
-
-    @keyframes glitch-anim-2 {
-      0% {
-        clip-path: inset(80% 0 0 0);
-        transform: translate(0);
-      }
-      20% {
-        clip-path: inset(60% 0 10% 0);
-        transform: translate(5px, -3px);
-      }
-      40% {
-        clip-path: inset(40% 0 30% 0);
-        transform: translate(-5px, 3px);
-      }
-      60% {
-        clip-path: inset(50% 0 20% 0);
-        transform: translate(3px, -5px);
-      }
-      80% {
-        clip-path: inset(80% 0 0 0);
-        transform: translate(0);
-      }
-      100% {
-        clip-path: inset(80% 0 0 0);
-        transform: translate(0);
-      }
-    }
-
-    /* Header styles */
     header {
       background: #333;
       color: #fff;
@@ -125,8 +29,21 @@
       align-items: center;
       user-select: none;
     }
-
-    /* Search bar styles */
+    .glitch {
+      font-size: 2.4em;
+      font-weight: bold;
+      letter-spacing: 3px;
+      color: white;
+      user-select: none;
+      animation: colorGlitch 2.5s infinite ease-in-out;
+    }
+    @keyframes colorGlitch {
+      0% { color: white; }
+      25% { color: #0ff; }
+      50% { color: white; }
+      75% { color: #f0f; }
+      100% { color: white; }
+    }
     #search-container {
       position: absolute;
       left: 20px;
@@ -153,13 +70,9 @@
       border-radius: 3px;
       outline: none;
     }
-
-    /* Main content */
     main {
       padding: 20px;
     }
-
-    /* Legal disclaimer box */
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -191,8 +104,6 @@
     #toggle-legal-btn:hover {
       background: #0056b3;
     }
-
-    /* Legal icon wrapper */
     #legal-icon-wrapper {
       position: fixed;
       bottom: 25px;
@@ -201,7 +112,6 @@
       height: 60px;
       z-index: 10000;
     }
-
     #legal-icon-circle {
       position: absolute;
       width: 38px;
@@ -217,7 +127,6 @@
       top: 11px;
       user-select: none;
     }
-
     #legal-svg {
       position: absolute;
       top: 0;
@@ -226,14 +135,11 @@
       height: 60px;
       pointer-events: none;
     }
-
     #legal-svg text {
       font-size: 13px;
       fill: #aaa;
       user-select: none;
     }
-
-    /* Legal scrollbox content */
     #legal-scrollbox h2 {
       margin: 0;
       font-weight: bold;
@@ -254,8 +160,6 @@
     #legal-scrollbox a:hover {
       text-decoration: underline;
     }
-
-    /* Konami message overlay */
     #konami-message {
       display: none;
       position: fixed;
@@ -277,7 +181,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <div id="search-container">
       <button id="search-toggle" aria-label="Search">
@@ -289,13 +192,10 @@
     </div>
     <h1 class="glitch" data-text="HBM Archive">HBM Archive</h1>
   </header>
-
   <main>
     <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
   </main>
-
   <button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
-
   <div id="legal-icon-wrapper">
     <div id="legal-icon-circle">&#9888;</div>
     <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
@@ -307,7 +207,6 @@
       <text><textPath href="#curveBottom" startOffset="50%" text-anchor="middle">Notice</textPath></text>
     </svg>
   </div>
-
   <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
     <h2>Legal Disclaimer & Terms of Use</h2>
     <p><strong>Last Updated:</strong> June 28, 2025</p>
@@ -323,10 +222,7 @@
       <li>These terms apply globally and supersede any conflicting local laws.</li>
     </ul>
     <p><strong>Creative Commons License:</strong><br>
-      This work is licensed under the
-      <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-        Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-      </a>.
+      This work is licensed under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
     </p>
     <h2>Content Disclaimer</h2>
     <p><strong>Disclaimer</strong></p>
@@ -338,15 +234,11 @@
       &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
     </p>
   </div>
-
   <div id="konami-message">They are watching!</div>
-
   <script>
-    // === Search bar toggle ===
     document.addEventListener('DOMContentLoaded', () => {
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
-
       searchToggle.addEventListener('click', () => {
         if (searchBar.style.display === 'none' || searchBar.style.display === '') {
           searchBar.style.display = 'inline-block';
@@ -357,13 +249,10 @@
         }
       });
     });
-
-    // === Legal disclaimer toggle ===
     document.addEventListener('DOMContentLoaded', () => {
       const legalBox = document.getElementById('legal-scrollbox');
       const toggleBtn = document.getElementById('toggle-legal-btn');
       const legalIcon = document.getElementById('legal-icon-circle');
-
       function setCookie(name, value, days) {
         let expires = "";
         if (days) {
@@ -371,9 +260,8 @@
           d.setTime(d.getTime() + (days*24*60*60*1000));
           expires = "; expires=" + d.toUTCString();
         }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
       }
-
       function getCookie(name) {
         let nameEQ = name + "=";
         let ca = document.cookie.split(';');
@@ -384,22 +272,18 @@
         }
         return null;
       }
-
       function hideLegal() {
         legalBox.style.display = 'none';
         toggleBtn.style.display = 'none';
         setCookie('legalVisible', 'false', 365);
       }
-
       function showLegal() {
         legalBox.style.display = 'block';
         toggleBtn.style.display = 'inline-block';
         setCookie('legalVisible', 'true', 365);
       }
-
       toggleBtn.addEventListener('click', hideLegal);
       legalIcon.addEventListener('click', showLegal);
-
       const visible = getCookie('legalVisible');
       if (visible === 'false') {
         legalBox.style.display = 'none';
@@ -409,13 +293,10 @@
         toggleBtn.style.display = 'inline-block';
       }
     });
-
-    // === Konami code detection ===
     (function() {
       const konamiCode = [38,38,40,40,37,39,37,39,66,65];
       let konamiIndex = 0;
       const konamiMsg = document.getElementById('konami-message');
-
       window.addEventListener('keydown', (e) => {
         if (e.keyCode === konamiCode[konamiIndex]) {
           konamiIndex++;
@@ -429,29 +310,17 @@
         }
       });
     })();
-
-    // === IP Block (client side example; not fully secure) ===
     (function() {
-      // List of known malicious IPs to block (example subset)
-      // Note: Client-side IP blocking is easily bypassed; server-side is recommended.
-      const blockedIPs = [
-        '123.45.67.89', // example bad IP
-        '111.222.333.444' // fake IP format, replace with real if you want
-      ];
-
-      // Use a free IP detection service API to get visitor IP (public services)
+      const blockedIPs = ['123.45.67.89', '111.222.333.444'];
       fetch('https://api.ipify.org?format=json')
         .then(res => res.json())
         .then(data => {
           if(blockedIPs.includes(data.ip)){
             alert('Access blocked: Your IP is restricted.');
-            // Optionally redirect or hide content here
             document.body.innerHTML = '<h2 style="color:red; text-align:center; margin-top:50px;">Access Denied</h2>';
           }
         })
-        .catch(() => {
-          // Fail silently if IP fetch fails
-        });
+        .catch(() => {});
     })();
   </script>
 </body>
