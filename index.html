@@ -98,7 +98,7 @@ header {
 /* Position search container top-left, absolute so it does not push header text */
 /* Search container now lives between header and toolbar, aligned left */
   #search-container {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   transform: none; /* remove centering offset */
@@ -161,10 +161,9 @@ body.dark-mode #clear-search {
 
 /* Funny response */
 #search-funny {
-  position: absolute;
-  top: 100%;         /* Puts it right below the search container */
-  left: 0;
-  margin-top: 4px;   /* Small spacing between input and suggestion */
+  position: fixed;
+  top: 58px; /* Align this with your current header/search bar height */
+  left: 60px; /* Align with search bar's left side + magnifier width */
   background: #333;
   color: #ccc;
   font-size: 12px;
