@@ -516,7 +516,13 @@ if (page === 'articles') {
 } else if (page === 'books') {
   mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
 } else if (page === 'about') {
-  mainContent.innerHTML = '<h2>About</h2><p>About page content goes here...</p>';
+  mainContent.innerHTML = `
+    <h2>About</h2>
+    <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
+    <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
+    <p><strong>HBM Archive</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
+    <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
+  `;
 } else if (page === 'tos') {
   mainContent.innerHTML = `
     <h2>Legal Disclaimer & Terms of Use</h2>
