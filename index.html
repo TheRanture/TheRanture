@@ -161,9 +161,9 @@ body.dark-mode #clear-search {
 
 /* Funny response */
 #search-funny {
-  position: fixed;
-  top: 70px; /* Align this with your current header/search bar height */
-  left: 60px; /* Align with search bar's left side + magnifier width */
+  position: absolute;
+  top: 40px; /* directly below search bar */
+  left: 40px; /* line it up nicely under the input */
   background: #333;
   color: #ccc;
   font-size: 12px;
@@ -173,7 +173,12 @@ body.dark-mode #clear-search {
   display: none;
   user-select: none;
   pointer-events: none;
-  z-index: 11002;
+  z-index: 11000;
+}
+
+body.dark-mode #search-funny {
+  background: #222;
+  color: #aaa;
 }
 
 body.dark-mode #search-funny {
