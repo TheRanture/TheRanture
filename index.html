@@ -15,16 +15,6 @@
       overflow-x: hidden;
       transition: background-color 0.5s ease, color 0.5s ease;
     }
-#clear-search {
-  display: none;
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 20px;
-  margin-left: 6px;
-  cursor: pointer;
-  user-select: none;
-}
 
 body.dark-mode #clear-search {
   color: white;
@@ -174,11 +164,6 @@ body.dark-mode #clear-search {
   user-select: none;
   pointer-events: none;
   z-index: 11000;
-}
-
-body.dark-mode #search-funny {
-  background: #222;
-  color: #aaa;
 }
 
 body.dark-mode #search-funny {
@@ -472,7 +457,7 @@ body.dark-mode #search-funny {
         "moon landing": "🚀 One small step for man, one giant leap for memes.",
       };
 
-   searchToggle.addEventListener('click', () => {
+   searchToggle.addEventListener('click', (event) => {
      event.stopPropagation();
  if (searchBar.style.display === 'inline-block') {
     searchBar.style.display = 'none';
