@@ -94,18 +94,17 @@ header {
 
 /* Position search container top-left, absolute so it does not push header text */
 /* Position search container top-left, absolute so it does not push header text */
+/* Search container now lives between header and toolbar, aligned left */
 #search-container {
-  position: absolute;
-  top: 42%; /* slightly above center */
-  left: 20px;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 6px;
+  padding: 10px 20px 0 20px; /* some space from header */
+  position: relative;
   z-index: 11001;
 }
 
-/* Magnifier button styling (left of input) */
+/* Magnifier button */
 #search-toggle {
   background: none;
   border: none;
@@ -116,7 +115,7 @@ header {
   user-select: none;
 }
 
-/* The search bar, inline next to magnifier */
+/* Search input */
 #search-bar {
   display: none;
   width: 200px;
@@ -131,13 +130,12 @@ header {
   z-index: 11000;
 }
 
-/* Dark mode search bar */
 body.dark-mode #search-bar {
   background: #333;
   color: #fff;
 }
 
-/* Clear (×) button, overlaps right inside input */
+/* Clear (×) button */
 #clear-search {
   position: relative;
   margin-left: -28px;
@@ -156,10 +154,10 @@ body.dark-mode #clear-search {
   color: white;
 }
 
-/* Funny message */
+/* Funny response */
 #search-funny {
   position: absolute;
-  top: 120%; /* just below the search bar */
+  top: 110%;
   left: 0;
   background: #333;
   color: #ccc;
@@ -172,50 +170,6 @@ body.dark-mode #clear-search {
   pointer-events: none;
   z-index: 10;
 }
-
-/* Dark mode search bar */
-body.dark-mode #search-bar {
-  background: #333;
-  color: #fff;
-}
-
-/* Clear (×) button, positioned relative, overlapping right inside input */
-#clear-search {
-  position: relative;
-  top: auto;
-  right: auto;
-  transform: none;
-  display: none;
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 18px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 11002;
-  margin-left: -28px;
-  padding: 0 6px 0 6px;
-}
-
-body.dark-mode #clear-search {
-  color: white;
-}
-
-    #search-funny {
-      position: absolute;
-      top: 36px;
-      left: 60px;
-      background: #333;
-      color: #ccc;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 3px;
-      white-space: nowrap;
-      display: none;
-      user-select: none;
-      pointer-events: none;
-      z-index: 10;
-    }
 
     /* Main content */
     main {
