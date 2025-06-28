@@ -51,6 +51,36 @@ body.dark-mode #clear-search {
       transition: top 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
+#toolbar {
+  display: flex;
+  justify-content: center;
+  background: #222;
+  padding: 10px 0;
+  gap: 15px;
+  user-select: none;
+}
+
+.toolbar-btn {
+  background: #444;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.toolbar-btn:hover {
+  background: #666;
+}
+
+.toolbar-btn.active {
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+}
 
     /* Header */
 header {
@@ -344,13 +374,14 @@ body.dark-mode #clear-search {
       <h1>HBM Archive</h1>
     </header>
 
-    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-      <button class="toolbar-btn active" data-page="articles">Articles</button>
-      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
-      <button class="toolbar-btn" data-page="books">Books</button>
-      <button class="toolbar-btn" data-page="about">About</button>
-      <button class="toolbar-btn" data-page="tos">ToS</button>
-    </nav>
+<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+  <button class="toolbar-btn active" data-page="articles">Articles</button>
+  <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+  <button class="toolbar-btn" data-page="books">Books</button>
+  <button class="toolbar-btn" data-page="about">About</button>
+  <button class="toolbar-btn" data-page="tos">ToS</button>
+</nav>
+
   </div>
 
   <!-- Main content -->
