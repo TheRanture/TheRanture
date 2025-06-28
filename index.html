@@ -443,164 +443,144 @@
         if (searchBar.style.display === 'inline-block') {
           searchBar.style.display = 'none';
           funnyBox.style.display = 'none';
+          searchBar.value = '';
         } else {
           searchBar.style.display = 'inline-block';
           searchBar.focus();
-          funnyBox.style.display = 'block';
         }
       });
 
       searchBar.addEventListener('input', () => {
-        const val = searchBar.value.trim().toLowerCase();
+        const val = searchBar.value.toLowerCase().trim();
         if (funnyResponses[val]) {
           funnyBox.textContent = funnyResponses[val];
-        } else if (val.length === 0) {
-          funnyBox.textContent = '';
+          funnyBox.style.display = 'block';
         } else {
-          funnyBox.textContent = '🔎 Searching... No results found.';
+          funnyBox.style.display = 'none';
         }
       });
 
-      // Toolbar navigation simulation
-      const buttons = document.querySelectorAll('.toolbar-btn');
+      // Toolbar navigation
+      const toolbarButtons = document.querySelectorAll('#toolbar button');
       const mainContent = document.getElementById('main-content');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const page = btn.getAttribute('data-page');
-          mainContent.innerHTML = `<p>Loading ${page} content... (simulated)</p>`;
-          // Simulated content loading delay
-          setTimeout(() => {
-            if (page === 'articles') {
-              mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
-            } else if (page === 'shorticles') {
-              mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
-            } else if (page === 'books') {
-              mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
-            } else if (page === 'about') {
-              mainContent.innerHTML = '<h2>About</h2><p>This website is written by Karlos Hayden, a self proclaimed synchromancer.</p>
 
-  <section id="philosophy" aria-label="Philosophy of Balanced Humor" style="margin-top:1.5em;">
-    <h3>The Philosophy of Balanced Humor</h3>
-    <p>At the heart of this philosophy lies a profound respect for <strong>balance</strong>—the fundamental principle woven into the fabric of nature itself. Life is neither wholly solemn nor perpetually playful; it is a delicate dance between humor and seriousness, light and shadow, chaos and order.</p>
-    <p><strong>Humor holds a sacred place</strong> within this worldview. It is the lens through which we soften the harshness of existence, the bridge that connects individuals across divides, and the spark that ignites creativity and resilience. Humor is the elixir that nourishes the spirit and reminds us not to take ourselves too seriously.</p>
-    <p>Yet, this reverence for humor is not a license for frivolity. Equally important is the <strong>recognition of seriousness</strong>—the gravity that governs cause and effect, the weight that compels responsibility, and the clarity that demands respect for truth. Without seriousness, humor becomes shallow; without humor, seriousness turns rigid and oppressive.</p>
-    <p>The <strong>primordial rule of nature—balance—is the guiding star</strong> of this philosophy. It teaches that extremes are transient and harmony is eternal. To live well is to embrace both laughter and solemnity, to wield humor as a tool for insight, and to honor seriousness as a compass for ethical action.</p>
-    <p>In practice, this philosophy encourages us to cultivate <strong>mindful levity</strong>: to find joy in the moment without escaping reality, to challenge dogma with wit, and to engage life with both lightheartedness and earnestness. It rejects absolutism and embraces paradox, recognizing that wisdom emerges not from singular truths but from their dynamic interplay.</p>
-    <p>Ultimately, the philosophy of balanced humor is a call to live fully—celebrating the absurd and the profound alike, while maintaining an unwavering commitment to the equilibrium that sustains all things.</p>
-  </section>`</p>';
-            } else {
-              mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
-            }
-          }, 600);
+      const pagesContent = {
+        articles: `<h2>Articles</h2>
+          <p>Here are some articles about various topics.</p>
+          <ul>
+            <li>Article 1: The History of Computing</li>
+            <li>Article 2: Modern Web Development</li>
+            <li>Article 3: AI and the Future</li>
+          </ul>`,
+        shorticles: `<h2>Shorticles</h2>
+          <p>Quick, fun short articles and musings.</p>
+          <ul>
+            <li>Shorticle 1: Why Coffee is Life</li>
+            <li>Shorticle 2: Cats vs Dogs: The Debate</li>
+            <li>Shorticle 3: Unexpected Life Hacks</li>
+          </ul>`,
+        books: `<h2>Books</h2>
+          <p>Book recommendations and reviews.</p>
+          <ul>
+            <li>Book 1: The Pragmatic Programmer</li>
+            <li>Book 2: Clean Code</li>
+            <li>Book 3: The Mythical Man-Month</li>
+          </ul>`,
+        about: `<h2>About</h2>
+          <p>This website is written by Karlos Hayden, a self proclaimed synchromancer.</p>
+
+          <section id="philosophy" aria-label="Philosophy of Balanced Humor" style="margin-top:1.5em;">
+            <h3>The Philosophy of Balanced Humor</h3>
+            <p>At the heart of this philosophy lies a profound respect for <strong>balance</strong>—the fundamental principle woven into the fabric of nature itself. Life is neither wholly solemn nor perpetually playful; it is a delicate dance between humor and seriousness, light and shadow, chaos and order.</p>
+            <p><strong>Humor holds a sacred place</strong> within this worldview. It is the lens through which we soften the harshness of existence, the bridge that connects individuals across divides, and the spark that ignites creativity and resilience. Humor is the elixir that nourishes the spirit and reminds us not to take ourselves too seriously.</p>
+            <p>Yet, this reverence for humor is not a license for frivolity. Equally important is the <strong>recognition of seriousness</strong>—the gravity that governs cause and effect, the weight that compels responsibility, and the clarity that demands respect for truth. Without seriousness, humor becomes shallow; without humor, seriousness turns rigid and oppressive.</p>
+            <p>The <strong>primordial rule of nature—balance—is the guiding star</strong> of this philosophy. It teaches that extremes are transient and harmony is eternal. To live well is to embrace both laughter and solemnity, to wield humor as a tool for insight, and to honor seriousness as a compass for ethical action.</p>
+            <p>In practice, this philosophy encourages us to cultivate <strong>mindful levity</strong>: to find joy in the moment without escaping reality, to challenge dogma with wit, and to engage life with both lightheartedness and earnestness. It rejects absolutism and embraces paradox, recognizing that wisdom emerges not from singular truths but from their dynamic interplay.</p>
+            <p>Ultimately, the philosophy of balanced humor is a call to live fully—celebrating the absurd and the profound alike, while maintaining an unwavering commitment to the equilibrium that sustains all things.</p>
+          </section>`
+      };
+
+      function setActivePage(pageKey) {
+        // Remove active class from all buttons
+        toolbarButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active to the clicked button
+        const btn = [...toolbarButtons].find(b => b.dataset.page === pageKey);
+        if (btn) btn.classList.add('active');
+        // Update main content
+        mainContent.innerHTML = pagesContent[pageKey] || "<p>Page not found.</p>";
+        mainContent.focus();
+      }
+
+      toolbarButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          setActivePage(button.dataset.page);
         });
       });
 
-      // Legal scrollbox toggle
-      const legalBox = document.getElementById('legal-scrollbox');
+      // Initialize to articles page
+      setActivePage('articles');
+
+      // Legal disclaimer toggle
+      const legalScrollbox = document.getElementById('legal-scrollbox');
       const toggleLegalBtn = document.getElementById('toggle-legal-btn');
       const legalIconWrapper = document.getElementById('legal-icon-wrapper');
 
+      function showLegal() {
+        legalScrollbox.classList.remove('hidden');
+        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+        toggleLegalBtn.classList.remove('hidden');
+        legalIconWrapper.style.display = 'none';
+        toggleLegalBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function hideLegal() {
+        legalScrollbox.classList.add('hidden');
+        toggleLegalBtn.textContent = 'Show Legal Disclaimer';
+        toggleLegalBtn.classList.add('hidden');
+        legalIconWrapper.style.display = 'block';
+        toggleLegalBtn.setAttribute('aria-expanded', 'false');
+      }
+
       toggleLegalBtn.addEventListener('click', () => {
-        legalBox.classList.toggle('hidden');
-        if (legalBox.classList.contains('hidden')) {
-          toggleLegalBtn.textContent = 'Show Legal Disclaimer';
-          toggleLegalBtn.setAttribute('aria-expanded', 'false');
-          toggleLegalBtn.classList.add('hidden');
-          legalIconWrapper.style.display = 'block';
+        if (legalScrollbox.classList.contains('hidden')) {
+          showLegal();
         } else {
-          toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
-          toggleLegalBtn.setAttribute('aria-expanded', 'true');
-          toggleLegalBtn.classList.remove('hidden');
-          legalIconWrapper.style.display = 'none';
+          hideLegal();
         }
       });
 
       legalIconWrapper.addEventListener('click', () => {
-        legalBox.classList.remove('hidden');
-        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
-        toggleLegalBtn.setAttribute('aria-expanded', 'true');
-        toggleLegalBtn.classList.remove('hidden');
-        legalIconWrapper.style.display = 'none';
+        showLegal();
       });
 
       legalIconWrapper.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          legalIconWrapper.click();
+          showLegal();
         }
       });
 
-      // Footnote visibility on scroll near bottom
-      const footnote = document.getElementById('footnote');
+      // Initially legal visible
+      showLegal();
+
+      // Hide header and toolbar when scrolling down, show when up
+      let lastScrollY = window.scrollY;
+      const wrapper = document.getElementById('header-toolbar-wrapper');
+
       window.addEventListener('scroll', () => {
-        const scrollBottom = window.innerHeight + window.scrollY;
-        const docHeight = document.documentElement.offsetHeight;
-        if (docHeight - scrollBottom < 200) {
-          footnote.style.opacity = '1';
-          footnote.style.pointerEvents = 'auto';
+        const currentY = window.scrollY;
+        if (currentY > lastScrollY && currentY > 50) {
+          // scrolling down
+          wrapper.style.top = '-130px'; // hide header + toolbar (combined height)
         } else {
-          footnote.style.opacity = '0';
-          footnote.style.pointerEvents = 'none';
+          // scrolling up
+          wrapper.style.top = '0';
         }
+        lastScrollY = currentY;
       });
 
-      // Konami code
-      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-      let konamiPosition = 0;
-      const popupId = 'konami-popup';
-
-      function showKonamiPopup() {
-        if (document.getElementById(popupId)) return;
-        const popup = document.createElement('div');
-        popup.id = popupId;
-        popup.textContent = 'They are watching!';
-        popup.style.position = 'fixed';
-        popup.style.top = '50%';
-        popup.style.left = '50%';
-        popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.backgroundColor = '#cc0000';
-        popup.style.color = '#fff';
-        popup.style.fontSize = '2rem';
-        popup.style.padding = '30px 50px';
-        popup.style.borderRadius = '8px';
-        popup.style.zIndex = '15000';
-        popup.style.fontWeight = 'bold';
-        popup.style.fontFamily = 'monospace';
-        popup.style.textAlign = 'center';
-        popup.style.userSelect = 'none';
-        popup.style.boxShadow = '0 0 15px #ff0000';
-        document.body.appendChild(popup);
-        setTimeout(() => {
-          if (popup.parentNode) popup.parentNode.removeChild(popup);
-        }, 4000);
-      }
-
-      window.addEventListener('keydown', (e) => {
-        if (e.keyCode === konamiCode[konamiPosition]) {
-          konamiPosition++;
-          if (konamiPosition === konamiCode.length) {
-            konamiPosition = 0;
-            showKonamiPopup();
-          }
-        } else {
-          konamiPosition = 0;
-        }
-      });
-
-      // *** RESPONSIVE MAIN CONTENT PADDING FIX ***
-      function adjustMainPadding() {
-        const wrapper = document.getElementById('header-toolbar-wrapper');
-        const main = document.getElementById('main-content');
-        if (wrapper && main) {
-          const height = wrapper.offsetHeight;
-          main.style.paddingTop = height + 'px';
-        }
-      }
-      window.addEventListener('resize', adjustMainPadding);
-      window.addEventListener('load', adjustMainPadding);
-      adjustMainPadding();
+      // Accessibility: Ensure main content is reachable via keyboard
+      mainContent.setAttribute('tabindex', '0');
     });
   </script>
 </body>
