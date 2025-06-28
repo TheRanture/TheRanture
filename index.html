@@ -55,7 +55,7 @@ body.dark-mode #clear-search {
   display: flex;
   justify-content: center;
   background: #222;
-  padding: 10px 0;
+  padding: 6px 0;
   gap: 15px;
   user-select: none;
 }
@@ -84,8 +84,10 @@ body.dark-mode #clear-search {
 
     /* Header */
 header {
-  position: relative; /* for absolute children */
-  padding: 15px 20px;
+  position: relative;
+  top: 0;
+  padding: 10px 0; /* Reduce from larger values like 20px */
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
