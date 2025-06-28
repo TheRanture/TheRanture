@@ -34,7 +34,7 @@
       user-select: none;
       display: flex;
       flex-direction: column;
-      transition: top 0.3s ease;
+      /* Remove transition on top so no hide-and-seek */
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
@@ -172,138 +172,6 @@
       color: #121212;
       border-color: #ddd;
     }
-
-    /* Legal scrollbox */
-    #legal-scrollbox {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-top: 3px solid #007BFF;
-      padding: 15px 25px;
-      font-size: 13px;
-      color: #222;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-      max-height: 220px;
-      overflow-y: auto;
-      z-index: 9999;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    body.dark-mode #legal-scrollbox {
-      background: #222;
-      color: #ccc;
-      border-top-color: #0a84ff;
-    }
-
-    /* Hide legal box by sliding down */
-    #legal-scrollbox.hidden {
-      transform: translateY(100%);
-    }
-
-    /* Toggle legal button */
-    #toggle-legal-btn {
-      position: fixed;
-      right: 25px;
-      bottom: 230px;
-      background: #007BFF;
-      color: #fff;
-      padding: 10px 14px;
-      font-size: 13px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      z-index: 10000;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-
-    #toggle-legal-btn:hover {
-      background: #0056b3;
-    }
-
-    /* Hide toggle legal btn when legal box visible */
-    #toggle-legal-btn.hidden {
-      display: none;
-    }
-
-    /* Legal icon circle */
-    #legal-icon-wrapper {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      z-index: 10000;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    #legal-icon-circle {
-      position: absolute;
-      width: 38px;
-      height: 38px;
-      background: #007BFF;
-      color: #fff;
-      font-size: 22px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 38px;
-      left: 11px;
-      top: 11px;
-    }
-
-    /* SVG text curving Legal / Notice */
-    #legal-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 60px;
-      height: 60px;
-      pointer-events: none;
-    }
-
-    #legal-svg text {
-      font-size: 13px;
-      fill: #aaa;
-      user-select: none;
-    }
-
-    body.dark-mode #legal-icon-circle {
-      background: #0a84ff;
-      color: #eee;
-    }
-
-    body.dark-mode #legal-svg text {
-      fill: #666;
-    }
-
-    /* Footnote at bottom, small text, visible only near bottom */
-    #footnote {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      font-size: 12px;
-      color: #666;
-      background: rgba(245, 245, 245, 0.9);
-      padding: 6px 12px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9998;
-      font-style: italic;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body.dark-mode #footnote {
-      color: #bbb;
-      background: rgba(18, 18, 18, 0.9);
-    }
   </style>
 </head>
 <body>
@@ -337,19 +205,18 @@
   <main id="main-content" tabindex="0" aria-live="polite">
     <p>Welcome to the HBM Archive. Select a section from above.</p>
   </main>
-
   <!-- Legal disclaimer -->
   <button id="toggle-legal-btn" aria-controls="legal-scrollbox" aria-expanded="true">Hide Legal Disclaimer</button>
 
-  <div id="legal-icon-wrapper" role="button" aria-label="Show Legal Disclaimer" tabindex="0">
-    <div id="legal-icon-circle">&#9888;</div>
-    <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
+  <div id="legal-icon-wrapper" role="button" aria-label="Show Legal Disclaimer" tabindex="0" style="top: 10px; right: 70px; bottom: auto; left: auto; position: fixed; cursor: pointer; z-index: 12001; width: 60px; height: 60px;">
+    <div id="legal-icon-circle" style="background: grey; color: white; position: absolute; width: 38px; height: 38px; border-radius: 50%; text-align: center; line-height: 38px; left: 11px; top: 11px; font-size: 22px;">&#9888;</div>
+    <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 60px; height: 60px; pointer-events: none;">
       <defs>
         <path id="curveTop" d="M20,60 A40,40 0 0,1 100,60" />
         <path id="curveBottom" d="M20,68 A40,40 0 0,0 100,68" />
       </defs>
-      <text><textPath href="#curveTop" startOffset="50%" text-anchor="middle">Legal</textPath></text>
-      <text><textPath href="#curveBottom" startOffset="50%" text-anchor="middle">Notice</textPath></text>
+      <text><textPath href="#curveTop" startOffset="50%" text-anchor="middle" style="fill: #aaa; user-select: none;">Legal</textPath></text>
+      <text><textPath href="#curveBottom" startOffset="50%" text-anchor="middle" style="fill: #aaa; user-select: none;">Notice</textPath></text>
     </svg>
   </div>
 
@@ -383,7 +250,6 @@
 
   <!-- Footnote -->
   <div id="footnote">Made possible by bad choices and good intentions.</div>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Mode toggle
@@ -443,144 +309,159 @@
         if (searchBar.style.display === 'inline-block') {
           searchBar.style.display = 'none';
           funnyBox.style.display = 'none';
-          searchBar.value = '';
         } else {
           searchBar.style.display = 'inline-block';
           searchBar.focus();
+          funnyBox.style.display = 'block';
         }
       });
 
       searchBar.addEventListener('input', () => {
-        const val = searchBar.value.toLowerCase().trim();
+        const val = searchBar.value.trim().toLowerCase();
         if (funnyResponses[val]) {
           funnyBox.textContent = funnyResponses[val];
-          funnyBox.style.display = 'block';
+        } else if (val.length === 0) {
+          funnyBox.textContent = '';
         } else {
-          funnyBox.style.display = 'none';
+          funnyBox.textContent = '🔎 Searching... No results found.';
         }
       });
 
-      // Toolbar navigation
-      const toolbarButtons = document.querySelectorAll('#toolbar button');
+      // Toolbar navigation simulation
+      const buttons = document.querySelectorAll('.toolbar-btn');
       const mainContent = document.getElementById('main-content');
-
-      const pagesContent = {
-        articles: `<h2>Articles</h2>
-          <p>Here are some articles about various topics.</p>
-          <ul>
-            <li>Article 1: The History of Computing</li>
-            <li>Article 2: Modern Web Development</li>
-            <li>Article 3: AI and the Future</li>
-          </ul>`,
-        shorticles: `<h2>Shorticles</h2>
-          <p>Quick, fun short articles and musings.</p>
-          <ul>
-            <li>Shorticle 1: Why Coffee is Life</li>
-            <li>Shorticle 2: Cats vs Dogs: The Debate</li>
-            <li>Shorticle 3: Unexpected Life Hacks</li>
-          </ul>`,
-        books: `<h2>Books</h2>
-          <p>Book recommendations and reviews.</p>
-          <ul>
-            <li>Book 1: The Pragmatic Programmer</li>
-            <li>Book 2: Clean Code</li>
-            <li>Book 3: The Mythical Man-Month</li>
-          </ul>`,
-        about: `<h2>About</h2>
-          <p>This website is written by Karlos Hayden, a self proclaimed synchromancer.</p>
-
-          <section id="philosophy" aria-label="Philosophy of Balanced Humor" style="margin-top:1.5em;">
-            <h3>The Philosophy of Balanced Humor</h3>
-            <p>At the heart of this philosophy lies a profound respect for <strong>balance</strong>—the fundamental principle woven into the fabric of nature itself. Life is neither wholly solemn nor perpetually playful; it is a delicate dance between humor and seriousness, light and shadow, chaos and order.</p>
-            <p><strong>Humor holds a sacred place</strong> within this worldview. It is the lens through which we soften the harshness of existence, the bridge that connects individuals across divides, and the spark that ignites creativity and resilience. Humor is the elixir that nourishes the spirit and reminds us not to take ourselves too seriously.</p>
-            <p>Yet, this reverence for humor is not a license for frivolity. Equally important is the <strong>recognition of seriousness</strong>—the gravity that governs cause and effect, the weight that compels responsibility, and the clarity that demands respect for truth. Without seriousness, humor becomes shallow; without humor, seriousness turns rigid and oppressive.</p>
-            <p>The <strong>primordial rule of nature—balance—is the guiding star</strong> of this philosophy. It teaches that extremes are transient and harmony is eternal. To live well is to embrace both laughter and solemnity, to wield humor as a tool for insight, and to honor seriousness as a compass for ethical action.</p>
-            <p>In practice, this philosophy encourages us to cultivate <strong>mindful levity</strong>: to find joy in the moment without escaping reality, to challenge dogma with wit, and to engage life with both lightheartedness and earnestness. It rejects absolutism and embraces paradox, recognizing that wisdom emerges not from singular truths but from their dynamic interplay.</p>
-            <p>Ultimately, the philosophy of balanced humor is a call to live fully—celebrating the absurd and the profound alike, while maintaining an unwavering commitment to the equilibrium that sustains all things.</p>
-          </section>`
-      };
-
-      function setActivePage(pageKey) {
-        // Remove active class from all buttons
-        toolbarButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active to the clicked button
-        const btn = [...toolbarButtons].find(b => b.dataset.page === pageKey);
-        if (btn) btn.classList.add('active');
-        // Update main content
-        mainContent.innerHTML = pagesContent[pageKey] || "<p>Page not found.</p>";
-        mainContent.focus();
-      }
-
-      toolbarButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          setActivePage(button.dataset.page);
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const page = btn.getAttribute('data-page');
+          mainContent.innerHTML = `<p>Loading ${page} content... (simulated)</p>`;
+          // Simulated content loading delay
+          setTimeout(() => {
+            if (page === 'articles') {
+              mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
+            } else if (page === 'shorticles') {
+              mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
+            } else if (page === 'books') {
+              mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
+            } else if (page === 'about') {
+              mainContent.innerHTML = `<h2>About</h2>
+                <p>This website is written by Karlos Hayden, a self proclaimed synchromancer.</p>
+                <p>The philosophy here holds humor in great place, but being serious is also needed because the very first and most important rule in nature is balance.</p>
+                <p>Balance is what guides the flow of energy, the dance between chaos and order, light and dark, laughter and contemplation. To embrace life fully, one must honor both the playful spirit and the solemn truth.</p>
+                <p>By weaving together these aspects, we cultivate a deeper understanding of the universe and ourselves.</p>`;
+            } else {
+              mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+            }
+          }, 600);
         });
       });
 
-      // Initialize to articles page
-      setActivePage('articles');
-
-      // Legal disclaimer toggle
-      const legalScrollbox = document.getElementById('legal-scrollbox');
+      // Legal scrollbox toggle
+      const legalBox = document.getElementById('legal-scrollbox');
       const toggleLegalBtn = document.getElementById('toggle-legal-btn');
       const legalIconWrapper = document.getElementById('legal-icon-wrapper');
 
-      function showLegal() {
-        legalScrollbox.classList.remove('hidden');
-        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
-        toggleLegalBtn.classList.remove('hidden');
-        legalIconWrapper.style.display = 'none';
-        toggleLegalBtn.setAttribute('aria-expanded', 'true');
-      }
-
-      function hideLegal() {
-        legalScrollbox.classList.add('hidden');
-        toggleLegalBtn.textContent = 'Show Legal Disclaimer';
-        toggleLegalBtn.classList.add('hidden');
-        legalIconWrapper.style.display = 'block';
-        toggleLegalBtn.setAttribute('aria-expanded', 'false');
-      }
-
       toggleLegalBtn.addEventListener('click', () => {
-        if (legalScrollbox.classList.contains('hidden')) {
-          showLegal();
+        legalBox.classList.toggle('hidden');
+        if (legalBox.classList.contains('hidden')) {
+          toggleLegalBtn.textContent = 'Show Legal Disclaimer';
+          toggleLegalBtn.setAttribute('aria-expanded', 'false');
+          toggleLegalBtn.classList.add('hidden');
+          legalIconWrapper.style.display = 'block';
         } else {
-          hideLegal();
+          toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+          toggleLegalBtn.setAttribute('aria-expanded', 'true');
+          toggleLegalBtn.classList.remove('hidden');
+          legalIconWrapper.style.display = 'none';
         }
       });
 
       legalIconWrapper.addEventListener('click', () => {
-        showLegal();
+        legalBox.classList.remove('hidden');
+        toggleLegalBtn.textContent = 'Hide Legal Disclaimer';
+        toggleLegalBtn.setAttribute('aria-expanded', 'true');
+        toggleLegalBtn.classList.remove('hidden');
+        legalIconWrapper.style.display = 'none';
       });
 
       legalIconWrapper.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          showLegal();
+          legalIconWrapper.click();
         }
       });
 
-      // Initially legal visible
-      showLegal();
-
-      // Hide header and toolbar when scrolling down, show when up
-      let lastScrollY = window.scrollY;
-      const wrapper = document.getElementById('header-toolbar-wrapper');
-
+      // Footnote visibility on scroll near bottom
+      const footnote = document.getElementById('footnote');
       window.addEventListener('scroll', () => {
-        const currentY = window.scrollY;
-        if (currentY > lastScrollY && currentY > 50) {
-          // scrolling down
-          wrapper.style.top = '-130px'; // hide header + toolbar (combined height)
+        const scrollBottom = window.innerHeight + window.scrollY;
+        const docHeight = document.documentElement.offsetHeight;
+        if (docHeight - scrollBottom < 200) {
+          footnote.style.opacity = '1';
+          footnote.style.pointerEvents = 'auto';
         } else {
-          // scrolling up
-          wrapper.style.top = '0';
+          footnote.style.opacity = '0';
+          footnote.style.pointerEvents = 'none';
         }
-        lastScrollY = currentY;
       });
 
-      // Accessibility: Ensure main content is reachable via keyboard
-      mainContent.setAttribute('tabindex', '0');
+      // Konami code
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+      let konamiPosition = 0;
+      const popupId = 'konami-popup';
+
+      function showKonamiPopup() {
+        if (document.getElementById(popupId)) return;
+        const popup = document.createElement('div');
+        popup.id = popupId;
+        popup.textContent = 'They are watching!';
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = '#cc0000';
+        popup.style.color = '#fff';
+        popup.style.fontSize = '2rem';
+        popup.style.padding = '30px 50px';
+        popup.style.borderRadius = '8px';
+        popup.style.zIndex = '15000';
+        popup.style.fontWeight = 'bold';
+        popup.style.fontFamily = 'monospace';
+        popup.style.textAlign = 'center';
+        popup.style.userSelect = 'none';
+        popup.style.boxShadow = '0 0 15px #ff0000';
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          if (popup.parentNode) popup.parentNode.removeChild(popup);
+        }, 4000);
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiCode[konamiPosition]) {
+          konamiPosition++;
+          if (konamiPosition === konamiCode.length) {
+            konamiPosition = 0;
+            showKonamiPopup();
+          }
+        } else {
+          konamiPosition = 0;
+        }
+      });
+
+      // Adjust main content padding according to header-toolbar height
+      function adjustMainPadding() {
+        const wrapper = document.getElementById('header-toolbar-wrapper');
+        const main = document.getElementById('main-content');
+        if (wrapper && main) {
+          const height = wrapper.offsetHeight;
+          main.style.marginTop = height + 'px';
+          main.style.paddingTop = '20px';
+        }
+      }
+      window.addEventListener('resize', adjustMainPadding);
+      window.addEventListener('load', adjustMainPadding);
+      adjustMainPadding();
     });
   </script>
 </body>
