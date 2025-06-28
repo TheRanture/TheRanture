@@ -25,8 +25,8 @@
       align-items: center;
       user-select: none;
       gap: 15px;
-      top: -10px; /* moved header slightly up */
-      position: relative; /* re-affirm relative for top */
+      top: -10px;
+      position: relative;
     }
 
     h1 {
@@ -38,7 +38,7 @@
     #search-container {
       position: absolute;
       left: 20px;
-      top: 40%;  /* moved search box higher */
+      top: 40%;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
@@ -62,10 +62,10 @@
       outline: none;
     }
 
-    /* New: funny search suggestion box */
+    /* Funny search suggestion box */
     #search-funny {
       position: absolute;
-      top: 36px; /* just below search box */
+      top: 36px;
       left: 60px;
       background: #333;
       color: #ccc;
@@ -111,6 +111,7 @@
       border: none;
       cursor: pointer;
       z-index: 10000;
+      user-select: none;
     }
 
     #toggle-legal-btn:hover {
@@ -124,6 +125,7 @@
       width: 60px;
       height: 60px;
       z-index: 10000;
+      user-select: none;
     }
 
     #legal-icon-circle {
@@ -139,7 +141,6 @@
       cursor: pointer;
       left: 11px;
       top: 11px;
-      user-select: none;
     }
 
     #legal-svg {
@@ -318,7 +319,7 @@
   <button id="toggle-legal-btn" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
 
   <div id="legal-icon-wrapper">
-    <div id="legal-icon-circle">&#9888;</div>
+    <div id="legal-icon-circle" tabindex="0" role="button" aria-label="Show Legal Disclaimer">&#9888;</div>
     <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
       <defs>
         <path id="curveTop" d="M20,60 A40,40 0 0,1 100,60" />
@@ -439,58 +440,51 @@
         }
       });
 
-      // Legal disclaimer toggle
+      // Legal disclaimer toggle logic
       const legalBox = document.getElementById('legal-scrollbox');
       const toggleBtn = document.getElementById('toggle-legal-btn');
       const legalIcon = document.getElementById('legal-icon-circle');
 
+      // Initialize with legal disclaimer visible and toggle button visible
+      legalBox.style.display = 'block';
+      toggleBtn.style.display = 'inline-block';
+
+      toggleBtn.textContent = 'Hide Legal Disclaimer';
+
       toggleBtn.addEventListener('click', () => {
-        if (legalBox.style.display === 'none' || getComputedStyle(legalBox).display === 'none') {
-          legalBox.style.display = 'block';
-          toggleBtn.textContent = 'Hide Legal Disclaimer';
-        } else {
-          legalBox.style.display = 'none';
-          toggleBtn.textContent = 'Show Legal Disclaimer';
-        }
+        legalBox.style.display = 'none';
+        toggleBtn.style.display = 'none';
       });
 
       legalIcon.addEventListener('click', () => {
-        toggleBtn.click(); // Trigger toggle button click
+        legalBox.style.display = 'block';
+        toggleBtn.style.display = 'inline-block';
       });
 
-      // Mode toggle for light/dark/secret modes
-      const modeToggle = document.getElementById('mode-toggle');
-      const body = document.body;
-
-      modeToggle.addEventListener('click', () => {
-        if (body.classList.contains('dark-mode')) {
-          // Switch to secret-doc mode
-          body.classList.remove('dark-mode');
-          body.classList.add('secret-doc');
-          modeToggle.textContent = 'Mode: Secret';
-          modeToggle.style.color = '#3e2f1c';
-          modeToggle.style.borderColor = '#3e2f1c';
-          modeToggle.style.backgroundColor = 'transparent';
-        } else if (body.classList.contains('secret-doc')) {
-          // Switch to light mode
-          body.classList.remove('secret-doc');
-          modeToggle.textContent = 'Mode: Light';
-          modeToggle.style.color = 'white';
-          modeToggle.style.borderColor = 'white';
-          modeToggle.style.backgroundColor = 'transparent';
-        } else {
-          // Switch to dark mode
-          body.classList.add('dark-mode');
-          modeToggle.textContent = 'Mode: Dark';
-          modeToggle.style.color = '#eee';
-          modeToggle.style.borderColor = '#eee';
-          modeToggle.style.backgroundColor = 'transparent';
+      legalIcon.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          legalBox.style.display = 'block';
+          toggleBtn.style.display = 'inline-block';
+          toggleBtn.focus();
         }
       });
 
-      // Initialize legal box to visible on page load
-      legalBox.style.display = 'block';
-      toggleBtn.textContent = 'Hide Legal Disclaimer';
+      // Mode toggle button
+      const modeToggle = document.getElementById('mode-toggle');
+      modeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+          document.body.classList.remove('dark-mode');
+          document.body.classList.add('secret-doc');
+          modeToggle.textContent = 'Mode: Secret Document';
+        } else if (document.body.classList.contains('secret-doc')) {
+          document.body.classList.remove('secret-doc');
+          modeToggle.textContent = 'Mode: Light';
+        } else {
+          document.body.classList.add('dark-mode');
+          modeToggle.textContent = 'Mode: Dark';
+        }
+      });
     });
   </script>
 </body>
