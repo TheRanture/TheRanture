@@ -25,8 +25,8 @@
       align-items: center;
       user-select: none;
       gap: 15px;
-      top: -10px; /* moved header slightly up */
-      position: relative; /* re-affirm relative for top */
+      top: -10px;
+      position: relative;
     }
 
     h1 {
@@ -35,10 +35,40 @@
       font-size: 2.4em;
     }
 
+    #toolbar {
+      position: sticky;
+      top: 60px; /* just below header */
+      background: #222;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 10px 0;
+      user-select: none;
+      z-index: 11000;
+      border-bottom: 2px solid #007BFF;
+    }
+
+    #toolbar button {
+      background: transparent;
+      border: none;
+      color: #eee;
+      font-size: 16px;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    #toolbar button:hover,
+    #toolbar button.active {
+      background-color: #007BFF;
+      color: #fff;
+    }
+
     #search-container {
       position: absolute;
       left: 20px;
-      top: 40%;  /* moved search box higher */
+      top: 40%;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
@@ -62,10 +92,9 @@
       outline: none;
     }
 
-    /* New: funny search suggestion box */
     #search-funny {
       position: absolute;
-      top: 36px; /* just below search box */
+      top: 36px;
       left: 60px;
       background: #333;
       color: #ccc;
@@ -81,8 +110,11 @@
 
     main {
       padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
+    /* Legal disclaimer styling */
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -205,10 +237,28 @@
       border-color: white;
     }
 
-    #mode-toggle[title] {
-      cursor: help;
+    /* Footnote styling */
+    #footnote {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #222;
+      color: #eee;
+      font-size: 12px;
+      text-align: center;
+      padding: 5px 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 12000;
+    }
+    #footnote.visible {
+      opacity: 1;
+      pointer-events: auto;
     }
 
+    /* Dark mode styles */
     body.dark-mode {
       background: #121212;
       color: #eee;
@@ -246,86 +296,10 @@
     body.dark-mode #legal-svg text {
       fill: #666;
     }
-
-    body.secret-doc {
-      background: #f5f0e6;
-      color: #3e2f1c;
-      font-family: 'Courier New', Courier, monospace;
-      letter-spacing: 0.7px;
-    }
-
-    body.secret-doc header {
-      background: #d9cbbf;
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #search-toggle {
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #legal-scrollbox {
-      background: #eae3d7;
-      color: #4b3a1b;
-      border-top-color: #3e2f1c;
-    }
-
-    body.secret-doc #toggle-legal-btn {
-      background: #3e2f1c;
-      color: #f5f0e6;
-      font-weight: bold;
-    }
-
-    body.secret-doc #toggle-legal-btn:hover {
-      background: #5b472d;
-      color: #fff;
-    }
-
-    body.secret-doc #legal-icon-circle {
-      background: #3e2f1c;
-      color: #f5f0e6;
-      font-weight: bold;
-    }
-
-    body.secret-doc #legal-svg text {
-      fill: #5b472d;
-    }
-
-    body.secret-doc #legal-scrollbox h2 {
-      color: #3e2f1c;
-    }
-
-    body.secret-doc #legal-scrollbox a {
-      color: #5b472d;
-    }
-
-    /* FOOTNOTE STYLE */
-    #scroll-footnote {
-      position: fixed;
-      bottom: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      color: #eee;
-      font-size: 11px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-      user-select: none;
-      z-index: 12000;
-      max-width: 90vw;
-      text-align: center;
-      font-family: Arial, sans-serif;
-    }
-    #scroll-footnote.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
   </style>
 </head>
 <body>
-  <button id="mode-toggle" aria-label="Toggle Mode" title="Click me to toggle dark mode, or just to pretend you're hacking.">Mode: Light</button>
+  <button id="mode-toggle" aria-label="Toggle Mode" title="Toggle light/dark mode">Mode: Light</button>
 
   <header>
     <div id="search-container">
@@ -340,14 +314,36 @@
     <h1>HBM Archive</h1>
   </header>
 
-  <main>
-    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
+  <nav id="toolbar" role="navigation" aria-label="Main navigation">
+    <button data-page="articles" class="active">Articles</button>
+    <button data-page="shorticles">Shorticles</button>
+    <button data-page="books">Books</button>
+    <button data-page="about">About</button>
+  </nav>
+
+  <main id="content">
+    <section data-page="articles" class="page-section">
+      <h2>Articles</h2>
+      <p>Welcome to the Articles section. Content coming soon!</p>
+    </section>
+    <section data-page="shorticles" class="page-section" style="display:none;">
+      <h2>Shorticles</h2>
+      <p>Welcome to the Shorticles section. Content coming soon!</p>
+    </section>
+    <section data-page="books" class="page-section" style="display:none;">
+      <h2>Books</h2>
+      <p>Welcome to the Books section. Content coming soon!</p>
+    </section>
+    <section data-page="about" class="page-section" style="display:none;">
+      <h2>About</h2>
+      <p>This is the About section. Learn more about HBM Archive here.</p>
+    </section>
   </main>
 
   <button id="toggle-legal-btn" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
 
   <div id="legal-icon-wrapper">
-    <div id="legal-icon-circle">&#9888;</div>
+    <div id="legal-icon-circle" title="Show Legal Disclaimer">&#9888;</div>
     <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
       <defs>
         <path id="curveTop" d="M20,60 A40,40 0 0,1 100,60" />
@@ -386,12 +382,19 @@
     </p>
   </div>
 
-  <div id="scroll-footnote">
-    Powered by bad decisions and good intentions. 🤞
-  </div>
+  <div id="footnote">Footnote 33: Remember, the cake is a lie. 🍰</div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Dark mode toggle
+      const modeToggle = document.getElementById('mode-toggle');
+      modeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        modeToggle.textContent = isDark ? 'Mode: Dark' : 'Mode: Light';
+      });
+
+      // Search toggle and funny messages
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
       const funnyBox = document.getElementById('search-funny');
@@ -438,16 +441,7 @@
         "coffee": "☕ Yes. Always a good idea.",
         "marshmallow": "🔥 Soft answers for a hard question.",
         "socks": "🧦 Missing one? Find it here!",
-        "cats": "🐈 Felines are watching you search.",
-        "zombie": "🧟‍♂️ Brains... not found here.",
-        "toilet": "🚽 Flush those doubts away with these results.",
-        "love": "❤️ Searching for love in a hopeless place?",
-        "naps": "😴 Results so good, they’ll put you to sleep.",
-        "money": "💸 If I had money, I’d share it with you.",
-        "time travel": "⏳ Past, present, future. Here all at once.",
-        "conspiracy": "🕵️‍♂️ You’re already part of the mystery.",
-        "funny": "😂 You found the funny business.",
-        "help": "🆘 You found help! Or did help find you?",
+        "cats": "🐈 Felines are watching you search."
       };
 
       searchToggle.addEventListener('click', () => {
@@ -462,111 +456,63 @@
       });
 
       searchBar.addEventListener('input', () => {
-        const val = searchBar.value.trim().toLowerCase();
-        if (val === "") {
+        const val = searchBar.value.toLowerCase();
+        if (val && funnyResponses[val]) {
+          funnyBox.textContent = funnyResponses[val];
+          funnyBox.style.display = 'block';
+        } else {
           funnyBox.style.display = 'none';
-          funnyBox.textContent = "";
-          return;
-        }
-        let found = false;
-        for (const key in funnyResponses) {
-          if (val.includes(key)) {
-            funnyBox.textContent = funnyResponses[key];
-            funnyBox.style.display = 'block';
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          funnyBox.style.display = 'none';
-          funnyBox.textContent = "";
         }
       });
 
       // Legal disclaimer toggle
-      const legalScrollbox = document.getElementById('legal-scrollbox');
+      const legalBox = document.getElementById('legal-scrollbox');
       const toggleLegalBtn = document.getElementById('toggle-legal-btn');
-      const legalIconCircle = document.getElementById('legal-icon-circle');
+      const legalIcon = document.getElementById('legal-icon-circle');
 
       toggleLegalBtn.addEventListener('click', () => {
-        legalScrollbox.style.display = 'none';
+        legalBox.style.display = 'none';
         toggleLegalBtn.style.display = 'none';
+        legalIcon.style.display = 'block';
       });
 
-      legalIconCircle.addEventListener('click', () => {
-        legalScrollbox.style.display = 'block';
+      legalIcon.addEventListener('click', () => {
+        legalBox.style.display = 'block';
         toggleLegalBtn.style.display = 'inline-block';
+        legalIcon.style.display = 'none';
       });
 
-      // Mode toggle
-      const modeToggle = document.getElementById('mode-toggle');
-      modeToggle.addEventListener('click', () => {
-        if (document.body.classList.contains('dark-mode')) {
-          document.body.classList.remove('dark-mode');
-          document.body.classList.remove('secret-doc');
-          modeToggle.textContent = 'Mode: Light';
-          modeToggle.title = "Click me to toggle dark mode, or just to pretend you're hacking.";
-        } else {
-          document.body.classList.add('dark-mode');
-          modeToggle.textContent = 'Mode: Dark';
-          modeToggle.title = "Night vision activated. The fun is just beginning.";
-        }
-      });
+      // Initialize legal icon hidden because legal box shown initially
+      legalIcon.style.display = 'none';
 
-      // KONAMI CODE Easter egg: message "They are watching!"
-      const konamiCode = [38,38,40,40,37,39,37,39,66,65]; // Up Up Down Down Left Right Left Right B A
-      let konamiPosition = 0;
+      // Toolbar page switching
+      const toolbarButtons = document.querySelectorAll('#toolbar button');
+      const pageSections = document.querySelectorAll('.page-section');
 
-      window.addEventListener('keydown', (e) => {
-        if (e.keyCode === konamiCode[konamiPosition]) {
-          konamiPosition++;
-          if (konamiPosition === konamiCode.length) {
-            konamiPosition = 0;
-            showKonamiMessage();
-          }
-        } else {
-          konamiPosition = 0;
-        }
-      });
+      toolbarButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active from all buttons
+          toolbarButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
 
-      function showKonamiMessage() {
-        // Create or reuse red overlay inside body
-        let overlay = document.getElementById('konami-overlay');
-        if (!overlay) {
-          overlay = document.createElement('div');
-          overlay.id = 'konami-overlay';
-          Object.assign(overlay.style, {
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: 'rgba(200, 0, 0, 0.9)',
-            color: 'white',
-            fontSize: '3em',
-            fontWeight: 'bold',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 15000,
-            userSelect: 'none',
-            textAlign: 'center',
-            padding: '0 20px',
+          const target = btn.getAttribute('data-page');
+          pageSections.forEach(section => {
+            if (section.getAttribute('data-page') === target) {
+              section.style.display = '';
+            } else {
+              section.style.display = 'none';
+            }
           });
-          overlay.textContent = "They are watching!";
-          document.body.appendChild(overlay);
-          overlay.addEventListener('click', () => {
-            overlay.remove();
-          });
-        }
-      }
+          // Scroll to top on page switch
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
 
-      // Footnote scroll fade-in/out
-      const footnote = document.getElementById('scroll-footnote');
+      // Footnote show on scroll bottom
+      const footnote = document.getElementById('footnote');
       window.addEventListener('scroll', () => {
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const nearBottom = document.body.offsetHeight - 100; // 100px from bottom
-
+        const scrollPosition = window.scrollY + window.innerHeight;
+        const nearBottom = document.body.scrollHeight - 150;
         if (scrollPosition >= nearBottom) {
           footnote.classList.add('visible');
         } else {
@@ -577,210 +523,3 @@
   </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HBM Archive</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-      margin: 0;
-      padding-bottom: 280px;
-      overflow-x: hidden;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-    header {
-      background: #333;
-      color: #fff;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      user-select: none;
-      gap: 15px;
-      top: -10px;
-    }
-
-    h1 {
-      margin: 0;
-      font-weight: bold;
-      font-size: 2.4em;
-    }
-
-    /* Toolbar */
-    nav#toolbar {
-      background: #444;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-      position: relative;
-      z-index: 5;
-    }
-
-    nav#toolbar button {
-      background: none;
-      border: none;
-      color: #eee;
-      font-size: 16px;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    nav#toolbar button:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    main {
-      padding: 20px;
-      min-height: 300px;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Other styles preserved… */
-    #mode-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      border: 1px solid white;
-      color: white;
-      font-size: 10px;
-      padding: 2px 4px;
-      border-radius: 4px;
-      cursor: pointer;
-      user-select: none;
-      z-index: 11000;
-    }
-
-    #mode-toggle:hover {
-      background-color: white;
-      color: #333;
-    }
-
-    body.dark-mode {
-      background: #121212;
-      color: #eee;
-    }
-
-    body.dark-mode header,
-    body.dark-mode nav#toolbar {
-      background: #222;
-    }
-
-    body.secret-doc {
-      background: #f5f0e6;
-      color: #3e2f1c;
-    }
-
-    body.secret-doc header,
-    body.secret-doc nav#toolbar {
-      background: #d9cbbf;
-      color: #3e2f1c;
-    }
-
-    body.secret-doc nav#toolbar button {
-      color: #3e2f1c;
-    }
-
-    body.secret-doc nav#toolbar button:hover {
-      color: #000;
-    }
-
-    /* Include any other existing CSS here, such as for legal box, search, etc. */
-  </style>
-</head>
-<body>
-  <button id="mode-toggle" title="Click to change the mood 🎭">Mode: Light</button>
-
-  <header>
-    <h1>HBM Archive</h1>
-  </header>
-
-  <nav id="toolbar">
-    <button onclick="loadPage('articles')">Articles</button>
-    <button onclick="loadPage('shorticles')">Shorticles</button>
-    <button onclick="loadPage('books')">Books</button>
-    <button onclick="loadPage('about')">About</button>
-  </nav>
-
-  <main id="main-content">
-    <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
-  </main>
-
-  <!-- (Legal section, search box, and other components would go here, omitted for brevity) -->
-
-  <script>
-    const main = document.getElementById('main-content');
-
-    const pages = {
-      articles: `<h2>Articles</h2><p>Explore long-form written articles by the site owner.</p>`,
-      shorticles: `<h2>Shorticles</h2><p>Bite-sized insights, ideas, or creative thoughts.</p>`,
-      books: `<h2>Books</h2><p>Download or view full-length publications shared here.</p>`,
-      about: `<h2>About</h2><p>The HBM Archive is a secure and curated personal publishing platform.</p>`
-    };
-
-    function loadPage(page) {
-      if (pages[page]) {
-        main.style.opacity = 0;
-        setTimeout(() => {
-          main.innerHTML = pages[page];
-          main.style.opacity = 1;
-        }, 200);
-      }
-    }
-
-    // Mode toggle
-    const toggleBtn = document.getElementById('mode-toggle');
-    toggleBtn.addEventListener('click', () => {
-      const body = document.body;
-      if (body.classList.contains('dark-mode')) {
-        body.classList.remove('dark-mode');
-        body.classList.remove('secret-doc');
-        toggleBtn.textContent = 'Mode: Light';
-      } else if (!body.classList.contains('secret-doc')) {
-        body.classList.add('dark-mode');
-        toggleBtn.textContent = 'Mode: Dark';
-      } else {
-        body.classList.remove('secret-doc');
-        body.classList.add('dark-mode');
-        toggleBtn.textContent = 'Mode: Dark';
-      }
-    });
-
-    // Konami code easter egg (if not already included)
-    const konami = [38,38,40,40,37,39,37,39,66,65];
-    let input = [];
-    window.addEventListener('keydown', e => {
-      input.push(e.keyCode);
-      if (input.toString().indexOf(konami) >= 0) {
-        input = [];
-        document.body.style.background = 'red';
-        const popup = document.createElement('div');
-        popup.textContent = "They are watching!";
-        popup.style.cssText = `
-          position: fixed; top: 40%; left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 28px; background: #000;
-          color: red; padding: 20px 40px;
-          border: 3px solid red; z-index: 99999;
-          box-shadow: 0 0 12px red;
-        `;
-        document.body.appendChild(popup);
-        setTimeout(() => {
-          popup.remove();
-          document.body.style.background = '';
-        }, 4000);
-      }
-    });
-  </script>
-</body>
-</html>
-
