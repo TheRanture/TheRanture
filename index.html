@@ -6,24 +6,119 @@
   <meta name="google-site-verification" content="V79ZyUx1q2uleVZO70OvVgJQYJZSNdPmw3pFeDYcCDM" />
   <title>HBM Archive</title>
   <style>
+    /* General Styles */
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
       margin: 0;
       padding-bottom: 280px;
+      overflow-x: hidden;
     }
+    main, header, #legal-scrollbox, #toggle-legal-btn, #legal-icon-wrapper {
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+    main.hidden, header.hidden, #legal-scrollbox.hidden, #toggle-legal-btn.hidden, #legal-icon-wrapper.hidden {
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Terminal loading screen */
+    #terminal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: black;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      padding: 20px;
+      white-space: pre-line;
+      z-index: 100000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+
+    /* Glitch effect for header */
+    @keyframes glitch {
+      0% {
+        clip: rect(0, 9999px, 0, 0);
+        transform: translate(0);
+      }
+      5% {
+        clip: rect(10px, 9999px, 80px, 0);
+        transform: translate(-2px, -2px);
+      }
+      10% {
+        clip: rect(0, 9999px, 10px, 0);
+        transform: translate(2px, 2px);
+      }
+      15% {
+        clip: rect(60px, 9999px, 90px, 0);
+        transform: translate(-2px, 0);
+      }
+      20% {
+        clip: rect(10px, 9999px, 40px, 0);
+        transform: translate(2px, -2px);
+      }
+      25% {
+        clip: rect(0, 9999px, 100px, 0);
+        transform: translate(0);
+      }
+      30% {
+        clip: rect(0, 9999px, 0, 0);
+        transform: translate(0);
+      }
+      100% {
+        clip: rect(0, 9999px, 0, 0);
+        transform: translate(0);
+      }
+    }
+    .glitch {
+      position: relative;
+      color: white;
+      font-size: 2.4em;
+      font-weight: bold;
+      letter-spacing: 3px;
+      user-select: none;
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      right: 0;
+      opacity: 0.8;
+      clip: rect(0, 900px, 0, 0);
+      animation: glitch 2s infinite linear alternate-reverse;
+    }
+    .glitch::before {
+      animation-delay: -0.2s;
+      color: #f0f;
+      z-index: -1;
+    }
+    .glitch::after {
+      animation-delay: 0.1s;
+      color: #0ff;
+      z-index: -2;
+    }
+
+    /* Header styles */
     header {
       background: #333;
       color: #fff;
       padding: 20px;
       position: relative;
-    }
-    .header-container {
       display: flex;
-      align-items: center;
       justify-content: center;
-      position: relative;
+      align-items: center;
+      user-select: none;
     }
+
+    /* Search bar styles */
     #search-container {
       position: absolute;
       left: 20px;
@@ -50,9 +145,13 @@
       border-radius: 3px;
       outline: none;
     }
+
+    /* Main content */
     main {
       padding: 20px;
     }
+
+    /* Legal disclaimer box */
     #legal-scrollbox {
       position: fixed;
       bottom: 0;
@@ -85,6 +184,7 @@
       background: #0056b3;
     }
 
+    /* Legal icon wrapper */
     #legal-icon-wrapper {
       position: fixed;
       bottom: 25px;
@@ -107,6 +207,7 @@
       cursor: pointer;
       left: 11px;
       top: 11px;
+      user-select: none;
     }
 
     #legal-svg {
@@ -119,10 +220,12 @@
     }
 
     #legal-svg text {
-      font-size: 14px;
+      font-size: 13px;
       fill: #aaa;
+      user-select: none;
     }
 
+    /* Legal scrollbox content */
     #legal-scrollbox h2 {
       margin: 0;
       font-weight: bold;
@@ -143,33 +246,59 @@
     #legal-scrollbox a:hover {
       text-decoration: underline;
     }
+
+    /* Konami message overlay */
+    #konami-message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 0, 0, 0.95);
+      color: white;
+      font-size: 2.2em;
+      font-weight: bold;
+      padding: 30px 50px;
+      border-radius: 12px;
+      z-index: 100001;
+      user-select: none;
+      box-shadow: 0 0 20px #ff0000;
+      text-align: center;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-container">
-      <h1 style="margin: 0 auto; color: white;">HBM Archive</h1>
-      <div id="search-container">
-        <button id="search-toggle" aria-label="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="#ffffff">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
-          </svg>
-        </button>
-        <input type="text" id="search-bar" placeholder="Search..." />
-      </div>
+  <!-- Terminal Loading Screen -->
+  <div id="terminal">
+Initializing Archive...
+Decrypting Files...
+Loading HBM Archive...
+Please wait...
+  </div>
+
+  <header class="hidden">
+    <div id="search-container">
+      <button id="search-toggle" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="#ffffff">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 5L20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+        </svg>
+      </button>
+      <input type="text" id="search-bar" placeholder="Search..." />
     </div>
+    <h1 class="glitch" data-text="HBM Archive">HBM Archive</h1>
   </header>
 
-  <main>
+  <main class="hidden">
     <p>This is the official read-only archive. Content will be added here by the site owner. No user uploads or input are permitted.</p>
   </main>
 
-  <button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox">Hide Legal Disclaimer</button>
+  <button id="toggle-legal-btn" aria-expanded="true" aria-controls="legal-scrollbox" class="hidden">Hide Legal Disclaimer</button>
 
-  <div id="legal-icon-wrapper">
+  <div id="legal-icon-wrapper" class="hidden">
     <div id="legal-icon-circle">&#9888;</div>
-    <svg viewBox="0 0 120 120" id="legal-svg">
+    <svg viewBox="0 0 120 120" id="legal-svg" aria-hidden="true">
       <defs>
         <path id="curveTop" d="M20,60 A40,40 0 0,1 100,60" />
         <path id="curveBottom" d="M20,68 A40,40 0 0,0 100,68" />
@@ -179,7 +308,7 @@
     </svg>
   </div>
 
-  <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer">
+  <div id="legal-scrollbox" role="region" aria-label="Legal disclaimer" class="hidden">
     <h2>Legal Disclaimer & Terms of Use</h2>
     <p><strong>Last Updated:</strong> June 28, 2025</p>
     <p>This website and its content are provided "as is" without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
@@ -210,13 +339,43 @@
     </p>
   </div>
 
+  <div id="konami-message">They are watching!</div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    // === Fake loading delay ===
+    document.addEventListener('DOMContentLoaded', () => {
+      const terminal = document.getElementById('terminal');
+      const mainContent = document.querySelectorAll('main, header, #legal-scrollbox, #toggle-legal-btn, #legal-icon-wrapper');
+
+      setTimeout(() => {
+        terminal.style.display = 'none';
+        mainContent.forEach(el => {
+          el.classList.remove('hidden');
+        });
+      }, 1500); // 1.5 seconds delay
+    });
+
+    // === Search bar toggle ===
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchToggle = document.getElementById('search-toggle');
+      const searchBar = document.getElementById('search-bar');
+
+      searchToggle.addEventListener('click', () => {
+        if (searchBar.style.display === 'none' || searchBar.style.display === '') {
+          searchBar.style.display = 'inline-block';
+          searchBar.focus();
+        } else {
+          searchBar.style.display = 'none';
+          searchBar.value = '';
+        }
+      });
+    });
+
+    // === Legal disclaimer toggle ===
+    document.addEventListener('DOMContentLoaded', () => {
       const legalBox = document.getElementById('legal-scrollbox');
       const toggleBtn = document.getElementById('toggle-legal-btn');
       const legalIcon = document.getElementById('legal-icon-circle');
-      const searchToggle = document.getElementById('search-toggle');
-      const searchBar = document.getElementById('search-bar');
 
       function setCookie(name, value, days) {
         let expires = "";
@@ -262,18 +421,18 @@
         legalBox.style.display = 'block';
         toggleBtn.style.display = 'inline-block';
       }
-
-      searchToggle.addEventListener('click', function () {
-        if (searchBar.style.display === 'none' || searchBar.style.display === '') {
-          searchBar.style.display = 'inline-block';
-          searchBar.focus();
-        } else {
-          searchBar.style.display = 'none';
-          searchBar.value = '';
-        }
-      });
     });
-  </script>
 
-</body>
-</html>
+    // === Konami code detection ===
+    (function() {
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+      let konamiIndex = 0;
+      const konamiMsg = document.getElementById('konami-message');
+
+      window.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            konamiMsg.style.display = 'block';
+            setTimeout(() => { konamiMsg.style.display = 'none'; }, 3000);
+            konami
