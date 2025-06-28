@@ -366,11 +366,11 @@
       const funnyResponses = {
         "aliens": "👽 Try Paris.",
         "password": "🔐 Nice try. The password is not 'password'.",
-         "secret": "🤫 If I told you, it wouldn’t be a secret.",
-         "ninja": "Ninjas don’t search. They just know."
-           "pyramids": "🔺 You’re not cleared for that level."
-      "saturn worship": "🪐 Rings and things they won’t teach in school.",
-             "ghost": "👻 Boo! No ghosts, just results.",
+        "secret": "🤫 If I told you, it wouldn’t be a secret.",
+        "ninja": "Ninjas don’t search. They just know.",
+        "pyramids": "🔺 You’re not cleared for that level.",
+        "saturn worship": "🪐 Rings and things they won’t teach in school.",
+        "ghost": "👻 Boo! No ghosts, just results.",
         "bigfoot": "🦶 Found. But he blocked us.",
         "project monarch": "🦋 A butterfly flaps its wings. Someone forgets their password.",
         "psychic": "🔮 We knew you'd search this.",
@@ -383,39 +383,39 @@
         "truth serum": "💉 Works best when you're already guilty.",
         "wikipedia": "📖 Edited 13 times... today.",
         "hidden messages": "🧾 Rotate 180°, hold to the light, squint.",
-          "kangaroo": "🦘 Jumping to conclusions? Not here.",
+        "kangaroo": "🦘 Jumping to conclusions? Not here.",
         "free energy": "⚡ Sounds free until the bill arrives.",
         "hack": "💻 Try turning it off and whispering to it.",
         "vatican secrets": "📜 You must be at least Level 9 to access this.",
         "black hole": "🕳️ You're already falling in.",
         "secret bases": "🗺️ Hidden in plain sight. Like your car keys.",
         "deep state": "🏛️ Deeper than your browser history. And twice as weird.",
-          "paperclip": "📎 Holding it all together for you.",
+        "paperclip": "📎 Holding it all together for you.",
         "mind control": "🎧 Please enjoy this relaxing frequency.",
         "immortality": "🧬 Ask again in 3,000 years.",
         "fbi": "🧠 We can neither confirm nor deny your curiosity.",
         "404": "🚫 This search returns more nothing than a black hole.",
         "chemtrails": "☁️ Just clouds. Or are they? (They are. But are they?)",
         "matrix": "💊 Red or blue? Doesn’t matter, you’re already in.",
-          "hbm": "🔎 You found us! No need to search further.",
+        "hbm": "🔎 You found us! No need to search further.",
         "reptilian": "🦎 Cold-blooded and power-hungry. Just like politicians.",
         "flat earth": "🌍 It's a sphere. But we admire your commitment to creative cartography.",
         "archive": "🗃️ It’s *literally* in the title.",
         "ufo": "🛸 Did you mean weather balloons?",
         "coffee": "☕ Yes. Always a good idea.",
-    "marshmallow": "🔥 Soft answers for a hard question.",
-          "socks": "🧦 Missing one? Find it here!",
-          "cats": "🐈 Felines are watching you search.",
-        "zombie": "🧟‍♂️ Brains... not found here."
+        "marshmallow": "🔥 Soft answers for a hard question.",
+        "socks": "🧦 Missing one? Find it here!",
+        "cats": "🐈 Felines are watching you search.",
+        "zombie": "🧟‍♂️ Brains... not found here.",
         "toilet": "🚽 Flush those doubts away with these results.",
-        "love": "❤️ Searching for love in a hopeless place?"
+        "love": "❤️ Searching for love in a hopeless place?",
         "naps": "😴 Results so good, they’ll put you to sleep.",
-          "money": "💸 If I had money, I’d share it with you.",
-  "time travel": "⏳ Past, present, future? Pick one!",
-      "yoda": "🧙‍♂️ Search, you will. Results, you get.",
-              "dinosaurs": "🦖 Extinct? Not your search results!",
-  "cookies": "🍪 I wish I could bake some for you.",
-  "banana": "🍌 That’s a-peeling!",
+        "money": "💸 If I had money, I’d share it with you.",
+        "time travel": "⏳ Past, present, future? Pick one!",
+        "yoda": "🧙‍♂️ Search, you will. Results, you get.",
+        "dinosaurs": "🦖 Extinct? Not your search results!",
+        "cookies": "🍪 I wish I could bake some for you.",
+        "banana": "🍌 That’s a-peeling!"
       };
 
       searchToggle.addEventListener('click', () => {
@@ -443,27 +443,4 @@
       const toggleBtn = document.getElementById('toggle-legal-btn');
       const legalIcon = document.getElementById('legal-icon-circle');
 
-      toggleBtn.addEventListener('click', () => {
-        legalBox.style.display = 'none';
-        toggleBtn.style.display = 'none';
-      });
-
-      legalIcon.addEventListener('click', () => {
-        legalBox.style.display = 'block';
-        toggleBtn.style.display = 'inline-block';
-      });
-
-      const modeToggle = document.getElementById('mode-toggle');
-      const modes = ['light', 'dark-mode', 'secret-doc'];
-      let modeIndex = 0;
-
-      modeToggle.addEventListener('click', () => {
-        document.body.classList.remove(...modes);
-        modeIndex = (modeIndex + 1) % modes.length;
-        if (modeIndex > 0) document.body.classList.add(modes[modeIndex]);
-        modeToggle.textContent = `Mode: ${modes[modeIndex].replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
-      });
-    });
-  </script>
-</body>
-</html>
+      toggleBtn.addEventListener('click
