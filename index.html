@@ -510,34 +510,27 @@ body.dark-mode #search-funny {
   <div id="footnote">Made possible by bad choices and good intentions.</div>
 
   <script>
-  function loadArticle(filename, previewElem) {
-    fetch(filename)
-      .then(response => response.text())
-      .then(html => {
-        // Parse the loaded HTML string
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+function loadArticle(filename, previewElem) {
+  fetch(filename)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const articleContent = doc.querySelector('.ai-rights-body');
 
-        // Extract the article body
-        const articleContent = doc.querySelector('.ai-rights-body');
-        
-        if (articleContent) {
-          // Hide all previews or optionally just this one
-          document.querySelectorAll('.article-preview').forEach(el => el.style.display = 'none');
-          
-          // Insert article content into container and show it
-          const container = document.getElementById('article-full-content');
-          container.innerHTML = articleContent.outerHTML;
-          container.style.display = 'block';
-          
-          // Optional: scroll to top of article
-          container.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          alert('Article content not found.');
-        }
-      })
-      .catch(err => alert('Failed to load article: ' + err));
-  }
+      if (articleContent) {
+        document.querySelectorAll('.article-preview').forEach(el => el.style.display = 'none');
+        const container = document.getElementById('article-full-content');
+        container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</div>`;
+        container.style.display = 'block';
+        container.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('Article content not found.');
+      }
+    })
+    .catch(err => alert('Failed to load article: ' + err));
+}
+
     document.addEventListener('DOMContentLoaded', () => {
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
