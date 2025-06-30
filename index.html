@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
   <style>
+    .search-suggestion {
+  display: inline-block;
+  background: #222;
+  color: #aaddff;
+  padding: 6px 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: 1px solid #444;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.search-suggestion:hover {
+  background: #333;
+  color: #fff;
+}
     .article-page {
   max-width: 800px;
   margin: 2rem auto;
@@ -710,7 +728,11 @@ searchBar.addEventListener('input', () => {
   );
 
   if (match && val.length > 0) {
-    funnyBox.innerHTML = `📄 <a href="#" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none'; return false;" style="color:#66aaff; text-decoration:underline">${match.title}</a>`;
+  funnyBox.innerHTML = `
+  <div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">
+     ${match.title}
+  </div>
+`;
   } else if (val.length > 0) {
     funnyBox.textContent = 'Searching... No results found.';
   } else {
