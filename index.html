@@ -52,7 +52,7 @@
 
 /* Paragraphs */
 .content-page p {
-  text-indent: 1.5em;
+  text-indent: 0em;
   margin: 1.4rem 0;
   text-align: justify;
 }
@@ -95,7 +95,7 @@
 }
 
 .article-page p {
- text-indent: 1.5em;
+ text-indent: 0em;
   margin-top: 0;
   margin-bottom: 1.5em;
   margin: 1.2rem 0;
@@ -187,6 +187,52 @@ body.dark-mode #clear-search {
 }
 
     /* Dark mode */
+    body.dark-mode .article-page,
+body.dark-mode .content-page {
+  background-color: #1c1c1c;
+  color: #ddd;
+}
+
+body.dark-mode .article-page h2,
+body.dark-mode .article-page h3,
+body.dark-mode .article-page h4,
+body.dark-mode .content-page h2,
+body.dark-mode .content-page h3,
+body.dark-mode .content-page h4 {
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .article-page p,
+body.dark-mode .content-page p {
+  color: #ccc;
+}
+
+body.dark-mode .article-page blockquote,
+body.dark-mode .content-page blockquote {
+  background: #2b2b2b;
+  border-left-color: #e0c97d;
+  color: #ddd;
+}
+
+body.dark-mode .article-page ul,
+body.dark-mode .article-page ol,
+body.dark-mode .content-page ul,
+body.dark-mode .content-page ol {
+  color: #ccc;
+}
+
+body.dark-mode .article-page a,
+body.dark-mode .content-page a {
+  color: #0077cc;
+  text-decoration: underline;
+}
+
+body.dark-mode .article-page img,
+body.dark-mode .content-page img {
+  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
+}
+
     body.dark-mode {
 body.dark-mode .article-page {
   background-color: #1c1c1c;
@@ -565,7 +611,6 @@ body.dark-mode #search-funny {
 <main id="main-content" tabindex="0" aria-live="polite"></main>
   
   <!-- Main content -->
-  <main id="main-content" tabindex="0" aria-live="polite">
   </main>
 
   <!-- Footnote -->
@@ -614,7 +659,10 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
 }
     document.addEventListener('DOMContentLoaded', () => {
         // Always start at top on page load
-  window.scrollTo(0, 0);
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
