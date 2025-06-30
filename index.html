@@ -630,6 +630,7 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
   };
 });
 function loadArticle(filename, previewElem) {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
   fetch(filename)
     .then(response => response.text())
     .then(html => {
@@ -658,11 +659,24 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     .catch(err => alert('Failed to load article: ' + err));
 }
     document.addEventListener('DOMContentLoaded', () => {
+      if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
         // Always start at top on page load
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 window.scrollTo(0, 0);
+      const saved = localStorage.getItem('lastView');
+if (saved) {
+  const view = JSON.parse(saved);
+  if (view.type === 'article' && view.file) {
+    loadArticle(view.file);
+  } else if (view.type === 'section' && view.page) {
+    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+    if (targetBtn) targetBtn.click();
+  }
+}
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
@@ -812,7 +826,7 @@ buttons.forEach(btn => {
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const page = btn.getAttribute('data-page');
-
+    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
     // Hide article full and previews
     articleFullContent.style.display = 'none';
     articlesContainer.style.display = (page === 'articles') ? 'block' : 'none';
