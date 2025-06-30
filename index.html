@@ -491,17 +491,20 @@ body.dark-mode #search-funny {
 </nav>
 
   </div>
-<div class="articles-container">
+<div class="articles-container" id="articles-container">
   <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
     <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
     <h3>AI Consciousness and Rights</h3>
     <p>An exploration of AI awareness.</p>
   </div>
-
-  <!-- This is where the full article content will be loaded dynamically -->
-  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
 </div>
 
+<!-- Full article content container -->
+<div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
+
+<!-- Main content for toolbar pages -->
+<main id="main-content" tabindex="0" aria-live="polite"></main>
+  
   <!-- Main content -->
   <main id="main-content" tabindex="0" aria-live="polite">
   </main>
@@ -519,10 +522,17 @@ function loadArticle(filename, previewElem) {
       const articleContent = doc.querySelector('.ai-rights-body');
 
       if (articleContent) {
-        document.querySelectorAll('.article-preview').forEach(el => el.style.display = 'none');
+        // Hide article previews container
+        document.getElementById('articles-container').style.display = 'none';
+
+        // Hide toolbar page content
+        document.getElementById('main-content').style.display = 'none';
+
+        // Show article full content container with loaded content
         const container = document.getElementById('article-full-content');
         container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</div>`;
         container.style.display = 'block';
+
         container.scrollIntoView({ behavior: 'smooth' });
       } else {
         alert('Article content not found.');
@@ -530,7 +540,6 @@ function loadArticle(filename, previewElem) {
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-
     document.addEventListener('DOMContentLoaded', () => {
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
@@ -655,35 +664,30 @@ modeToggle.addEventListener('click', () => {
         clearSearch.style.display = 'none';
         searchBar.focus();
       });
+// Toolbar navigation simulation
+const buttons = document.querySelectorAll('.toolbar-btn');
+const mainContent = document.getElementById('main-content');
+const articleFullContent = document.getElementById('article-full-content');
+const articlesContainer = document.getElementById('articles-container');
 
-      // Toolbar navigation simulation
-      const buttons = document.querySelectorAll('.toolbar-btn');
-      const mainContent = document.getElementById('main-content');
-     buttons.forEach(btn => {
+buttons.forEach(btn => {
   btn.addEventListener('click', (event) => {
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const page = btn.getAttribute('data-page');
 
-    // Directly change content without delay
-if (page === 'articles') {
-  fetch('ai-rights.html')
-    .then(response => response.text())
-    .then(htmlText => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlText, 'text/html');
-      const articleContent = doc.querySelector('.ai-rights-body');
-      if (articleContent) {
-        mainContent.innerHTML = '';
-        mainContent.appendChild(articleContent);
-      } else {
-        mainContent.innerHTML = '<p>Article content not found.</p>';
-      }
-    })
-    .catch(() => {
-      mainContent.innerHTML = '<p>Failed to load article.</p>';
-    });
-} else if (page === 'shorticles') {
+    // Hide article content and show previews
+    articleFullContent.style.display = 'none';
+    articlesContainer.style.display = 'block';
+
+    // Show main content container
+    mainContent.style.display = 'block';
+
+    // Load respective page content
+    if (page === 'articles') {
+      mainContent.innerHTML = '';
+      // Nothing to load here, just show previews
+    } else if (page === 'shorticles') {
       mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
     } else if (page === 'books') {
       mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
@@ -729,8 +733,7 @@ if (page === 'articles') {
       mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
     }
   });
-});
-    
+});    
       // Footnote visibility on scroll near bottom
       const footnote = document.getElementById('footnote');
       window.addEventListener('scroll', () => {
