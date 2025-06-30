@@ -525,9 +525,38 @@ modeToggle.addEventListener('click', () => {
     const page = btn.getAttribute('data-page');
 
     // Directly change content without delay
-    if (page === 'articles') {
-      mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
-    } else if (page === 'shorticles') {
+   if (page === 'articles') {
+  mainContent.innerHTML = `
+    <h2>Articles</h2>
+    <ul>
+      <li><a href="#" id="article-ai-rights-link">AI Rights</a></li>
+      <!-- Other articles -->
+    </ul>
+    <div id="article-content">
+      <p>Select an article to read.</p>
+    </div>
+  `;
+
+  // Load AI Rights external page on link click
+  const aiRightsLink = document.getElementById('article-ai-rights-link');
+  const articleContentDiv = document.getElementById('article-content');
+
+  aiRightsLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('ai-rights.html'); // path to your separate AI rights HTML file
+      if (!response.ok) throw new Error('Failed to load AI Rights page');
+      const html = await response.text();
+
+      // Optionally, extract only the body or relevant content from html string
+      // For simplicity, we insert entire HTML here, but ideally extract main content only
+
+      articleContentDiv.innerHTML = html;
+    } catch (error) {
+      articleContentDiv.innerHTML = `<p>Error loading AI Rights page: ${error.message}</p>`;
+    }
+  });
+} else if (page === 'shorticles') {
       mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
     } else if (page === 'books') {
       mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
