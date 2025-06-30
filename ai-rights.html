@@ -7,85 +7,33 @@
   <style>
     body {
       font-family: 'Georgia', serif;
-      background: linear-gradient(135deg, #f4f1ec 0%, #e3ded7 100%);
+      background-color: #f4f1ec;
       color: #1c1c1c;
-      line-height: 1.75;
-      padding: 3em 2em;
-      max-width: 850px;
-      margin: 2em auto 4em auto;
-      box-sizing: border-box;
+      line-height: 1.6;
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
     }
-
     h1, h2 {
       font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-      color: #2e2b28;
-      font-weight: 700;
-      margin-bottom: 0.5em;
-      position: relative;
+      color: #333;
     }
-
-    h1::after, h2::after {
-      content: '';
-      display: block;
-      width: 50px;
-      height: 3px;
-      background: #8c7b6f;
-      margin-top: 0.3em;
-      border-radius: 2px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
     img.header {
       width: 100%;
-      border-radius: 16px;
-      margin-bottom: 2em;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
+      border-radius: 12px;
+      margin-bottom: 1.5em;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       display: block;
+      object-fit: cover;
     }
-
-    img.header:hover {
-      transform: scale(1.02);
-    }
-
     article {
-      background: #fff;
-      padding: 3em 3.5em;
-      border-radius: 20px;
-      box-shadow:
-        0 12px 25px rgba(0, 0, 0, 0.1),
-        inset 0 0 40px #f9f6f3;
-      line-height: 1.8;
-      font-size: 1.1rem;
-      color: #2d2a27;
-      border: 1px solid #ddd6cc;
+      background: #ffffffdd;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
-    p {
-      margin-bottom: 1.4em;
-      text-align: justify;
-    }
-
     strong {
-      color: #665544;
-      font-weight: 600;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 1.5em 1em;
-        max-width: 100%;
-        margin: 1em auto 2em auto;
-      }
-
-      article {
-        padding: 2em 1.5em;
-        border-radius: 14px;
-      }
-
-      h1, h2 {
-        font-size: 1.3rem;
-      }
+      color: #444;
     }
   </style>
 </head>
