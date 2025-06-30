@@ -525,9 +525,24 @@ modeToggle.addEventListener('click', () => {
     const page = btn.getAttribute('data-page');
 
     // Directly change content without delay
-    if (page === 'articles') {
-      mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
-    } else if (page === 'shorticles') {
+if (page === 'articles') {
+  fetch('ai-rights.html')
+    .then(response => response.text())
+    .then(htmlText => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      const articleContent = doc.querySelector('.ai-rights-body');
+      if (articleContent) {
+        mainContent.innerHTML = '';
+        mainContent.appendChild(articleContent);
+      } else {
+        mainContent.innerHTML = '<p>Article content not found.</p>';
+      }
+    })
+    .catch(() => {
+      mainContent.innerHTML = '<p>Failed to load article.</p>';
+    });
+} else if (page === 'shorticles') {
       mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
     } else if (page === 'books') {
       mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
