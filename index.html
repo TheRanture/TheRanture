@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
   <style>
+        .article-preview {
+      max-width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1em;
+      margin: 1em;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .article-preview:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .preview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.8em;
+    }
+
+    .article-preview h3 {
+      margin: 0 0 0.5em;
+      font-family: 'Palatino Linotype', serif;
+      color: #333;
+    }
+
+    .article-preview p {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .articles-container {
+      text-align: center;
+      padding: 1em;
+    }
     /* Basic reset and body */
     body {
       font-family: Arial, sans-serif;
@@ -380,6 +422,13 @@ body.dark-mode #search-funny {
 </nav>
 
   </div>
+<div class="articles-container">
+<div class="article-preview" onclick="window.location.href='ai-rights.html'">
+  <img src="banner.png" alt="AI Rights Banner" class="preview-image" />
+  <h3>AI Consciousness and Rights</h3>
+  <p>An exploration of AI awareness.</p>
+</div>
+</div>
 
   <!-- Main content -->
   <main id="main-content" tabindex="0" aria-live="polite">
