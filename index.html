@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .search-suggestion {
   display: inline-block;
@@ -692,6 +692,8 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     .catch(err => alert('Failed to load article: ' + err));
 }
     document.addEventListener('DOMContentLoaded', () => {
+        // Always start at top on page load
+  window.scrollTo(0, 0);
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
