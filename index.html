@@ -423,11 +423,14 @@ body.dark-mode #search-funny {
 
   </div>
 <div class="articles-container">
-<div class="article-preview" onclick="loadArticle('ai-rights.html')">
-<img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
-  <h3>AI Consciousness and Rights</h3>
-  <p>An exploration of AI awareness.</p>
-</div>
+  <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
+    <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
+    <h3>AI Consciousness and Rights</h3>
+    <p>An exploration of AI awareness.</p>
+  </div>
+
+  <!-- This is where the full article content will be loaded dynamically -->
+  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
 </div>
 
   <!-- Main content -->
