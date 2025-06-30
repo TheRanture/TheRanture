@@ -548,6 +548,18 @@ body.dark-mode #search-funny {
   <div id="footnote">Made possible by bad choices and good intentions.</div>
 
   <script>
+    // Build searchable index from article previews
+const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+  const titleElem = preview.querySelector('h3');
+  const snippetElem = preview.querySelector('p');
+  const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
+  return {
+    title: titleElem?.textContent.trim() || '',
+    snippet: snippetElem?.textContent.trim() || '',
+    file: fileMatch ? fileMatch[1] : '',
+    keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+  };
+});
 function loadArticle(filename, previewElem) {
   fetch(filename)
     .then(response => response.text())
@@ -681,19 +693,30 @@ modeToggle.addEventListener('click', () => {
     }
   }
 });
-      searchBar.addEventListener('input', () => {
-        const val = searchBar.value.trim().toLowerCase();
-        clearSearch.style.display = val.length ? 'inline' : 'none';
+searchBar.addEventListener('input', () => {
+  const val = searchBar.value.trim().toLowerCase();
+  clearSearch.style.display = val.length ? 'inline' : 'none';
 
-        if (funnyResponses[val]) {
-          funnyBox.textContent = funnyResponses[val];
-        } else if (val.length === 0) {
-          funnyBox.textContent = '';
-        } else {
-          funnyBox.textContent = 'Searching... No results found.';
-        }
-      });
+  // Show funny response if exists
+  if (funnyResponses[val]) {
+    funnyBox.textContent = funnyResponses[val];
+    return;
+  }
 
+  // Look for article matches by title or keywords
+  const match = searchableArticles.find(article =>
+    article.title.toLowerCase().includes(val) ||
+    article.keywords.some(keyword => keyword.startsWith(val))
+  );
+
+  if (match && val.length > 0) {
+    funnyBox.innerHTML = `📄 <a href="#" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none'; return false;" style="color:#66aaff; text-decoration:underline">${match.title}</a>`;
+  } else if (val.length > 0) {
+    funnyBox.textContent = 'Searching... No results found.';
+  } else {
+    funnyBox.textContent = '';
+  }
+});
       clearSearch.addEventListener('click', () => {
         searchBar.value = '';
         funnyBox.textContent = '';
