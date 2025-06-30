@@ -5,60 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
   <style>
-    #search-suggestions {
-      position: absolute; 
-      top: 36px; /* just below input */
-      left: 0;
-      width: 200px;
-      max-height: 200px;
-      overflow-y: auto;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 11005;
-    }
-
-    #search-suggestions .suggestion-item:hover,
-    #search-suggestions .suggestion-item:focus {
-      background-color: #007BFF;
-      color: white;
-      outline: none;
-    }
-
-    .ai-rights-body {
-      font-family: 'Georgia', serif;
-      background-color: #f4f1ec;
-      color: #1c1c1c;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: auto;
-    }
-    .ai-rights-body h1, .ai-rights-body h2 {
-      font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-      color: #333;
-    }
-    .ai-rights-body img.header {
-      width: 100%;
-      height: auto;       /* let height adjust naturally */
-      max-height: none;   /* remove any max-height restrictions */
-      object-fit: contain; /* prevent cropping */
-      border-radius: 12px;
-      margin-bottom: 1.5em;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      display: block;
-      background-color: #f4f1ec; /* optional */
-    }
-    .ai-rights-body article {
-      background: #ffffffdd;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    .ai-rights-body strong {
-      color: #444;
-    }
     /* Basic reset and body */
     body {
       font-family: Arial, sans-serif;
@@ -70,9 +16,9 @@
       transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    body.dark-mode #clear-search {
-      color: white;
-    }
+body.dark-mode #clear-search {
+  color: white;
+}
 
     /* Dark mode */
     body.dark-mode {
@@ -95,138 +41,138 @@
       transition: top 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    #toolbar {
-      display: flex;
-      justify-content: center;
-      background: #222;
-      padding: 6px 0;
-      gap: 15px;
-      user-select: none;
-    }
+#toolbar {
+  display: flex;
+  justify-content: center;
+  background: #222;
+  padding: 6px 0;
+  gap: 15px;
+  user-select: none;
+}
 
-    .toolbar-btn {
-      background: #444;
-      border: none;
-      color: white;
-      padding: 8px 18px;
-      font-size: 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
+.toolbar-btn {
+  background: #444;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
 
-    .toolbar-btn:hover {
-      background: #666;
-    }
+.toolbar-btn:hover {
+  background: #666;
+}
 
-    .toolbar-btn.active {
-      background: #007BFF;
-      color: white;
-      font-weight: bold;
-    }
+.toolbar-btn.active {
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+}
 
     /* Header */
-    header {
-      position: relative;
-      top: 0;
-      padding: 10px 0; /* Reduce from larger values like 20px */
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-    }
+header {
+  position: relative;
+  top: 0;
+  padding: 10px 0; /* Reduce from larger values like 20px */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
 
-    /* Search container */
-    #search-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: none; /* remove centering offset */
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 11001;
-      padding: 6px; /* optional, for spacing from screen edge */
-    }
+/* Position search container top-left, absolute so it does not push header text */
+/* Position search container top-left, absolute so it does not push header text */
+/* Search container now lives between header and toolbar, aligned left */
+  #search-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: none; /* remove centering offset */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 11001;
+  padding: 6px; /* optional, for spacing from screen edge */
+}
 
-    /* Magnifier button */
-    #search-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      color: #fff;
-      font-size: 22px;
-      user-select: none;
-    }
+/* Magnifier button */
+#search-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+  font-size: 22px;
+  user-select: none;
+}
 
-    /* Search input */
-    #search-bar {
-      display: none;
-      width: 200px;
-      padding: 6px 28px 6px 8px;
-      font-size: 14px;
-      border: none;
-      border-radius: 3px;
-      outline: none;
-      background: #fff;
-      color: #000;
-      position: relative;
-      z-index: 11000;
-    }
+/* Search input */
+#search-bar {
+  display: none;
+  width: 200px;
+  padding: 6px 28px 6px 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background: #fff;
+  color: #000;
+  position: relative;
+  z-index: 11000;
+}
 
-    body.dark-mode #search-bar {
-      background: #333;
-      color: #fff;
-    }
+body.dark-mode #search-bar {
+  background: #333;
+  color: #fff;
+}
 
-    /* Clear (×) button */
-    #clear-search {
-      position: relative;
-      margin-left: -28px;
-      background: transparent;
-      border: none;
-      color: black;
-      font-size: 18px;
-      cursor: pointer;
-      user-select: none;
-      z-index: 11002;
-      padding: 0 6px;
-      display: none;
-    }
-        
-    body.dark-mode #clear-search {
-      color: white;
-    }
+/* Clear (×) button */
+#clear-search {
+  position: relative;
+  margin-left: -28px;
+  background: transparent;
+  border: none;
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 11002;
+  padding: 0 6px;
+  display: none;
+}
 
-    /* Funny response */
-    #search-funny {
-      position: absolute;
-      top: 40px; /* directly below search bar */
-      left: 40px; /* line it up nicely under the input */
-      background: #333;
-      color: #ccc;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 3px;
-      white-space: nowrap;
-      display: none;
-      user-select: none;
-      pointer-events: none;
-      z-index: 11000;
-    }
+body.dark-mode #clear-search {
+  color: white;
+}
 
-    body.dark-mode #search-funny {
-      background: #222;
-      color: #aaa;
-    }
-  </style>
-</head>
-<body>
-<!-- The rest of your body will come in next parts -->
-   main {
+/* Funny response */
+#search-funny {
+  position: absolute;
+  top: 40px; /* directly below search bar */
+  left: 40px; /* line it up nicely under the input */
+  background: #333;
+  color: #ccc;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  display: none;
+  user-select: none;
+  pointer-events: none;
+  z-index: 11000;
+}
+
+body.dark-mode #search-funny {
+  background: #222;
+  color: #aaa;
+}
+
+    /* Main content */
+    main {
       padding: 10px;
       margin-top: 10px; /* header + toolbar combined height */
       min-height: 500px;
@@ -237,21 +183,22 @@
     }
 
     /* Mode toggle button */
-    #mode-toggle {
-      position: absolute;     /* changed from fixed */
-      top: 10px;
-      right: 10px;
-      background: transparent;
-      border: 1px solid white;
-      color: white;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      z-index: 12000;
-    }
+   #mode-toggle {
+  position: absolute;     /* changed from fixed */
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  z-index: 12000;
+}
+
 
     #mode-toggle:hover {
       background-color: white;
@@ -406,49 +353,36 @@
 <body>
   <!-- Mode toggle -->
   <button id="mode-toggle" aria-label="Toggle Mode">Mode: Light</button>
-  
+
   <!-- Header and Toolbar fixed wrapper -->
   <div id="header-toolbar-wrapper">
     <header>
       <h1>HBM Archive</h1>
     </header>
-    <div id="search-container">
-      <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
-        <!-- magnifier icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-        </svg>
-      </button>
-      <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
-      <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
-      <div id="search-funny" aria-live="polite"></div>
-    </div>
-    <div id="search-suggestions" style="
-      position: absolute; 
-      top: 36px; /* just below input */
-      left: 0;
-      width: 200px;
-      max-height: 200px;
-      overflow-y: auto;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 11005;
-    "></div>
+<div id="search-container">
+  <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+    <!-- magnifier icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+    </svg>
+  </button>
+  <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
+  <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
+  <div id="search-funny" aria-live="polite"></div>
+</div>
 
-    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-      <button class="toolbar-btn active" data-page="articles">Articles</button>
-      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
-      <button class="toolbar-btn" data-page="books">Books</button>
-      <button class="toolbar-btn" data-page="about">About</button>
-      <button class="toolbar-btn" data-page="tos">ToS</button>
-    </nav>
+<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+  <button class="toolbar-btn active" data-page="articles">Articles</button>
+  <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+  <button class="toolbar-btn" data-page="books">Books</button>
+  <button class="toolbar-btn" data-page="about">About</button>
+  <button class="toolbar-btn" data-page="tos">ToS</button>
+</nav>
+
   </div>
 
   <!-- Main content -->
-  <main id="main-content" aria-live="polite">
+  <main id="main-content" tabindex="0" aria-live="polite">
     <p>Welcome to the HBM Archive. Select a section from above.</p>
   </main>
 
@@ -458,77 +392,53 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Mode toggle
-      const searchBar = document.getElementById('search-bar');
-      const suggestionsContainer = document.getElementById('search-suggestions');
-      const clearSearch = document.getElementById('clear-search');
-      const funnyBox = document.getElementById('search-funny');
       const modeToggle = document.getElementById('mode-toggle');
-      const backToTopBtn = document.getElementById('back-to-top');
-      const articles = [
-        {
-          id: 'ai-rights',
-          title: 'AI Consciousness and Rights',
-          url: 'ai-rights.html',
-          description: 'A philosophical exploration of AI awareness and rights.'
-        },
-        // add more articles here as you create them
-      ];
+const backToTopBtn = document.getElementById('back-to-top');
 
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          backToTopBtn.style.display = 'block';
-        } else {
-          backToTopBtn.style.display = 'none';
-        }
-      });
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    backToTopBtn.style.display = 'block';
+  } else {
+    backToTopBtn.style.display = 'none';
+  }
+});
 
-      backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Home') {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Home') {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
 
-      modeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
-      });
+modeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
+});
 
       document.addEventListener('click', (event) => {
-        const searchContainer = document.getElementById('search-container');
-        if (!searchContainer.contains(event.target)) {
-          searchBar.style.display = 'none';
-          clearSearch.style.display = 'none';
-          funnyBox.style.display = 'none';
-          suggestionsContainer.style.display = 'none'; // add this line
-        }
-      });
+  const searchContainer = document.getElementById('search-container');
+  const searchBar = document.getElementById('search-bar');
+  const clearBtn = document.getElementById('clear-search');
+  const funnyBox = document.getElementById('search-funny');
+
+  // If click is outside the search container, close the search bar
+  if (!searchContainer.contains(event.target)) {
+    searchBar.style.display = 'none';
+    clearBtn.style.display = 'none';
+    funnyBox.style.display = 'none';
+  }
+});
 
       // Search toggle
       const searchToggle = document.getElementById('search-toggle');
-
-      searchToggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        if (searchBar.style.display === 'inline-block') {
-          searchBar.style.display = 'none';
-          funnyBox.style.display = 'none';
-          clearSearch.style.display = 'none';
-          suggestionsContainer.style.display = 'none';
-        } else {
-          searchBar.style.display = 'inline-block';
-          searchBar.focus();
-          funnyBox.style.display = 'block';
-
-          if (searchBar.value.trim().length) {
-            clearSearch.style.display = 'inline';
-          }
-        }
-      });
+      const searchBar = document.getElementById('search-bar');
+      const funnyBox = document.getElementById('search-funny');
+      const clearSearch = document.getElementById('clear-search');
 
       const funnyResponses = {
         "aliens": "👽 Try Paris.",
@@ -569,54 +479,32 @@
         "moon landing": "🚀 One small step for man, one giant leap for memes.",
       };
 
+   searchToggle.addEventListener('click', (event) => {
+     event.stopPropagation();
+ if (searchBar.style.display === 'inline-block') {
+    searchBar.style.display = 'none';
+    funnyBox.style.display = 'none';
+    clearSearch.style.display = 'none';
+  } else {
+    searchBar.style.display = 'inline-block';
+    searchBar.focus();
+    funnyBox.style.display = 'block';
+
+    if (searchBar.value.trim().length) {
+      clearSearch.style.display = 'inline';
+    }
+  }
+});
       searchBar.addEventListener('input', () => {
         const val = searchBar.value.trim().toLowerCase();
         clearSearch.style.display = val.length ? 'inline' : 'none';
-        if (val.length === 0) {
-          suggestionsContainer.style.display = 'none';
-          funnyBox.textContent = '';
-          clearSearch.style.display = 'none';
-          return;
-        }
 
-        // Find matches
-        const matches = articles.filter(article =>
-          article.title.toLowerCase().includes(val) ||
-          (article.description && article.description.toLowerCase().includes(val))
-        );
-
-        if (matches.length > 0) {
-          suggestionsContainer.innerHTML = matches.map(article =>
-            `<div class="suggestion-item" tabindex="0" style="padding:6px 10px;cursor:pointer;">${article.title}</div>`
-          ).join('');
-          suggestionsContainer.style.display = 'block';
+        if (funnyResponses[val]) {
+          funnyBox.textContent = funnyResponses[val];
+        } else if (val.length === 0) {
           funnyBox.textContent = '';
         } else {
-          suggestionsContainer.style.display = 'none';
           funnyBox.textContent = 'Searching... No results found.';
-        }
-      });
-
-      // Delegate clicks on suggestion items
-      suggestionsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('suggestion-item')) {
-          const selectedTitle = e.target.textContent;
-          const article = articles.find(a => a.title === selectedTitle);
-          if (article) {
-            window.location.href = article.url;
-          }
-        }
-      });
-
-      // Optional: keyboard support (Enter key) to select
-      suggestionsContainer.addEventListener('keydown', (e) => {
-        if (e.target.classList.contains('suggestion-item') && e.key === 'Enter') {
-          e.preventDefault();
-          const selectedTitle = e.target.textContent;
-          const article = articles.find(a => a.title === selectedTitle);
-          if (article) {
-            window.location.href = article.url;
-          }
         }
       });
 
@@ -624,101 +512,69 @@
         searchBar.value = '';
         funnyBox.textContent = '';
         clearSearch.style.display = 'none';
-        suggestionsContainer.style.display = 'none'; // add this line
         searchBar.focus();
       });
 
       // Toolbar navigation simulation
       const buttons = document.querySelectorAll('.toolbar-btn');
       const mainContent = document.getElementById('main-content');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', (event) => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const page = btn.getAttribute('data-page');
-          // Delegated click handler for Articles' internal links
-          // Directly change content without delay
-          if (page === 'articles') {
-            mainContent.innerHTML = `
-              <h2>Articles</h2>
-              <ul>
-                <li><a href="#" id="article-ai-rights-link">AI Rights</a></li>
-                <!-- Other articles -->
-              </ul>
-              <div id="article-content">
-                <p>Select an article to read.</p>
-              </div>
-            `;
-          } else if (page === 'shorticles') {
-            mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
-          } else if (page === 'books') {
-            mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
-          } else if (page === 'about') {
-            mainContent.innerHTML = `
-              <h2>About</h2>
-              <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer and AI philosopher.</p>
-              <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. AI (ChatGPT) is used to help with coding of website, and also with some articles, but as an assistant with my full supervision on the content. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
-              <p><strong>HBM Archive</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
-              <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
-            `;
-          } else if (page === 'tos') {
-            mainContent.innerHTML = `
-              <h2>Legal Disclaimer & Terms of Use</h2>
-              <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-              <ul>
-                <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-                <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-                <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-                <li>The owner is not responsible for any third-party links or external content.</li>
-                <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-                <li>The website does not collect personal data, and no input from users is accepted.</li>
-                <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-                <li>These terms apply globally and supersede any conflicting local laws.</li>
-              </ul>
-              <p><strong>Creative Commons License:</strong><br>
-                This work is licensed under the
-                <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-                  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-                </a>.
-              </p>
-              <h2>Content Disclaimer</h2>
-              <p><strong>Disclaimer:</strong></p>
-              <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-              <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-              <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-              <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-              <p><strong>Copyright Notice:</strong><br>
-                &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-              </p>
-            `;
-          } else {
-            mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
-          }
-        });
-      });
+     buttons.forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const page = btn.getAttribute('data-page');
 
-      // Delegated click handler for Articles' internal links (only once)
-      mainContent.addEventListener('click', async (e) => {
-        if (e.target && e.target.id === 'article-ai-rights-link') {
-          e.preventDefault();
-          const articleContentDiv = document.getElementById('article-content');
-          if (!articleContentDiv) return;
-
-          try {
-            const response = await fetch('ai-rights.html');
-            if (!response.ok) throw new Error('Failed to load AI Rights page');
-            const html = await response.text();
-
-            // Extract only <body> content for clean insertion
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            articleContentDiv.innerHTML = doc.body.innerHTML;
-          } catch (error) {
-            articleContentDiv.innerHTML = `<p>Error loading AI Rights page: ${error.message}</p>`;
-          }
-        }
-      });
-
+    // Directly change content without delay
+    if (page === 'articles') {
+      mainContent.innerHTML = '<h2>Articles</h2><p>Articles content goes here...</p>';
+    } else if (page === 'shorticles') {
+      mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
+    } else if (page === 'books') {
+      mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
+    } else if (page === 'about') {
+      mainContent.innerHTML = `
+        <h2>About</h2>
+        <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
+        <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
+        <p><strong>HBM Archive</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
+        <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
+      `;
+    } else if (page === 'tos') {
+      mainContent.innerHTML = `
+        <h2>Legal Disclaimer & Terms of Use</h2>
+        <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+        <ul>
+          <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+          <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+          <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+          <li>The owner is not responsible for any third-party links or external content.</li>
+          <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+          <li>The website does not collect personal data, and no input from users is accepted.</li>
+          <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+          <li>These terms apply globally and supersede any conflicting local laws.</li>
+        </ul>
+        <p><strong>Creative Commons License:</strong><br>
+          This work is licensed under the
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+            Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+          </a>.
+        </p>
+        <h2>Content Disclaimer</h2>
+        <p><strong>Disclaimer:</strong></p>
+        <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+        <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+        <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+        <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+        <p><strong>Copyright Notice:</strong><br>
+          &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+        </p>
+      `;
+    } else {
+      mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+    }
+  });
+});
+    
       // Footnote visibility on scroll near bottom
       const footnote = document.getElementById('footnote');
       window.addEventListener('scroll', () => {
@@ -775,32 +631,32 @@
           konamiPosition = 0;
         }
       });
-    });
+     });
   </script>
-
   <button id="back-to-top" aria-label="Back to top" title="Back to top" 
-    style="
-      display:none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 36px;
-      height: 36px;
-      background: rgba(0, 0, 0, 0.3);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 15000;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      user-select: none;
-      transition: background-color 0.3s ease;
-    "
-    onmouseenter="this.style.background='rgba(0,0,0,0.6)'" 
-    onmouseleave="this.style.background='rgba(0,0,0,0.3)'"
-  >
-    ↑
-  </button>
+  style="
+    display:none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 15000;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    user-select: none;
+    transition: background-color 0.3s ease;
+  "
+  onmouseenter="this.style.background='rgba(0,0,0,0.6)'" 
+  onmouseleave="this.style.background='rgba(0,0,0,0.3)'"
+>
+  ↑
+</button>
+
 </body>
 </html>
