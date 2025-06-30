@@ -423,7 +423,7 @@ body.dark-mode #search-funny {
 
   </div>
 <div class="articles-container">
-<div class="article-preview" onclick="window.location.href='ai-rights.html'">
+<div class="article-preview" onclick="loadArticle('ai-rights.html')">
 <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
   <h3>AI Consciousness and Rights</h3>
   <p>An exploration of AI awareness.</p>
@@ -439,6 +439,26 @@ body.dark-mode #search-funny {
   <div id="footnote">Made possible by bad choices and good intentions.</div>
 
   <script>
+    function loadArticle(file) {
+  const mainContent = document.getElementById('main-content');
+  fetch(file)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const article = doc.querySelector('.ai-rights-body');
+      if (article) {
+        mainContent.innerHTML = '';
+        mainContent.appendChild(article);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        mainContent.innerHTML = '<p>Article content not found.</p>';
+      }
+    })
+    .catch(() => {
+      mainContent.innerHTML = '<p>Failed to load article.</p>';
+    });
+}
     document.addEventListener('DOMContentLoaded', () => {
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
