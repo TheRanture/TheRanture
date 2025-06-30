@@ -676,13 +676,11 @@ buttons.forEach(btn => {
     btn.classList.add('active');
     const page = btn.getAttribute('data-page');
 
-    // Hide article content and show previews
+    // Always hide both full article view and article previews
     articleFullContent.style.display = 'none';
-    articlesContainer.style.display = 'block';
-
-    // Show main content container
+    articlesContainer.style.display = (page === 'articles') ? 'block' : 'none';
     mainContent.style.display = 'block';
-
+    
     // Load respective page content
     if (page === 'articles') {
       mainContent.innerHTML = '';
