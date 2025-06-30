@@ -520,12 +520,32 @@ modeToggle.addEventListener('click', () => {
       const mainContent = document.getElementById('main-content');
      buttons.forEach(btn => {
   btn.addEventListener('click', (event) => {
+      mainContent.addEventListener('click', async (e) => {
+    if (e.target && e.target.id === 'article-ai-rights-link') {
+      e.preventDefault();
+      const articleContentDiv = document.getElementById('article-content');
+      if (!articleContentDiv) return;
+
+      try {
+        const response = await fetch('ai-rights.html');
+        if (!response.ok) throw new Error('Failed to load AI Rights page');
+        const html = await response.text();
+
+        // Extract only <body> content for clean insertion
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        articleContentDiv.innerHTML = doc.body.innerHTML;
+      } catch (error) {
+        articleContentDiv.innerHTML = `<p>Error loading AI Rights page: ${error.message}</p>`;
+      }
+    }
+  });
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const page = btn.getAttribute('data-page');
-
+      // Delegated click handler for Articles' internal links
     // Directly change content without delay
-   if (page === 'articles') {
+ if (page === 'articles') {
   mainContent.innerHTML = `
     <h2>Articles</h2>
     <ul>
@@ -536,27 +556,7 @@ modeToggle.addEventListener('click', () => {
       <p>Select an article to read.</p>
     </div>
   `;
-
-  // Load AI Rights external page on link click
-  const aiRightsLink = document.getElementById('article-ai-rights-link');
-  const articleContentDiv = document.getElementById('article-content');
-
-  aiRightsLink.addEventListener('click', async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('ai-rights.html'); // path to your separate AI rights HTML file
-      if (!response.ok) throw new Error('Failed to load AI Rights page');
-      const html = await response.text();
-
-      // Optionally, extract only the body or relevant content from html string
-      // For simplicity, we insert entire HTML here, but ideally extract main content only
-
-      articleContentDiv.innerHTML = html;
-    } catch (error) {
-      articleContentDiv.innerHTML = `<p>Error loading AI Rights page: ${error.message}</p>`;
-    }
-  });
-} else if (page === 'shorticles') {
+}else if (page === 'shorticles') {
       mainContent.innerHTML = '<h2>Shorticles</h2><p>Shorticles content goes here...</p>';
     } else if (page === 'books') {
       mainContent.innerHTML = '<h2>Books</h2><p>Books content goes here...</p>';
