@@ -512,7 +512,7 @@ body.dark-mode #search-funny {
       <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
     </svg>
   </button>
-  <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" />
+<input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
   <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
   <div id="search-funny" aria-live="polite"></div>
 </div>
@@ -562,10 +562,11 @@ function loadArticle(filename, previewElem) {
 
         // Hide toolbar page content
         document.getElementById('main-content').style.display = 'none';
-
+        
         // Show article full content container with loaded content
         const container = document.getElementById('article-full-content');
-        container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</div>`;
+document.getElementById('search-funny').style.display = 'none';
+container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</div>`;
         container.style.display = 'block';
 
         container.scrollIntoView({ behavior: 'smooth' });
