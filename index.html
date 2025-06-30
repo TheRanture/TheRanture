@@ -17,15 +17,17 @@
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     color: #333;
   }
-  .ai-rights-body img.header {
-    width: 100%;
-    height: 220px;
-    border-radius: 12px;
-    margin-bottom: 1.5em;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    display: block;
-    object-fit: cover;
-  }
+.ai-rights-body img.header {
+  width: 100%;
+  height: auto;       /* let height adjust naturally */
+  max-height: none;   /* remove any max-height restrictions */
+  object-fit: contain; /* prevent cropping */
+  border-radius: 12px;
+  margin-bottom: 1.5em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: block;
+  background-color: #f4f1ec; /* optional */
+}
   .ai-rights-body article {
     background: #ffffffdd;
     padding: 2em;
