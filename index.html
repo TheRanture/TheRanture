@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
   <style>
     .search-suggestion {
   display: inline-block;
@@ -20,19 +20,24 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
   .article-page, .content-page {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Crimson Text', serif;
-  font-size: 0.9rem;
-  line-height: 1.20;
+  font-size: 1.1rem;
+  line-height: 1.6;
   letter-spacing: 0.01px;
   color: var(--text-color, #1a1a1a);
   background-color: var(--article-bg, #fdfdfd);
   padding: 1rem;
   padding-left: 1.5rem;
-  padding-right: 4rem;
-  word-spacing: -0.02em;
-  max-width: 700px;
+  padding-right: 1.5rem;
+  word-spacing: -0.01rem;
+  max-width: 650px;  /* or 600–700px range */
+  margin-left: auto;
+  margin-right: auto;
   margin: auto;
   border-radius: 1rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
@@ -56,7 +61,7 @@
 .content-page p {
   text-indent: 0em;
   margin: 1.4rem 0;
-  text-align: justify;
+  text-align: left;
 }
 
 /* Images */
@@ -101,7 +106,7 @@
   margin-top: 0;
   margin-bottom: 1.5em;
   margin: 1.2rem 0;
-  text-align: justify;
+  text-align: keft;
 }
 
 .article-page img {
