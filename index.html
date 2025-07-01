@@ -726,8 +726,8 @@ if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 window.scrollTo(0, 0);
-      const saved = localStorage.getItem('lastView');
-if (saved) {
+const saved = localStorage.getItem('lastView');
+if (!window.location.hash && saved) {
   const view = JSON.parse(saved);
   if (view.type === 'article' && view.file) {
     loadArticle(view.file);
