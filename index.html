@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet" />
   <style>
     .search-suggestion {
   display: inline-block;
@@ -25,7 +25,7 @@
   -ms-hyphens: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Crimson Text', serif;
+  font-family: 'Lora', serif;
   font-size: 1.1rem;
   line-height: 1.6;
   letter-spacing: 0.01px;
@@ -637,6 +637,24 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
   };
 });
 function loadArticle(filename, previewElem) {
+  window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.page) {
+    loadArticle(event.state.page);
+  } else {
+    // No state means we should show main articles page again
+    document.getElementById('article-full-content').style.display = 'none';
+    document.getElementById('articles-container').style.display = 'block';
+    document.getElementById('main-content').style.display = 'block';
+
+    // Reset toolbar buttons active state to 'articles'
+    document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.toolbar-btn[data-page="articles"]').classList.add('active');
+
+    // Clear main content if needed
+    document.getElementById('main-content').innerHTML = '';
+  }
+});
+  history.pushState({page: filename}, '', '#' + filename);
   localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
   fetch(filename)
     .then(response => response.text())
@@ -666,6 +684,11 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     .catch(err => alert('Failed to load article: ' + err));
 }
     document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+  if (hash) {
+    loadArticle(hash);
+    history.replaceState({page: hash}, '', '#' + hash);
+  }
       if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
