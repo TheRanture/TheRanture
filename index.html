@@ -6,6 +6,19 @@
   <title>HBM Archive</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet" />
   <style>
+    :root {
+  --article-bg: #f9f9f6;        /* Light background (Alabaster) */
+  --article-text: #1a1a1a;      /* Standard text */
+  --accent-color: #444;         /* Heading borders and h2 colors */
+  --link-color: #0077cc;
+}
+
+body.dark-mode {
+  --article-bg: #1c1c1c;
+  --article-text: #ddd;
+  --accent-color: #ccc;
+  --link-color: #66aaff;
+}
     .search-suggestion {
   display: inline-block;
   background: #222;
@@ -29,8 +42,8 @@
   font-size: 1.1rem;
   line-height: 1.6;
   letter-spacing: 0.01px;
-  color: var(--text-color, #1a1a1a);
-  background-color: var(--article-bg, #fdfdfd);
+  background-color: var(--article-bg);
+  color: var(--article-text);
   padding: 1rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -46,12 +59,30 @@
   text-align: justify;
   /* from .article-page */
 }
+.article-page a {
+  color: var(--link-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.article-page a:hover {
+  color: #005fa3; /* optional hover color for better UX */
+}
+.content-page a {
+  color: var(--link-color);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.content-page a:hover {
+  color: #005fa3;
+}
 
 /* Headings */
 .content-page h2,
 .content-page h3,
 .content-page h4 {
-  color: var(--accent-color, #444);
+  color: var(--accent-color);
   margin-top: 2rem;
   border-bottom: 2px solid #ddd;
   padding-bottom: 0.3rem;
@@ -636,27 +667,25 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
     keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
   };
 });
-function loadArticle(filename, previewElem) {
-  window.addEventListener('popstate', (event) => {
+    window.addEventListener('popstate', (event) => {
   if (event.state && event.state.page) {
     loadArticle(event.state.page);
-  } else {
-    // No state means we should show main articles page again
+ } else {
+    // No state: back to main section
     document.getElementById('article-full-content').style.display = 'none';
     document.getElementById('articles-container').style.display = 'block';
     document.getElementById('main-content').style.display = 'block';
 
-    // Reset toolbar buttons active state to 'articles'
+    // Reset active button to 'Articles'
     document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector('.toolbar-btn[data-page="articles"]').classList.add('active');
 
-    // Clear main content if needed
+    // Clear any toolbar content
     document.getElementById('main-content').innerHTML = '';
   }
 });
-  history.pushState({page: filename}, '', '#' + filename);
-  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
-  fetch(filename)
+ function loadArticle(filename, element = null) {
+     fetch(filename)
     .then(response => response.text())
     .then(html => {
       const parser = new DOMParser();
@@ -664,19 +693,19 @@ function loadArticle(filename, previewElem) {
       const articleContent = doc.querySelector('.ai-rights-body');
 
       if (articleContent) {
-        // Hide article previews container
+        // Hide article previews and main content
         document.getElementById('articles-container').style.display = 'none';
-
-        // Hide toolbar page content
         document.getElementById('main-content').style.display = 'none';
-        
-        // Show article full content container with loaded content
-        const container = document.getElementById('article-full-content');
-document.getElementById('search-funny').style.display = 'none';
-container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
-        container.style.display = 'block';
 
+        const container = document.getElementById('article-full-content');
+        document.getElementById('search-funny').style.display = 'none';
+
+        container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
+        container.style.display = 'block';
         container.scrollIntoView({ behavior: 'smooth' });
+
+        // Mark toolbar buttons inactive
+        document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
       } else {
         alert('Article content not found.');
       }
