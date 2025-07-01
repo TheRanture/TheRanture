@@ -684,59 +684,144 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
     document.getElementById('main-content').innerHTML = '';
   }
 });
- function loadArticle(filename, element = null) {
-     fetch(filename)
-    .then(response => response.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const articleContent = doc.querySelector('.ai-rights-body');
+<script>
+  // Load article content and update history
+  function loadArticle(filename, pushHistory = true) {
+    fetch(filename)
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const articleContent = doc.querySelector('.ai-rights-body');
 
-      if (articleContent) {
-        // Hide article previews and main content
-        document.getElementById('articles-container').style.display = 'none';
-        document.getElementById('main-content').style.display = 'none';
+        if (articleContent) {
+          // Hide previews and main content
+          document.getElementById('articles-container').style.display = 'none';
+          document.getElementById('main-content').style.display = 'none';
 
-        const container = document.getElementById('article-full-content');
-        document.getElementById('search-funny').style.display = 'none';
+          const container = document.getElementById('article-full-content');
+          document.getElementById('search-funny').style.display = 'none';
 
-        container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
-        container.style.display = 'block';
-        container.scrollIntoView({ behavior: 'smooth' });
+          container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
+          container.style.display = 'block';
+          container.scrollIntoView({ behavior: 'smooth' });
 
-        // Mark toolbar buttons inactive
-        document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
-      } else {
-        alert('Article content not found.');
+          // Remove active state from toolbar buttons
+          document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
+
+          if (pushHistory) {
+            history.pushState({ page: 'article', file: filename }, '', `#${filename}`);
+          }
+
+          // Save current view to localStorage
+          localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+        } else {
+          alert('Article content not found.');
+        }
+      })
+      .catch(err => alert('Failed to load article: ' + err));
+  }
+
+  // Load a main section (articles, shorticles, books, about, tos)
+  function loadSection(page, pushHistory = true) {
+    // Update toolbar active state
+    document.querySelectorAll('.toolbar-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-page') === page);
+    });
+
+    // Show/hide containers
+    document.getElementById('article-full-content').style.display = 'none';
+    document.getElementById('articles-container').style.display = (page === 'articles') ? 'block' : 'none';
+    const mainContent = document.getElementById('main-content');
+    mainContent.style.display = 'block';
+
+    // Update main content based on section
+    if (page === 'articles') {
+      mainContent.innerHTML = '';
+    } else if (page === 'shorticles') {
+      mainContent.innerHTML = `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`;
+    } else if (page === 'books') {
+      mainContent.innerHTML = `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`;
+    } else if (page === 'about') {
+      mainContent.innerHTML = `<div class="content-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p></div>`;
+    } else if (page === 'tos') {
+      mainContent.innerHTML = `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2><p>...</p></div>`;
+    } else {
+      mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+    }
+
+    if (pushHistory) {
+      history.pushState({ page: 'section', section: page }, '', `#${page}`);
+    }
+
+    // Save current view to localStorage
+    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+  }
+
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', (event) => {
+    if (event.state) {
+      if (event.state.page === 'article' && event.state.file) {
+        loadArticle(event.state.file, false);
+      } else if (event.state.page === 'section' && event.state.section) {
+        loadSection(event.state.section, false);
       }
-    })
-    .catch(err => alert('Failed to load article: ' + err));
-}
-    document.addEventListener('DOMContentLoaded', () => {
-      localStorage.removeItem('lastView');
-        const hash = window.location.hash.substring(1);
-  if (hash) {
-    loadArticle(hash);
-    history.replaceState({page: hash}, '', '#' + hash);
-  }
-      if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-        // Always start at top on page load
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-const saved = localStorage.getItem('lastView');
-if (!window.location.hash && saved) {
-  const view = JSON.parse(saved);
-  if (view.type === 'article' && view.file) {
-    loadArticle(view.file);
-  } else if (view.type === 'section' && view.page) {
-    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-    if (targetBtn) targetBtn.click();
-  }
-}
+    } else {
+      // No state: load default section
+      loadSection('articles', false);
+    }
+  });
+
+  // On page load, restore the last viewed page/article
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.substring(1);
+    let handled = false;
+
+    if (hash) {
+      if (hash.endsWith('.html')) {
+        loadArticle(hash, false);
+        handled = true;
+      } else {
+        loadSection(hash, false);
+        handled = true;
+      }
+    }
+
+    if (!handled) {
+      const saved = localStorage.getItem('lastView');
+      if (saved) {
+        const view = JSON.parse(saved);
+        if (view.type === 'article' && view.file) {
+          loadArticle(view.file, false);
+        } else if (view.type === 'section' && view.page) {
+          loadSection(view.page, false);
+        } else {
+          loadSection('articles', false);
+        }
+      } else {
+        loadSection('articles', false);
+      }
+    }
+
+    // Attach toolbar button click handlers
+    document.querySelectorAll('.toolbar-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = btn.getAttribute('data-page');
+        loadSection(page);
+      });
+    });
+
+    // Attach article preview clicks (example for articles previews)
+    document.querySelectorAll('.article-preview').forEach(preview => {
+      preview.addEventListener('click', (e) => {
+        e.preventDefault();
+        const file = preview.getAttribute('data-file');
+        if (file) {
+          loadArticle(file);
+        }
+      });
+    });
+  });
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
