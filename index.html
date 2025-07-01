@@ -713,6 +713,7 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
     .catch(err => alert('Failed to load article: ' + err));
 }
     document.addEventListener('DOMContentLoaded', () => {
+      localStorage.removeItem('lastView');
         const hash = window.location.hash.substring(1);
   if (hash) {
     loadArticle(hash);
