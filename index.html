@@ -1,606 +1,308 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HBM Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet" />
+
+  <!-- Google Fonts: Lora for main text, Crimson Text for headings -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    :root {
-  --article-bg: #f9f9f6;        /* Light background (Alabaster) */
-  --article-text: #1a1a1a;      /* Standard text */
-  --accent-color: #444;         /* Heading borders and h2 colors */
-  --link-color: #0077cc;
-}
-
-body.dark-mode {
-  --article-bg: #1c1c1c;
-  --article-text: #ddd;
-  --accent-color: #ccc;
-  --link-color: #66aaff;
-}
-    .search-suggestion {
-  display: inline-block;
-  background: #222;
-  color: #aaddff;
-  padding: 6px 10px;
-  margin-top: 4px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  border: 1px solid #444;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-  .article-page, .content-page {
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  letter-spacing: 0.01px;
-  background-color: var(--article-bg);
-  color: var(--article-text);
-  padding: 1rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  word-spacing: -0.01rem;
-  max-width: 650px;  /* or 600–700px range */
-  margin-left: auto;
-  margin-right: auto;
-  margin: auto;
-  border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 0.4s ease-in-out;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  text-align: justify;
-  /* from .article-page */
-}
-.article-page a {
-  color: var(--link-color);
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-.article-page a:hover {
-  color: #005fa3; /* optional hover color for better UX */
-}
-.content-page a {
-  color: var(--link-color);
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-.content-page a:hover {
-  color: #005fa3;
-}
-
-/* Headings */
-.content-page h2,
-.content-page h3,
-.content-page h4 {
-  color: var(--accent-color);
-  margin-top: 2rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.3rem;
-}
-
-/* Paragraphs */
-.content-page p {
-  text-indent: 0em;
-  margin: 1.4rem 0;
-  text-align: left;
-}
-
-/* Images */
-.content-page img {
-  display: block;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Lists */
-.content-page ul,
-.content-page ol {
-  padding-left: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-color, #1a1a1a);
-}
-
-/* Blockquotes */
-.content-page blockquote {
-  font-style: italic;
-  background: #fefae0;
-  border-left: 4px solid #b59f3b;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  border-radius: 6px;
-  color: #444;
-}
-
-/* Dark mode */
-
-.article-page h2, .article-page h3, .article-page h4 {
-  color: var(--accent-color, #444);
-  margin-top: 2rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.3rem;
-}
-
-.article-page p {
- text-indent: 0em;
-  margin-top: 0;
-  margin-bottom: 1.5em;
-  margin: 1.2rem 0;
-  text-align: keft;
-}
-
-.article-page img {
-  display: block;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.article-page ul, .article-page ol {
-  padding-left: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.article-page blockquote {
-  font-style: italic;
-  background: #fefae0;
-  border-left: 4px solid #b59f3b;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  border-radius: 6px;
-  color: #444;
-}
-    
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-        .article-preview {
-      max-width: 300px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 1em;
-      margin: 1em;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease;
-      display: inline-block;
-      vertical-align: top;
-      text-align: left;
-    }
-
-    .article-preview:hover {
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    }
-
-    .preview-image {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 0.8em;
-    }
-
-    .article-preview h3 {
-      margin: 0 0 0.5em;
-      font-family: 'Palatino Linotype', serif;
-      color: #333;
-    }
-
-    .article-preview p {
-      font-size: 0.9em;
-      color: #555;
-      line-height: 1.3;
-      margin: 0;
-    }
-
-    .articles-container {
-      text-align: center;
-      padding: 1em;
-    }
-    /* Basic reset and body */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-      margin: 0;
-      padding-bottom: 280px;
-      overflow-x: hidden;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-body.dark-mode #clear-search {
-  color: white;
-}
-
-    /* Dark mode */
-    body.dark-mode .article-page,
-body.dark-mode .content-page {
-  background-color: #1c1c1c;
-  color: #ddd;
-}
-
-body.dark-mode .article-page h2,
-body.dark-mode .article-page h3,
-body.dark-mode .article-page h4,
-body.dark-mode .content-page h2,
-body.dark-mode .content-page h3,
-body.dark-mode .content-page h4 {
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark-mode .article-page p,
-body.dark-mode .content-page p {
-  color: #ccc;
-}
-
-body.dark-mode .article-page blockquote,
-body.dark-mode .content-page blockquote {
-  background: #2b2b2b;
-  border-left-color: #e0c97d;
-  color: #ddd;
-}
-
-body.dark-mode .article-page ul,
-body.dark-mode .article-page ol,
-body.dark-mode .content-page ul,
-body.dark-mode .content-page ol {
-  color: #ccc;
-}
-
-body.dark-mode .article-page a,
-body.dark-mode .content-page a {
-  color: #0077cc;
-  text-decoration: underline;
-}
-
-body.dark-mode .article-page img,
-body.dark-mode .content-page img {
-  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
-}
-
-    body.dark-mode {
-body.dark-mode .article-page {
-  background-color: #1c1c1c;
-  color: #ddd;
-}
-      background: #121212;
-      color: #eee;
-    }
-
-    /* Header & Toolbar container */
-    #header-toolbar-wrapper {
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 11000;
-      background: #333;
-      color: #fff;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      transition: top 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-#toolbar {
-  display: flex;
-  justify-content: center;
-  background: #222;
-  padding: 6px 0;
-  gap: 15px;
-  user-select: none;
-}
-
-.toolbar-btn {
-  background: #444;
-  border: none;
-  color: white;
-  padding: 8px 18px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
-}
-
-.toolbar-btn:hover {
-  background: #666;
-}
-
-.toolbar-btn.active {
-  background: #007BFF;
-  color: white;
-  font-weight: bold;
-}
-
-    /* Header */
-header {
-  position: relative;
-  top: 0;
-  padding: 10px 0; /* Reduce from larger values like 20px */
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Position search container top-left, absolute so it does not push header text */
-/* Position search container top-left, absolute so it does not push header text */
-/* Search container now lives between header and toolbar, aligned left */
-  #search-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: none; /* remove centering offset */
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 11001;
-  padding: 6px; /* optional, for spacing from screen edge */
-}
-
-/* Magnifier button */
-#search-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: #fff;
-  font-size: 22px;
-  user-select: none;
-}
-
-/* Search input */
-#search-bar {
-  display: none;
-  width: 200px;
-  padding: 6px 28px 6px 8px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background: #fff;
-  color: #000;
-  position: relative;
-  z-index: 11000;
-}
-
-body.dark-mode #search-bar {
-  background: #333;
-  color: #fff;
-}
-
-/* Clear (×) button */
-#clear-search {
-  position: relative;
-  margin-left: -28px;
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 18px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 11002;
-  padding: 0 6px;
-  display: none;
-}
-
-body.dark-mode #clear-search {
-  color: white;
-}
-
-/* Funny response */
-#search-funny {
-  position: absolute;
-  top: 40px; /* directly below search bar */
-  left: 40px; /* line it up nicely under the input */
-  background: #333;
-  color: #ccc;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  white-space: nowrap;
-  display: none;
-  user-select: none;
-  pointer-events: auto;
-  z-index: 11000;
-}
-
-body.dark-mode #search-funny {
-  background: #222;
-  color: #aaa;
-}
-
-    /* Main content */
-    main {
-      padding: 10px;
-      margin-top: 10px; /* header + toolbar combined height */
-      min-height: 500px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+    /* Base Reset */
+    *, *::before, *::after {
       box-sizing: border-box;
     }
-
-    /* Mode toggle button */
-   #mode-toggle {
-  position: absolute;     /* changed from fixed */
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  z-index: 12000;
-}
-
-
-    #mode-toggle:hover {
-      background-color: white;
-      color: #333;
-      border-color: white;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Lora', serif;
+      background: #f9f9f6;
+      color: #222;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: text;
+      min-height: 100vh;
+      background-color: #f9f9f6;
+    }
+    h1, h2, h3 {
+      font-family: 'Crimson Text', serif;
+      margin-top: 0;
+      margin-bottom: 0.5em;
+      line-height: 1.2;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover,
+    a:focus {
+      text-decoration: underline;
     }
 
-    body.dark-mode #mode-toggle {
-      border-color: #ddd;
-      color: #ddd;
-    }
-
-    body.dark-mode #mode-toggle:hover {
-      background-color: #ddd;
-      color: #121212;
-      border-color: #ddd;
-    }
-
-    /* Legal scrollbox */
-    #legal-scrollbox {
+    /* Header and Toolbar */
+    #header-toolbar-wrapper {
       position: fixed;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
       background: #fff;
-      border-top: 3px solid #007BFF;
-      padding: 15px 25px;
-      font-size: 13px;
-      color: #222;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-      max-height: 220px;
-      overflow-y: auto;
-      z-index: 9999;
-      display: block;
-      transition: transform 0.3s ease;
+      border-bottom: 1px solid #ccc;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.5em 1em;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+      user-select: none;
+      color: #333;
+    }
+    #toolbar {
+      margin-top: 0.3em;
+      display: flex;
+      gap: 0.7em;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .toolbar-btn {
+      background: #eee;
+      border: none;
+      padding: 0.4em 0.9em;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #333;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+    .toolbar-btn:hover,
+    .toolbar-btn:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+    .toolbar-btn.active {
+      background-color: #0066cc;
+      color: white;
+      font-weight: 600;
+      pointer-events: none;
     }
 
-    body.dark-mode #legal-scrollbox {
-      background: #222;
-      color: #ccc;
-      border-top-color: #0a84ff;
+    /* Search Container */
+    #search-container {
+      position: relative;
+      margin-top: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
     }
-
-    /* Hide legal box by sliding down */
-    #legal-scrollbox.hidden {
-      transform: translateY(100%);
-    }
-
-    /* Toggle legal button */
-    #toggle-legal-btn {
-      position: fixed;
-      right: 25px;
-      bottom: 230px;
-      background: #007BFF;
-      color: #fff;
-      padding: 10px 14px;
-      font-size: 13px;
-      border-radius: 4px;
+    #search-toggle {
+      background: transparent;
       border: none;
       cursor: pointer;
-      z-index: 10000;
+      padding: 0;
+      color: #555;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       user-select: none;
+    }
+    #search-toggle:hover,
+    #search-toggle:focus {
+      color: #0066cc;
+      outline: none;
+    }
+    #search-bar {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.3em 0.5em;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      outline-offset: 2px;
+      display: none;
+      min-width: 180px;
+      transition: all 0.3s ease;
+    }
+    #search-bar:focus {
+      border-color: #0066cc;
+      box-shadow: 0 0 5px #0066ccaa;
+    }
+    #clear-search {
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: none;
+      color: #666;
+      user-select: none;
+      padding: 0 0.2em;
+    }
+    #clear-search:hover,
+    #clear-search:focus {
+      color: #0066cc;
+      outline: none;
+    }
+    #search-funny {
+      margin-left: 0.8em;
+      font-style: italic;
+      color: #777;
+      max-width: 320px;
+      user-select: none;
+    }
+
+    /* Article Preview */
+    .article-preview {
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin: 1em;
+      padding: 1em;
+      max-width: 320px;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      outline-offset: 2px;
+    }
+    .article-preview:hover,
+    .article-preview:focus {
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    .article-preview img.preview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      margin-bottom: 0.8em;
+      user-select: none;
+    }
+    .article-preview h3 {
+      margin-bottom: 0.3em;
+      font-weight: 600;
+      color: #222;
+    }
+    .article-preview p {
+      margin: 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    /* Article Full Content and Main Content */
+    #article-full-content,
+    #main-content {
+      margin: 6.5em auto 2em auto; /* Leave room for fixed header */
+      max-width: 900px;
+      padding: 0 1em;
+      color: #222;
+      user-select: text;
+    }
+    .content-page {
+      max-width: 100%;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #222;
+    }
+    .content-page h2 {
+      margin-top: 0;
+    }
+    .content-page p {
+      margin-bottom: 1em;
+    }
+    .content-page ul {
+      margin: 0 0 1em 1.2em;
+    }
+    .content-page li {
+      margin-bottom: 0.4em;
+    }
+
+    /* Footnote */
+    #footnote {
+      font-size: 0.8rem;
+      color: #999;
+      text-align: center;
+      margin: 3em 1em 1em 1em;
+      transition: opacity 0.4s ease;
+      user-select: none;
+    }
+
+    /* Back to Top Button */
+    #back-to-top {
+      background-color: rgba(0, 0, 0, 0.3);
+      color: white;
+      border-radius: 50%;
+      border: none;
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      cursor: pointer;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
       transition: background-color 0.3s ease;
-    }
-
-    #toggle-legal-btn:hover {
-      background: #0056b3;
-    }
-
-    /* Hide toggle legal btn when legal box visible */
-    #toggle-legal-btn.hidden {
+      user-select: none;
+      z-index: 15000;
       display: none;
     }
-
-    /* Legal icon circle */
-    #legal-icon-wrapper {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      z-index: 10000;
-      cursor: pointer;
-      user-select: none;
+    #back-to-top:hover,
+    #back-to-top:focus {
+      background-color: rgba(0, 0, 0, 0.6);
+      outline: none;
     }
 
-    #legal-icon-circle {
-      position: absolute;
-      width: 38px;
-      height: 38px;
-      background: #007BFF;
-      color: #fff;
-      font-size: 22px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 38px;
-      left: 11px;
-      top: 11px;
-    }
-
-    /* SVG text curving Legal / Notice */
-    #legal-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 60px;
-      height: 60px;
-      pointer-events: none;
-    }
-
-    #legal-svg text {
-      font-size: 13px;
-      fill: #aaa;
-      user-select: none;
-    }
-
-    body.dark-mode #legal-icon-circle {
-      background: #0a84ff;
+    /* Dark mode placeholder - add your dark mode colors here */
+    body.dark-mode {
+      background-color: #121212;
       color: #eee;
     }
-
-    body.dark-mode #legal-svg text {
-      fill: #666;
+    body.dark-mode a {
+      color: #66aaff;
     }
-
-    /* Footnote at bottom, small text, visible only near bottom */
-    #footnote {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      font-size: 12px;
-      color: #666;
-      background: rgba(245, 245, 245, 0.9);
-      padding: 6px 12px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9998;
-      font-style: italic;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    body.dark-mode #header-toolbar-wrapper {
+      background: #222;
+      border-bottom-color: #444;
+      box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
     }
-
-    body.dark-mode #footnote {
+    body.dark-mode .toolbar-btn {
+      background: #333;
+      color: #ddd;
+    }
+    body.dark-mode .toolbar-btn.active {
+      background-color: #3399ff;
+      color: white;
+    }
+    body.dark-mode #search-bar {
+      background-color: #222;
+      border-color: #555;
+      color: #eee;
+    }
+    body.dark-mode #search-bar:focus {
+      border-color: #66aaff;
+      box-shadow: 0 0 5px #66aaffaa;
+    }
+    body.dark-mode #search-funny {
       color: #bbb;
-      background: rgba(18, 18, 18, 0.9);
+    }
+    body.dark-mode #footnote {
+      color: #777;
+    }
+    body.dark-mode #back-to-top {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #eee;
+    }
+    body.dark-mode #back-to-top:hover,
+    body.dark-mode #back-to-top:focus {
+      background-color: rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
@@ -613,259 +315,256 @@ body.dark-mode #search-funny {
     <header>
       <h1>HBM Archive</h1>
     </header>
-<div id="search-container">
-  <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
-    <!-- magnifier icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-    </svg>
-  </button>
-<input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
-  <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
-  <div id="search-funny" aria-live="polite"></div>
-</div>
 
-<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-  <button class="toolbar-btn active" data-page="articles">Articles</button>
-  <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
-  <button class="toolbar-btn" data-page="books">Books</button>
-  <button class="toolbar-btn" data-page="about">About</button>
-  <button class="toolbar-btn" data-page="tos">ToS</button>
-</nav>
+    <div id="search-container">
+      <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+        <!-- magnifier icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+        </svg>
+      </button>
+      <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" style="display:none;" />
+      <button id="clear-search" title="Clear" aria-label="Clear Search" style="display:none;">×</button>
+      <div id="search-funny" aria-live="polite" style="display:none;"></div>
+    </div>
 
+    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+      <button class="toolbar-btn active" data-page="articles">Articles</button>
+      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+      <button class="toolbar-btn" data-page="books">Books</button>
+      <button class="toolbar-btn" data-page="about">About</button>
+      <button class="toolbar-btn" data-page="tos">ToS</button>
+    </nav>
   </div>
-<div class="articles-container" id="articles-container">
-  <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
-    <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
-    <h3>AI Consciousness and Rights</h3>
-    <p>An exploration of AI awareness.</p>
+
+  <div class="articles-container" id="articles-container">
+    <div class="article-preview" data-file="ai-rights.html" tabindex="0" role="button" aria-pressed="false">
+      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
+      <h3>AI Consciousness and Rights</h3>
+      <p>An exploration of AI awareness.</p>
+    </div>
   </div>
-</div>
 
-<!-- Full article content container -->
-<div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
+  <!-- Full article content container -->
+  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
 
-<!-- Main content for toolbar pages -->
-<main id="main-content" tabindex="0" aria-live="polite"></main>
-  
-  <!-- Main content -->
-  </main>
+  <!-- Main content for toolbar pages -->
+  <main id="main-content" tabindex="0" aria-live="polite"></main>
 
   <!-- Footnote -->
-  <div id="footnote">Made possible by bad choices and good intentions.</div>
+  <div id="footnote" style="opacity:0; pointer-events:none;">Made possible by bad choices and good intentions.</div>
+
+  <button id="back-to-top" aria-label="Back to top" title="Back to top"
+    style="
+      display:none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 15000;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      user-select: none;
+      transition: background-color 0.3s ease;
+    "
+    onmouseenter="this.style.background='rgba(0,0,0,0.6)'" 
+    onmouseleave="this.style.background='rgba(0,0,0,0.3)'"
+  >
+    ↑
+  </button>
 
   <script>
     // Build searchable index from article previews
-const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
-  const titleElem = preview.querySelector('h3');
-  const snippetElem = preview.querySelector('p');
-  const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
-  return {
-    title: titleElem?.textContent.trim() || '',
-    snippet: snippetElem?.textContent.trim() || '',
-    file: fileMatch ? fileMatch[1] : '',
-    keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
-  };
-});
-    window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.page) {
-    loadArticle(event.state.page);
- } else {
-    // No state: back to main section
-    document.getElementById('article-full-content').style.display = 'none';
-    document.getElementById('articles-container').style.display = 'block';
-    document.getElementById('main-content').style.display = 'block';
-
-    // Reset active button to 'Articles'
-    document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.toolbar-btn[data-page="articles"]').classList.add('active');
-
-    // Clear any toolbar content
-    document.getElementById('main-content').innerHTML = '';
-  }
-});
-<script>
-  // Load article content and update history
-  function loadArticle(filename, pushHistory = true) {
-    fetch(filename)
-      .then(response => response.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const articleContent = doc.querySelector('.ai-rights-body');
-
-        if (articleContent) {
-          // Hide previews and main content
-          document.getElementById('articles-container').style.display = 'none';
-          document.getElementById('main-content').style.display = 'none';
-
-          const container = document.getElementById('article-full-content');
-          document.getElementById('search-funny').style.display = 'none';
-
-          container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
-          container.style.display = 'block';
-          container.scrollIntoView({ behavior: 'smooth' });
-
-          // Remove active state from toolbar buttons
-          document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
-
-          if (pushHistory) {
-            history.pushState({ page: 'article', file: filename }, '', `#${filename}`);
-          }
-
-          // Save current view to localStorage
-          localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
-        } else {
-          alert('Article content not found.');
-        }
-      })
-      .catch(err => alert('Failed to load article: ' + err));
-  }
-
-  // Load a main section (articles, shorticles, books, about, tos)
-  function loadSection(page, pushHistory = true) {
-    // Update toolbar active state
-    document.querySelectorAll('.toolbar-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-page') === page);
+    const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+      const titleElem = preview.querySelector('h3');
+      const snippetElem = preview.querySelector('p');
+      const file = preview.getAttribute('data-file') || '';
+      return {
+        title: titleElem?.textContent.trim() || '',
+        snippet: snippetElem?.textContent.trim() || '',
+        file: file,
+        keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+      };
     });
 
-    // Show/hide containers
-    document.getElementById('article-full-content').style.display = 'none';
-    document.getElementById('articles-container').style.display = (page === 'articles') ? 'block' : 'none';
-    const mainContent = document.getElementById('main-content');
-    mainContent.style.display = 'block';
+    // Load article content and update history
+    function loadArticle(filename, pushHistory = true) {
+      fetch(filename)
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const articleContent = doc.querySelector('.ai-rights-body');
 
-    // Update main content based on section
-    if (page === 'articles') {
-      mainContent.innerHTML = '';
-    } else if (page === 'shorticles') {
-      mainContent.innerHTML = `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`;
-    } else if (page === 'books') {
-      mainContent.innerHTML = `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`;
-    } else if (page === 'about') {
-      mainContent.innerHTML = `<div class="content-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p></div>`;
-    } else if (page === 'tos') {
-      mainContent.innerHTML = `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2><p>...</p></div>`;
-    } else {
-      mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+          if (articleContent) {
+            document.getElementById('articles-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'none';
+            const container = document.getElementById('article-full-content');
+            document.getElementById('search-funny').style.display = 'none';
+
+            container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+
+            // Remove active state from toolbar buttons
+            document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (pushHistory) {
+              history.pushState({ page: 'article', file: filename }, '', `#${filename}`);
+            }
+
+            localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+          } else {
+            alert('Article content not found.');
+          }
+        })
+        .catch(err => alert('Failed to load article: ' + err));
     }
 
-    if (pushHistory) {
-      history.pushState({ page: 'section', section: page }, '', `#${page}`);
-    }
+    // Load a main section (articles, shorticles, books, about, tos)
+    function loadSection(page, pushHistory = true) {
+      document.querySelectorAll('.toolbar-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-page') === page);
+      });
 
-    // Save current view to localStorage
-    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
-  }
+      document.getElementById('article-full-content').style.display = 'none';
+      document.getElementById('articles-container').style.display = (page === 'articles') ? 'block' : 'none';
+      const mainContent = document.getElementById('main-content');
+      mainContent.style.display = 'block';
 
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', (event) => {
-    if (event.state) {
-      if (event.state.page === 'article' && event.state.file) {
-        loadArticle(event.state.file, false);
-      } else if (event.state.page === 'section' && event.state.section) {
-        loadSection(event.state.section, false);
-      }
-    } else {
-      // No state: load default section
-      loadSection('articles', false);
-    }
-  });
-
-  // On page load, restore the last viewed page/article
-  document.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash.substring(1);
-    let handled = false;
-
-    if (hash) {
-      if (hash.endsWith('.html')) {
-        loadArticle(hash, false);
-        handled = true;
+      if (page === 'articles') {
+        mainContent.innerHTML = '';
+      } else if (page === 'shorticles') {
+        mainContent.innerHTML = `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`;
+      } else if (page === 'books') {
+        mainContent.innerHTML = `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`;
+      } else if (page === 'about') {
+        mainContent.innerHTML = `
+          <div class="content-page">
+            <h2>About</h2>
+            <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
+            <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
+            <p><strong>HBM Archive</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
+            <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
+          </div>`;
+      } else if (page === 'tos') {
+        mainContent.innerHTML = `
+          <div class="content-page">
+            <h2>Legal Disclaimer & Terms of Use</h2>
+            <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+            <ul>
+              <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+              <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+              <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+              <li>The owner is not responsible for any third-party links or external content.</li>
+              <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+              <li>The website does not collect personal data, and no input from users is accepted.</li>
+              <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+              <li>These terms apply globally and supersede any conflicting local laws.</li>
+            </ul>
+            <p><strong>Creative Commons License:</strong><br>
+              This work is licensed under the
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+                Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+              </a>.
+            </p>
+            <h2>Content Disclaimer</h2>
+            <p><strong>Disclaimer:</strong></p>
+            <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+            <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+            <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+            <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+            <p><strong>Copyright Notice:</strong><br>
+              &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+            </p>
+          </div>`;
       } else {
-        loadSection(hash, false);
-        handled = true;
+        mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
       }
+
+      if (pushHistory) {
+        history.pushState({ page: 'section', section: page }, '', `#${page}`);
+      }
+      localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
     }
 
-    if (!handled) {
-      const saved = localStorage.getItem('lastView');
-      if (saved) {
-        const view = JSON.parse(saved);
-        if (view.type === 'article' && view.file) {
-          loadArticle(view.file, false);
-        } else if (view.type === 'section' && view.page) {
-          loadSection(view.page, false);
-        } else {
-          loadSection('articles', false);
+    // Handle back/forward navigation
+    window.addEventListener('popstate', (event) => {
+      if (event.state) {
+        if (event.state.page === 'article' && event.state.file) {
+          loadArticle(event.state.file, false);
+        } else if (event.state.page === 'section' && event.state.section) {
+          loadSection(event.state.section, false);
         }
       } else {
         loadSection('articles', false);
       }
-    }
-
-    // Attach toolbar button click handlers
-    document.querySelectorAll('.toolbar-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const page = btn.getAttribute('data-page');
-        loadSection(page);
-      });
     });
 
-    // Attach article preview clicks (example for articles previews)
-    document.querySelectorAll('.article-preview').forEach(preview => {
-      preview.addEventListener('click', (e) => {
-        e.preventDefault();
-        const file = preview.getAttribute('data-file');
-        if (file) {
-          loadArticle(file);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attach toolbar button click handlers
+      document.querySelectorAll('.toolbar-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          loadSection(btn.getAttribute('data-page'));
+        });
+      });
+
+      // Attach click handlers for article previews
+      document.querySelectorAll('.article-preview').forEach(preview => {
+        preview.addEventListener('click', () => {
+          const file = preview.getAttribute('data-file');
+          if (file) {
+            loadArticle(file);
+          }
+        });
+        // Accessibility: also allow Enter/Space to trigger click
+        preview.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            preview.click();
+          }
+        });
+      });
+
+      // On page load, handle hash or last view
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        if (hash.endsWith('.html')) {
+          loadArticle(hash, false);
+        } else {
+          loadSection(hash, false);
         }
-      });
-    });
-  });
-      // Mode toggle
+      } else {
+        const saved = localStorage.getItem('lastView');
+        if (saved) {
+          const view = JSON.parse(saved);
+          if (view.type === 'article' && view.file) {
+            loadArticle(view.file, false);
+          } else if (view.type === 'section' && view.page) {
+            loadSection(view.page, false);
+          } else {
+            loadSection('articles', false);
+          }
+        } else {
+          loadSection('articles', false);
+        }
+      }
+
+      // Mode toggle logic
       const modeToggle = document.getElementById('mode-toggle');
-const backToTopBtn = document.getElementById('back-to-top');
+      modeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
+      });
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.style.display = 'block';
-  } else {
-    backToTopBtn.style.display = 'none';
-  }
-});
-
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Home') {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-});
-
-modeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
-});
-
-      document.addEventListener('click', (event) => {
-  const searchContainer = document.getElementById('search-container');
-  const searchBar = document.getElementById('search-bar');
-  const clearBtn = document.getElementById('clear-search');
-  const funnyBox = document.getElementById('search-funny');
-
-  // If click is outside the search container, close the search bar
-  if (!searchContainer.contains(event.target)) {
-    searchBar.style.display = 'none';
-    clearBtn.style.display = 'none';
-    funnyBox.style.display = 'none';
-  }
-});
-
-      // Search toggle
+      // Search toggle logic
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
       const funnyBox = document.getElementById('search-funny');
@@ -910,215 +609,79 @@ modeToggle.addEventListener('click', () => {
         "moon landing": "🚀 One small step for man, one giant leap for memes.",
       };
 
-   searchToggle.addEventListener('click', (event) => {
-     event.stopPropagation();
- if (searchBar.style.display === 'inline-block') {
-    searchBar.style.display = 'none';
-    funnyBox.style.display = 'none';
-    clearSearch.style.display = 'none';
-  } else {
-    searchBar.style.display = 'inline-block';
-    searchBar.focus();
-    funnyBox.style.display = 'block';
+      searchToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (searchBar.style.display === 'inline-block') {
+          searchBar.style.display = 'none';
+          funnyBox.style.display = 'none';
+          clearSearch.style.display = 'none';
+        } else {
+          searchBar.style.display = 'inline-block';
+          searchBar.focus();
+          funnyBox.style.display = 'block';
 
-    if (searchBar.value.trim().length) {
-      clearSearch.style.display = 'inline';
-    }
-  }
-});
-searchBar.addEventListener('input', () => {
-  const val = searchBar.value.trim().toLowerCase();
-  clearSearch.style.display = val.length ? 'inline' : 'none';
+          if (searchBar.value.trim().length) {
+            clearSearch.style.display = 'inline';
+          }
+        }
+      });
 
-  // Show funny response if exists
-  if (funnyResponses[val]) {
-    funnyBox.textContent = funnyResponses[val];
-    return;
-  }
+      searchBar.addEventListener('input', () => {
+        const val = searchBar.value.trim().toLowerCase();
+        clearSearch.style.display = val.length ? 'inline' : 'none';
 
-  // Look for article matches by title or keywords
-  const match = searchableArticles.find(article =>
-    article.title.toLowerCase().includes(val) ||
-    article.keywords.some(keyword => keyword.startsWith(val))
-  );
+        if (funnyResponses[val]) {
+          funnyBox.textContent = funnyResponses[val];
+          return;
+        }
 
-  if (match && val.length > 0) {
-  funnyBox.innerHTML = `
-  <div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">
-     ${match.title}
-  </div>
-`;
-  } else if (val.length > 0) {
-    funnyBox.textContent = 'Searching... No results found.';
-  } else {
-    funnyBox.textContent = '';
-  }
-});
+        const match = searchableArticles.find(article =>
+          article.title.toLowerCase().includes(val) ||
+          article.keywords.some(keyword => keyword.startsWith(val))
+        );
+
+        if (match && val.length > 0) {
+          funnyBox.innerHTML = `
+            <div class="search-suggestion" style="cursor:pointer; text-decoration:underline;" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">
+               ${match.title}
+            </div>
+          `;
+        } else if (val.length > 0) {
+          funnyBox.textContent = 'Searching... No results found.';
+        } else {
+          funnyBox.textContent = '';
+        }
+      });
+
       clearSearch.addEventListener('click', () => {
         searchBar.value = '';
         funnyBox.textContent = '';
         clearSearch.style.display = 'none';
         searchBar.focus();
       });
-// Toolbar navigation simulation
-const buttons = document.querySelectorAll('.toolbar-btn');
-const mainContent = document.getElementById('main-content');
-const articleFullContent = document.getElementById('article-full-content');
-const articlesContainer = document.getElementById('articles-container');
 
-buttons.forEach(btn => {
-  btn.addEventListener('click', (event) => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const page = btn.getAttribute('data-page');
-    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
-    // Hide article full and previews
-    articleFullContent.style.display = 'none';
-    articlesContainer.style.display = (page === 'articles') ? 'block' : 'none';
-    mainContent.style.display = 'block';
+      // Close search bar if clicking outside
+      document.addEventListener('click', (event) => {
+        if (!document.getElementById('search-container').contains(event.target)) {
+          searchBar.style.display = 'none';
+          funnyBox.style.display = 'none';
+          clearSearch.style.display = 'none';
+        }
+      });
 
-    if (page === 'articles') {
-      mainContent.innerHTML = ''; // just previews
-    } else if (page === 'shorticles') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Shorticles</h2>
-          <p>Shorticles content goes here...</p>
-        </div>`;
-    } else if (page === 'books') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Books</h2>
-          <p>Books content goes here...</p>
-        </div>`;
-    } else if (page === 'about') {
-      // You can keep About simple or wrap in content-page if you want consistent look
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>About</h2>
-          <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
-          <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
-          <p><strong>HBM Archive</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
-          <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
-        </div>`;
-    } else if (page === 'tos') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Legal Disclaimer & Terms of Use</h2>
-          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-          <ul>
-            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-            <li>The owner is not responsible for any third-party links or external content.</li>
-            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-            <li>The website does not collect personal data, and no input from users is accepted.</li>
-            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-            <li>These terms apply globally and supersede any conflicting local laws.</li>
-          </ul>
-          <p><strong>Creative Commons License:</strong><br>
-            This work is licensed under the
-            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-            </a>.
-          </p>
-          <h2>Content Disclaimer</h2>
-          <p><strong>Disclaimer:</strong></p>
-          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-          <p><strong>Copyright Notice:</strong><br>
-            &copy; 2025 HBM Archive. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-          </p>
-        </div>`;
-    } else {
-      mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
-    }
-  });
-});
-      // Footnote visibility on scroll near bottom
-      const footnote = document.getElementById('footnote');
+      // Back to top button logic
+      const backToTopBtn = document.getElementById('back-to-top');
       window.addEventListener('scroll', () => {
-        const scrollBottom = window.innerHeight + window.scrollY;
-        const docHeight = document.documentElement.offsetHeight;
-        if (docHeight - scrollBottom < 200) {
-          footnote.style.opacity = '1';
-          footnote.style.pointerEvents = 'auto';
+        if (window.scrollY > 200) {
+          backToTopBtn.style.display = 'block';
         } else {
-          footnote.style.opacity = '0';
-          footnote.style.pointerEvents = 'none';
+          backToTopBtn.style.display = 'none';
         }
       });
-
-      // Konami code
-      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-      let konamiPosition = 0;
-      const popupId = 'konami-popup';
-
-      function showKonamiPopup() {
-        if (document.getElementById(popupId)) return;
-        const popup = document.createElement('div');
-        popup.id = popupId;
-        popup.textContent = 'They are watching!';
-        popup.style.position = 'fixed';
-        popup.style.top = '50%';
-        popup.style.left = '50%';
-        popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.backgroundColor = '#cc0000';
-        popup.style.color = '#fff';
-        popup.style.fontSize = '2rem';
-        popup.style.padding = '30px 50px';
-        popup.style.borderRadius = '8px';
-        popup.style.zIndex = '15000';
-        popup.style.fontWeight = 'bold';
-        popup.style.fontFamily = 'monospace';
-        popup.style.textAlign = 'center';
-        popup.style.userSelect = 'none';
-        popup.style.boxShadow = '0 0 15px #ff0000';
-        document.body.appendChild(popup);
-        setTimeout(() => {
-          if (popup.parentNode) popup.parentNode.removeChild(popup);
-        }, 4000);
-      }
-
-      window.addEventListener('keydown', (e) => {
-        if (e.keyCode === konamiCode[konamiPosition]) {
-          konamiPosition++;
-          if (konamiPosition === konamiCode.length) {
-            konamiPosition = 0;
-            showKonamiPopup();
-          }
-        } else {
-          konamiPosition = 0;
-        }
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-     });
+    });
   </script>
-  <button id="back-to-top" aria-label="Back to top" title="Back to top" 
-  style="
-    display:none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
-    background: rgba(0, 0, 0, 0.3);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 15000;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    user-select: none;
-    transition: background-color 0.3s ease;
-  "
-  onmouseenter="this.style.background='rgba(0,0,0,0.6)'" 
-  onmouseleave="this.style.background='rgba(0,0,0,0.3)'"
->
-  ↑
-</button>
-
 </body>
 </html>
