@@ -368,26 +368,7 @@ header {
   user-select: none;
 }
 
-/* Search input */
-#search-bar {
-  display: none;
-  width: 200px;
-  padding: 6px 28px 6px 8px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background: #fff;
-  color: #000;
-  position: relative;
-  z-index: 11000;
-}
-
-body.dark-mode #search-bar {
-  background: #333;
-  color: #fff;
-}
-
+/* Search input */   
 /* Clear (×) button */
 #clear-search {
   position: relative;
@@ -606,6 +587,38 @@ body.dark-mode #search-funny {
       color: #bbb;
       background: rgba(18, 18, 18, 0.9);
     }
+#header-toolbar-wrapper,
+#toolbar,
+header {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+body.dark-mode #header-toolbar-wrapper,
+body.dark-mode #toolbar,
+body.dark-mode header {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+#search-bar {
+  display: none !important;
+  width: 200px !important;
+  padding: 6px 28px 6px 8px !important;
+  font-size: 14px !important;
+  border: none !important;
+  border-radius: 3px !important;
+  outline: none !important;
+  background: #fff !important;
+  color: #000 !important;
+  position: relative !important;
+  z-index: 11000 !important;
+}
+
+body.dark-mode #search-bar {
+  background: #333 !important;
+  color: #fff !important;
+}
   </style>
 </head>
 <body>
