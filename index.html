@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ranture</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
     .search-suggestion {
   display: inline-block;
@@ -19,35 +19,39 @@
   border: 1px solid #444;
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
-  .article-page, .content-page {
-  font-family: 'Quicksand', sans-serif;
+.article-page, .content-page {
+  font-family: 'Lora', serif;
   font-size: 1.1rem;
-  line-height: 1.15;
-  letter-spacing: 0.14px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  word-spacing: 0.05em;
   color: var(--text-color, #1a1a1a);
   background-color: var(--article-bg, #fdfdfd);
-  padding: 1rem;
-  padding-left: 1.5rem;
-  padding-right: 2rem;
-  word-spacing: -0.05em;
   max-width: 700px;
-  margin: auto;
+  margin: 2rem auto;            /* Avoid duplicate margin lines */
+  padding: 0 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 0.4s ease-in-out;
-  transition: background-color 0.4s ease, color 0.4s ease;
   text-align: justify;
-  /* from .article-page */
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: manual;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+
 /* Headings */
-.content-page h2,
-.content-page h3,
-.content-page h4 {
-  color: var(--accent-color, #444);
+.article-page h2, .content-page h2,
+.article-page h3, .content-page h3,
+.article-page h4, .content-page h4 {
+  font-family: 'Crimson Text', serif;
+  color: var(--accent-color, #333);
+  font-weight: 700;
   margin-top: 2rem;
+  margin-bottom: 1rem;
   border-bottom: 2px solid #ddd;
   padding-bottom: 0.3rem;
+  letter-spacing: 0.01em;
 }
 
 /* Paragraphs */
