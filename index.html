@@ -7,15 +7,41 @@
  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
   <style>
 :root {
-  --article-bg: #fffdf6;
+  --article-bg: #f5f3eb;
   --text-color: #1a1a1a;
 }
 
 body.dark-mode {
-  --article-bg: #0a1a2f;
+  --article-bg: #001f3f;
   --text-color: #dddddd;
 }
+    .article-page {
+  background-color: var(--article-bg, #fff);
+  padding: 2rem;
+  margin: 1rem auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 800px;
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #222;
+}
+.article-page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
 /* Article + Content Layout */
+    body.dark-mode .article-page {
+  background-color: #1b1b1b; /* Or use var(--article-bg) if defined */
+  color: #e0e0e0;
+}
+
+body.dark-mode .article-page img {
+  filter: brightness(0.9) contrast(1.1);
+}
     #article-full-content {
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -602,7 +628,7 @@ function loadArticle(filename, previewElem) {
         // Show article full content container with loaded content
         const container = document.getElementById('article-full-content');
 document.getElementById('search-funny').style.display = 'none';
-container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
+container.innerHTML = `<div class="content-page article-page">${articleContent.innerHTML}</div>`;
         container.style.display = 'block';
 
         container.scrollIntoView({ behavior: 'smooth' });
