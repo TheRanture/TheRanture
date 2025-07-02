@@ -16,6 +16,13 @@ body.dark-mode {
   --text-color: #dddddd;
 }
 /* Article + Content Layout */
+    #article-full-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+body.ready #article-full-content {
+  opacity: 1;
+}
 .article-page,
 .content-page {
   background-color: var(--article-bg, #f7f7f7);
@@ -605,25 +612,27 @@ container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</di
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-    document.addEventListener('DOMContentLoaded', () => {
-      if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-        // Always start at top on page load
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-      const saved = localStorage.getItem('lastView');
-if (saved) {
-  const view = JSON.parse(saved);
-  if (view.type === 'article' && view.file) {
-    loadArticle(view.file);
-  } else if (view.type === 'section' && view.page) {
-    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-    if (targetBtn) targetBtn.click();
+document.addEventListener('DOMContentLoaded', () => {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
   }
-}
+  window.scrollTo(0, 0);
+
+  const saved = localStorage.getItem('lastView');
+
+  if (saved) {
+    const view = JSON.parse(saved);
+    // Delay loading article slightly to give CSS time to settle
+    setTimeout(() => {
+      if (view.type === 'article' && view.file) {
+        loadArticle(view.file);
+      } else if (view.type === 'section' && view.page) {
+        const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+        if (targetBtn) targetBtn.click();
+      }
+    }, 100); // ← slight delay helps page stabilize
+  }
+
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
@@ -652,7 +661,7 @@ modeToggle.addEventListener('click', () => {
   const isDark = document.body.classList.contains('dark-mode');
   modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
 });
-
+  document.body.classList.add('ready');
       document.addEventListener('click', (event) => {
   const searchContainer = document.getElementById('search-container');
   const searchBar = document.getElementById('search-bar');
