@@ -15,7 +15,6 @@ body.dark-mode {
   --article-bg: #0a1a2f;
   --text-color: #dddddd;
 }
-
 /* Article + Content Layout */
 .article-page,
 .content-page {
@@ -596,7 +595,7 @@ function loadArticle(filename, previewElem) {
         // Show article full content container with loaded content
         const container = document.getElementById('article-full-content');
 document.getElementById('search-funny').style.display = 'none';
-container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
+container.innerHTML = `<div class="article-page">${articleContent.innerHTML}</div>`;
         container.style.display = 'block';
 
         container.scrollIntoView({ behavior: 'smooth' });
