@@ -6,14 +6,14 @@
   <title>Ranture</title>
  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-  --article-bg: #fffdf6;  /* background for light mode */
-  --text-color: #1a1a1a;  /* text color for light mode */
+:root {
+  --article-bg: #fffdf6;
+  --text-color: #1a1a1a;
 }
 
 body.dark-mode {
-  --article-bg: #1c1c1c;  /* background for dark mode */
-  --text-color: #dddddd;  /* text color for dark mode */
+  --article-bg: #0a1a2f;  /* dark navy */
+  --text-color: #dddddd;
 }
     .search-suggestion {
   display: inline-block;
@@ -230,9 +230,10 @@ body.dark-mode .legal-page {
 }
 
     /* Dark mode */
+body.dark-mode .article-page,
 body.dark-mode .content-page {
-  background-color: #1c1c1c;
-  color: #ddd;
+  background-color: var(--article-bg);
+  color: var(--text-color);
 }
 
 body.dark-mode .article-page h2,
@@ -274,16 +275,6 @@ body.dark-mode .article-page img,
 body.dark-mode .content-page img {
   box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
 }
-
-    
-body.dark-mode .article-page {
-  background-color: #0a1a2f;
-  color: #ddd;
-}
-      background: #121212;
-      color: #eee;
-    }
-
     /* Header & Toolbar container */
     #header-toolbar-wrapper {
       position: relative;
