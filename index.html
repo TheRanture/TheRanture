@@ -16,22 +16,23 @@ body.dark-mode {
   --text-color: #dddddd;
 }
 
-/* Typography and Layout */
+/* Article + Content Layout */
 .article-page,
 .content-page {
   background-color: var(--article-bg, #f7f7f7);
   color: var(--text-color, #1a1a1a);
+  font-family: 'Lora', serif;
   font-size: 1.15rem;
   line-height: 1.6;
+  max-width: 800px;
+  margin: 2em auto;
   padding: 2rem;
   border-radius: 8px;
-  font-family: 'Lora', serif;
-  max-width: 800px;
-  margin: 0 auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-wrap: break-word;
 }
 
-/* Ensure dark mode keeps consistency */
+/* Dark mode article override */
 body.dark-mode .article-page,
 body.dark-mode .content-page {
   background-color: var(--article-bg);
@@ -40,35 +41,34 @@ body.dark-mode .content-page {
 
 /* Headings */
 .article-page h1,
-.content-page h1,
 .article-page h2,
-.content-page h2,
 .article-page h3,
+.content-page h1,
+.content-page h2,
 .content-page h3 {
-  color: inherit;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  color: inherit;
 }
 
 /* Paragraphs */
 .article-page p,
 .content-page p {
   margin-bottom: 1.2em;
-  color: inherit;
 }
 
 /* Lists */
 .article-page ul,
-.content-page ul {
-  margin-left: 2em;
+.article-page ol,
+.content-page ul,
+.content-page ol {
+  padding-left: 2em;
   margin-bottom: 1em;
-  color: inherit;
 }
 
 .article-page li,
 .content-page li {
   margin-bottom: 0.5em;
-  color: inherit;
 }
 
 /* Blockquotes */
@@ -76,8 +76,9 @@ body.dark-mode .content-page {
 .content-page blockquote {
   border-left: 4px solid #888;
   padding-left: 1em;
-  color: inherit;
   margin: 1em 0;
+  font-style: italic;
+  opacity: 0.9;
 }
 
 /* Links */
@@ -92,14 +93,14 @@ body.dark-mode .content-page {
   text-decoration: underline;
 }
 
-/* Code blocks */
+/* Code Blocks */
 .article-page pre,
 .content-page pre {
   background-color: #f4f4f4;
+  color: #333;
   padding: 1em;
   overflow-x: auto;
   border-radius: 4px;
-  color: #333;
 }
 
 .article-page code,
@@ -118,9 +119,10 @@ body.dark-mode .content-page {
   height: auto;
   display: block;
   margin: 1em auto;
+  border-radius: 6px;
 }
 
-/* Horizontal rules */
+/* Horizontal Rules */
 .article-page hr,
 .content-page hr {
   border: 0;
@@ -134,24 +136,24 @@ body.dark-mode .content-page {
 .content-page table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1em 0;
+  margin: 1.5em 0;
 }
 
 .article-page th,
-.content-page th,
 .article-page td,
+.content-page th,
 .content-page td {
   border: 1px solid #ccc;
   padding: 0.5em;
   text-align: left;
 }
 
-/* Responsive */
+/* Responsive Scaling */
 @media (max-width: 768px) {
   .article-page,
   .content-page {
-    padding: 1rem;
     font-size: 1rem;
+    padding: 1rem;
   }
 }
     /* Header & Toolbar container */
