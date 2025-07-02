@@ -613,23 +613,32 @@ body.dark-mode #search-funny {
   <div id="footnote">Made possible by bad choices and good intentions.</div>
 
   <script>
-    async function generatePageHash() {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(document.documentElement.outerHTML);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  async function generatePageHash() {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(document.documentElement.outerHTML);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const shortHash = fullHash.substring(0, 6);
 
-  // Use only first 6 characters as a short hash (or customize length)
-  const shortHash = fullHash.substring(0, 6);
+    // Console log full and short
+    console.log("Full SHA-256 hash:", fullHash);
+    console.log("Short Proof Code: RAN-" + shortHash);
 
-  // ✅ This is where you log it to the console:
-  console.log("Page hash (SHA-256):", shortHash);
+    // Display short hash on site
+    const hashDisplay = document.getElementById('page-hash');
+    if (hashDisplay) {
+      hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
+    }
 
-  // You can also embed it somewhere if you want:
-  // document.getElementById('page-hash').textContent = shortHash;
-}
-generatePageHash();
+    // Store full hash in hidden element
+    const fullHashEl = document.getElementById('full-page-hash');
+    if (fullHashEl) {
+      fullHashEl.textContent = fullHash;
+    }
+  }
+
+  generatePageHash();
     // Build searchable index from article previews
 const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
   const titleElem = preview.querySelector('h3');
