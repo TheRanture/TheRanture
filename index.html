@@ -184,12 +184,14 @@ body.dark-mode a:hover {
       z-index: 11000;
     }
 body.dark-mode #search-bar {
-  background: #2a2236;
-  color: #f0e6ff;
-  border: 1px solid #4b3b60;
+  background-color: #f4f4f8;  /* soft off-white */
+  color: #111;                /* dark text for readability */
+  border: 1px solid #aaa;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
 }
+
 body.dark-mode #search-bar::placeholder {
-  color: #b89edc;
+  color: #777; /* slightly dimmed hint text */
 }
     #clear-search {
       margin-left: -28px;
