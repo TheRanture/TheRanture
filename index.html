@@ -490,13 +490,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Mode toggle
-const modeToggle = document.getElementById('mode-toggle');
-modeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-});
-  const isDark = document.body.classList.toggle('dark-mode');
-  modeToggle.setAttribute('aria-pressed', isDark);
+  // Mode toggle setup
+  const modeToggle = document.getElementById('mode-toggle');
+  const darkActive = document.body.classList.contains('dark-mode');
+  modeToggle.setAttribute('aria-pressed', darkActive);
+
+  modeToggle.addEventListener('click', () => {
+    const toggled = document.body.classList.toggle('dark-mode');
+    modeToggle.setAttribute('aria-pressed', toggled);
+  });
 });
   // Back to top visibility
   const backToTop = document.getElementById('back-to-top');
