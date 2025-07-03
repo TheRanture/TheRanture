@@ -677,6 +677,8 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
   };
 });
 function loadArticle(filename, previewElem) {
+  history.pushState({ article: filename }, '', '?article=' + encodeURIComponent(filename));
+  history.pushState({ type: 'section', page }, '', `/${page}`);
   localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
   fetch(filename)
     .then(response => response.text())
@@ -903,7 +905,7 @@ buttons.forEach(btn => {
           <p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
           <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
         </div>`;
-    } else if (page === 'Legal') {
+    } else if (page === 'legal') {
       mainContent.innerHTML = `
         <div class="content-page">
           <h2>Legal Disclaimer & Terms of Use</h2>
