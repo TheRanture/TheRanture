@@ -627,11 +627,14 @@ body.dark-mode #search-funny {
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
-      <p id="site-motto">I came, I saw, I ranted.</p>
 <div id="site-motto">
-  <span class="motto-part" id="came">I came,</span>
-  <span class="motto-part" id="saw">I saw,</span>
-  <span class="motto-part" id="ranted">I ranted.</span>
+  <h1>Ranture</h1>
+  <h1>Ranture</h1>
+  <div id="site-motto">
+    <span class="motto-part" id="came">I came,</span>
+    <span class="motto-part" id="saw">I saw,</span>
+    <span class="motto-part" id="ranted">I ranted.</span>
+  </div>
 </div>
     </header>
 <div id="search-container">
@@ -653,8 +656,6 @@ body.dark-mode #search-funny {
   <button class="toolbar-btn" data-page="about">About</button>
   <button class="toolbar-btn" data-page="tos">ToS</button>
 </nav>
-
-  </div>
 <div class="articles-container" id="articles-container">
   <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
     <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
@@ -739,68 +740,69 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-    document.addEventListener('DOMContentLoaded', () => {
-      if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-        // Always start at top on page load
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-      const saved = localStorage.getItem('lastView');
-if (saved) {
-  const view = JSON.parse(saved);
-  if (view.type === 'article' && view.file) {
-    loadArticle(view.file);
-  } else if (view.type === 'section' && view.page) {
-    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-    if (targetBtn) targetBtn.click();
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Scroll restoration
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  // 2. Restore last view
+  const saved = localStorage.getItem('lastView');
+  if (saved) {
+    const view = JSON.parse(saved);
+    if (view.type === 'article' && view.file) {
+      loadArticle(view.file);
+    } else if (view.type === 'section' && view.page) {
+      const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+      if (targetBtn) targetBtn.click();
+    }
   }
-}
-      // Mode toggle
-      const modeToggle = document.getElementById('mode-toggle');
-const backToTopBtn = document.getElementById('back-to-top');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.style.display = 'block';
-  } else {
-    backToTopBtn.style.display = 'none';
-  }
-});
+  // 3. Mode toggle
+  const modeToggle = document.getElementById('mode-toggle');
+  modeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
+  });
 
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Home') {
-    e.preventDefault();
+  // 4. Back to top
+  const backToTopBtn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+  backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Home') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  // 5. Search bar outside-click handling
+  document.addEventListener('click', (event) => {
+    const searchContainer = document.getElementById('search-container');
+    if (!searchContainer.contains(event.target)) {
+      document.getElementById('search-bar').style.display = 'none';
+      document.getElementById('clear-search').style.display = 'none';
+      document.getElementById('search-funny').style.display = 'none';
+    }
+  });
+
+  // 6. Header animation
+  const came = document.getElementById('came');
+  const saw = document.getElementById('saw');
+  const ranted = document.getElementById('ranted');
+  if (came && saw && ranted) {
+    setTimeout(() => came.classList.add('show'), 200);
+    setTimeout(() => saw.classList.add('show'), 1000);
+    setTimeout(() => {
+      ranted.classList.add('show');
+      ranted.classList.add('ranted-glitch');
+    }, 1800);
   }
 });
-
-modeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
-});
-
-      document.addEventListener('click', (event) => {
-  const searchContainer = document.getElementById('search-container');
-  const searchBar = document.getElementById('search-bar');
-  const clearBtn = document.getElementById('clear-search');
-  const funnyBox = document.getElementById('search-funny');
-
-  // If click is outside the search container, close the search bar
-  if (!searchContainer.contains(event.target)) {
-    searchBar.style.display = 'none';
-    clearBtn.style.display = 'none';
-    funnyBox.style.display = 'none';
-  }
-});
-
       // Search toggle
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
@@ -934,7 +936,7 @@ buttons.forEach(btn => {
           <h2>About</h2>
           <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
           <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
-          <p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
+          <p><strong>ranted-glitch</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
           <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
         </div>`;
     } else if (page === 'tos') {
@@ -1055,19 +1057,5 @@ buttons.forEach(btn => {
 >
   ↑
 </button>
-    window.addEventListener('DOMContentLoaded', () => {
-    const came = document.getElementById('came');
-    const saw = document.getElementById('saw');
-    const ranted = document.getElementById('ranted');
-
-    setTimeout(() => came.classList.add('show'), 200);
-    setTimeout(() => saw.classList.add('show'), 1000);
-    setTimeout(() => ranted.classList.add('show'), 1800);
-
-    // Add glitch after delay
-    setTimeout(() => {
-      ranted.classList.add('ranted-glitch');
-    }, 2800);
-  });
 </body>
 </html>
