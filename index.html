@@ -6,43 +6,6 @@
   <title>Ranture</title>
  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
-#site-motto {
-  font-family: 'Lora', serif;
-  font-size: 1.5rem;
-  color: #bbb;
-  text-align: center;
-  margin-top: 0.5rem;
-  position: relative;
-}
-
-.motto-part {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  margin: 0 0.2em;
-}
-
-/* Animation timing */
-#came.show { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
-#saw.show { opacity: 1; transform: translateY(0); transition-delay: 1s; }
-#ranted.show { opacity: 1; transform: translateY(0); transition-delay: 1.8s; }
-
-/* Glitchy shake after delay */
-@keyframes shakeRotate {
-  0% { transform: rotate(0deg) translate(0, 0); }
-  20% { transform: rotate(-1deg) translate(-1px, 1px); }
-  40% { transform: rotate(1deg) translate(2px, -1px); }
-  60% { transform: rotate(-2deg) translate(-2px, 2px); }
-  80% { transform: rotate(1deg) translate(1px, -2px); }
-  100% { transform: rotate(0deg) translate(0, 0); }
-}
-
-.ranted-glitch {
-  animation: shakeRotate 0.4s ease-in-out infinite;
-  color: #f33;
-}
-
     .search-suggestion {
   display: inline-block;
   background: #222;
@@ -78,22 +41,6 @@
   hyphens: manual;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
-    #motto {
-  text-align: center;
-  font-family: 'Crimson Text', serif;
-  font-size: 1.2rem;
-  font-style: italic;
-  color: #ccc;
-  padding: 6px 0 4px;
-  letter-spacing: 0.4px;
-  user-select: none;
-  transition: color 0.4s ease;
-}
-
-body.dark-mode #motto {
-  color: #aaa;
-}
-
 
 
 /* Headings */
@@ -643,51 +590,45 @@ body.dark-mode #search-funny {
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
-      <div id="site-motto">
-        <span class="motto-part" id="came">I came,</span>
-        <span class="motto-part" id="saw">I saw,</span>
-        <span class="motto-part" id="ranted">I ranted.</span>
-      </div>
     </header>
+<div id="search-container">
+  <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+    <!-- magnifier icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+    </svg>
+  </button>
+<input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
+  <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
+  <div id="search-funny" aria-live="polite"></div>
+</div>
 
-    <div id="search-container">
-      <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
-        <!-- magnifier icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-        </svg>
-      </button>
-      <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
-      <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
-      <div id="search-funny" aria-live="polite"></div>
-    </div>
+<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+  <button class="toolbar-btn active" data-page="articles">Articles</button>
+  <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+  <button class="toolbar-btn" data-page="books">Books</button>
+  <button class="toolbar-btn" data-page="about">About</button>
+  <button class="toolbar-btn" data-page="tos">ToS</button>
+</nav>
 
-    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-      <button class="toolbar-btn active" data-page="articles">Articles</button>
-      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
-      <button class="toolbar-btn" data-page="books">Books</button>
-      <button class="toolbar-btn" data-page="about">About</button>
-      <button class="toolbar-btn" data-page="tos">ToS</button>
-    </nav>
   </div>
-
-  <div class="articles-container" id="articles-container">
-    <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
-      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
-      <h3>AI Consciousness and Rights</h3>
-      <p>An exploration of AI awareness.</p>
-    </div>
+<div class="articles-container" id="articles-container">
+  <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
+    <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
+    <h3>AI Consciousness and Rights</h3>
+    <p>An exploration of AI awareness.</p>
   </div>
+</div>
 
-  <!-- Full article content container -->
-  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
+<!-- Full article content container -->
+<div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
 
-  <!-- Main content for toolbar pages -->
-  <main id="main-content" tabindex="0" aria-live="polite"></main>
-
+<!-- Main content for toolbar pages -->
+<main id="main-content" tabindex="0" aria-live="polite"></main>
   <!-- Footnote -->
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
-<script>
+
+  <script>
   async function generatePageHash() {
     const encoder = new TextEncoder();
     const data = encoder.encode(document.documentElement.outerHTML);
@@ -755,69 +696,68 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Scroll restoration
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  // 2. Restore last view
-  const saved = localStorage.getItem('lastView');
-  if (saved) {
-    const view = JSON.parse(saved);
-    if (view.type === 'article' && view.file) {
-      loadArticle(view.file);
-    } else if (view.type === 'section' && view.page) {
-      const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-      if (targetBtn) targetBtn.click();
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+        // Always start at top on page load
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+      const saved = localStorage.getItem('lastView');
+if (saved) {
+  const view = JSON.parse(saved);
+  if (view.type === 'article' && view.file) {
+    loadArticle(view.file);
+  } else if (view.type === 'section' && view.page) {
+    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+    if (targetBtn) targetBtn.click();
   }
+}
+      // Mode toggle
+      const modeToggle = document.getElementById('mode-toggle');
+const backToTopBtn = document.getElementById('back-to-top');
 
-  // 3. Mode toggle
-  const modeToggle = document.getElementById('mode-toggle');
-  modeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
-  });
-
-  // 4. Back to top
-  const backToTopBtn = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-  });
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Home') {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-
-  // 5. Search bar outside-click handling
-  document.addEventListener('click', (event) => {
-    const searchContainer = document.getElementById('search-container');
-    if (!searchContainer.contains(event.target)) {
-      document.getElementById('search-bar').style.display = 'none';
-      document.getElementById('clear-search').style.display = 'none';
-      document.getElementById('search-funny').style.display = 'none';
-    }
-  });
-
-  // 6. Header animation
-  const came = document.getElementById('came');
-  const saw = document.getElementById('saw');
-  const ranted = document.getElementById('ranted');
-  if (came && saw && ranted) {
-    setTimeout(() => came.classList.add('show'), 200);
-    setTimeout(() => saw.classList.add('show'), 1000);
-    setTimeout(() => {
-      ranted.classList.add('show');
-      ranted.classList.add('ranted-glitch');
-    }, 1800);
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    backToTopBtn.style.display = 'block';
+  } else {
+    backToTopBtn.style.display = 'none';
   }
 });
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Home') {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+modeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
+});
+
+      document.addEventListener('click', (event) => {
+  const searchContainer = document.getElementById('search-container');
+  const searchBar = document.getElementById('search-bar');
+  const clearBtn = document.getElementById('clear-search');
+  const funnyBox = document.getElementById('search-funny');
+
+  // If click is outside the search container, close the search bar
+  if (!searchContainer.contains(event.target)) {
+    searchBar.style.display = 'none';
+    clearBtn.style.display = 'none';
+    funnyBox.style.display = 'none';
+  }
+});
+
       // Search toggle
       const searchToggle = document.getElementById('search-toggle');
       const searchBar = document.getElementById('search-bar');
@@ -951,7 +891,7 @@ buttons.forEach(btn => {
           <h2>About</h2>
           <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
           <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
-          <p><strong>ranted-glitch</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
+          <p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
           <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
         </div>`;
     } else if (page === 'tos') {
@@ -971,7 +911,7 @@ buttons.forEach(btn => {
           </ul>
           <p><strong>Creative Commons License:</strong><br>
             This work is licensed under the
-            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license">
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
               Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
             </a>.
           </p>
