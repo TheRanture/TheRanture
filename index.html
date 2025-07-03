@@ -4,190 +4,253 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ranture</title>
- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
-:root {
-  --article-bg: #f5f3eb;
-  --text-color: #1a1a1a;
+    .search-suggestion {
+  display: inline-block;
+  background: #222;
+  color: #aaddff;
+  padding: 6px 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: 1px solid #444;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
-
-body.dark-mode {
-  --article-bg: #001f3f;
-  --text-color: #dddddd;
-}
-    .article-page {
-  background-color: var(--article-bg, #fff);
-  padding: 2rem;
-  margin: 1rem auto;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  max-width: 800px;
+.article-page, .content-page {
   font-family: 'Lora', serif;
   font-size: 1.1rem;
-  line-height: 1.7;
-  color: #222;
-}
-.article-page img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-}
-/* Article + Content Layout */
-    body.dark-mode .article-page {
-  background-color: #1b1b1b; /* Or use var(--article-bg) if defined */
-  color: #e0e0e0;
-}
-
-body.dark-mode .article-page img {
-  filter: brightness(0.9) contrast(1.1);
-}
-    #article-full-content {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-body.ready #article-full-content {
-  opacity: 1;
-}
-.article-page,
-.content-page {
-  background-color: var(--article-bg, #f7f7f7);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  word-spacing: 0.02em;
   color: var(--text-color, #1a1a1a);
-  font-family: 'Lora', serif;
-  font-size: 1.15rem;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 2em auto;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--article-bg, #fdfdfd);
+  max-width: 1000px;
+  margin: 2rem auto;            /* Avoid duplicate margin lines */
+  padding-top: 1rem;    /* your existing padding */
+  padding-bottom: 1rem; /* your existing padding */
+  padding-left: 2.5rem;
+  padding-right: 3.5rem;  /* add this to push text away from right edge */
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  word-break: normal;
   overflow-wrap: break-word;
+  hyphens: manual;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Dark mode article override */
-body.dark-mode .article-page,
-body.dark-mode .content-page {
-  background-color: var(--article-bg);
-  color: var(--text-color);
-}
 
 /* Headings */
-.article-page h1,
-.article-page h2,
-.article-page h3,
-.content-page h1,
-.content-page h2,
-.content-page h3 {
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  color: inherit;
+.article-page h2, .content-page h2,
+.article-page h3, .content-page h3,
+.article-page h4, .content-page h4 {
+  font-family: 'Crimson Text', serif;
+  color: var(--accent-color, #333);
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.3rem;
+  letter-spacing: 0.01em;
 }
 
 /* Paragraphs */
-.article-page p,
 .content-page p {
-  margin-bottom: 1.2em;
-}
-
-/* Lists */
-.article-page ul,
-.article-page ol,
-.content-page ul,
-.content-page ol {
-  padding-left: 2em;
-  margin-bottom: 1em;
-}
-
-.article-page li,
-.content-page li {
-  margin-bottom: 0.5em;
-}
-
-/* Blockquotes */
-.article-page blockquote,
-.content-page blockquote {
-  border-left: 4px solid #888;
-  padding-left: 1em;
-  margin: 1em 0;
-  font-style: italic;
-  opacity: 0.9;
-}
-
-/* Links */
-.article-page a,
-.content-page a {
-  color: #336699;
-  text-decoration: none;
-}
-
-.article-page a:hover,
-.content-page a:hover {
-  text-decoration: underline;
-}
-
-/* Code Blocks */
-.article-page pre,
-.content-page pre {
-  background-color: #f4f4f4;
-  color: #333;
-  padding: 1em;
-  overflow-x: auto;
-  border-radius: 4px;
-}
-
-.article-page code,
-.content-page code {
-  background-color: #f4f4f4;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-family: monospace;
-  font-size: 0.95em;
-}
-
-/* Images */
-.article-page img,
-.content-page img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1em auto;
-  border-radius: 6px;
-}
-
-/* Horizontal Rules */
-.article-page hr,
-.content-page hr {
-  border: 0;
-  height: 1px;
-  background: #ccc;
-  margin: 2em 0;
-}
-
-/* Tables */
-.article-page table,
-.content-page table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5em 0;
-}
-
-.article-page th,
-.article-page td,
-.content-page th,
-.content-page td {
-  border: 1px solid #ccc;
-  padding: 0.5em;
+  text-indent: 0em;
+  margin: 1.4rem 0;
   text-align: left;
 }
 
-/* Responsive Scaling */
-@media (max-width: 768px) {
-  .article-page,
-  .content-page {
-    font-size: 1rem;
-    padding: 1rem;
-  }
+/* Images */
+.content-page img {
+  display: block;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* Lists */
+.content-page ul,
+.content-page ol {
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color, #1a1a1a);
+}
+
+/* Blockquotes */
+.content-page blockquote {
+  font-style: italic;
+  background: #fefae0;
+  border-left: 4px solid #b59f3b;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 6px;
+  color: #444;
+}
+
+/* Dark mode */
+
+.article-page h2, .article-page h3, .article-page h4 {
+  color: var(--accent-color, #444);
+  margin-top: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.3rem;
+}
+
+.article-page p {
+ text-indent: 0em;
+  margin-top: 0;
+  margin-bottom: 1.7em;
+  text-align: left;
+}
+  .article-page p + p {
+  margin-top: 0;
+}
+
+.article-page img {
+  display: block;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-page ul, .article-page ol {
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-page blockquote {
+  font-style: italic;
+  background: #fefae0;
+  border-left: 4px solid #b59f3b;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 6px;
+  color: #444;
+}
+    
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+        .article-preview {
+      max-width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1em;
+      margin: 1em;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .article-preview:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .preview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.8em;
+    }
+
+    .article-preview h3 {
+      margin: 0 0 0.5em;
+      font-family: 'Palatino Linotype', serif;
+      color: #333;
+    }
+
+    .article-preview p {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .articles-container {
+      text-align: center;
+      padding: 1em;
+    }
+    /* Basic reset and body */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding-bottom: 280px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+body.dark-mode #clear-search {
+  color: white;
+}
+
+    /* Dark mode */
+    body.dark-mode .article-page,
+body.dark-mode .content-page {
+  background-color: #1c1c1c;
+  color: #ddd;
+}
+
+body.dark-mode .article-page h2,
+body.dark-mode .article-page h3,
+body.dark-mode .article-page h4,
+body.dark-mode .content-page h2,
+body.dark-mode .content-page h3,
+body.dark-mode .content-page h4 {
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .article-page p,
+body.dark-mode .content-page p {
+  color: #ccc;
+}
+
+body.dark-mode .article-page blockquote,
+body.dark-mode .content-page blockquote {
+  background: #2b2b2b;
+  border-left-color: #e0c97d;
+  color: #ddd;
+}
+
+body.dark-mode .article-page ul,
+body.dark-mode .article-page ol,
+body.dark-mode .content-page ul,
+body.dark-mode .content-page ol {
+  color: #ccc;
+}
+
+body.dark-mode .article-page a,
+body.dark-mode .content-page a {
+  color: #0077cc;
+  text-decoration: underline;
+}
+
+body.dark-mode .article-page img,
+body.dark-mode .content-page img {
+  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
+}
+
+    body.dark-mode {
+body.dark-mode .article-page {
+  background-color: #1c1c1c;
+  color: #ddd;
+}
+      background: #121212;
+      color: #eee;
+    }
+
     /* Header & Toolbar container */
     #header-toolbar-wrapper {
       position: relative;
@@ -272,7 +335,26 @@ header {
   user-select: none;
 }
 
-/* Search input */   
+/* Search input */
+#search-bar {
+  display: none;
+  width: 200px;
+  padding: 6px 28px 6px 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background: #fff;
+  color: #000;
+  position: relative;
+  z-index: 11000;
+}
+
+body.dark-mode #search-bar {
+  background: #333;
+  color: #fff;
+}
+
 /* Clear (×) button */
 #clear-search {
   position: relative;
@@ -491,37 +573,6 @@ body.dark-mode #search-funny {
       color: #bbb;
       background: rgba(18, 18, 18, 0.9);
     }
-#header-toolbar-wrapper,
-#toolbar,
-header {
-  background-color: #333 !important;
-  color: #fff !important;
-}
-
-body.dark-mode #header-toolbar-wrapper,
-body.dark-mode #toolbar,
-body.dark-mode header {
-  background-color: #222 !important;
-  color: #fff !important;
-}
-  #search-bar {
-  display: none;
-  width: 200px !important;
-  padding: 6px 28px 6px 8px !important;
-  font-size: 14px !important;
-  border: none !important;
-  border-radius: 3px !important;
-  outline: none !important;
-  background: #fff !important;
-  color: #000 !important;
-  position: relative !important;
-  z-index: 11000 !important;
-}
-
-body.dark-mode #search-bar {
-  background: #001f3f !important;
-  color: #fff !important;
-}
   </style>
 </head>
 <body>
@@ -550,7 +601,7 @@ body.dark-mode #search-bar {
   <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
   <button class="toolbar-btn" data-page="books">Books</button>
   <button class="toolbar-btn" data-page="about">About</button>
-  <button class="toolbar-btn" data-page="legal">Legal</button>
+  <button class="toolbar-btn" data-page="tos">ToS</button>
 </nav>
 
   </div>
@@ -628,7 +679,7 @@ function loadArticle(filename, previewElem) {
         // Show article full content container with loaded content
         const container = document.getElementById('article-full-content');
 document.getElementById('search-funny').style.display = 'none';
-container.innerHTML = `<div class="content-page article-page">${articleContent.innerHTML}</div>`;
+container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
         container.style.display = 'block';
 
         container.scrollIntoView({ behavior: 'smooth' });
@@ -638,27 +689,25 @@ container.innerHTML = `<div class="content-page article-page">${articleContent.i
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-document.addEventListener('DOMContentLoaded', () => {
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+    document.addEventListener('DOMContentLoaded', () => {
+      if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+        // Always start at top on page load
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+      const saved = localStorage.getItem('lastView');
+if (saved) {
+  const view = JSON.parse(saved);
+  if (view.type === 'article' && view.file) {
+    loadArticle(view.file);
+  } else if (view.type === 'section' && view.page) {
+    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+    if (targetBtn) targetBtn.click();
   }
-  window.scrollTo(0, 0);
-
-  const saved = localStorage.getItem('lastView');
-
-  if (saved) {
-    const view = JSON.parse(saved);
-    // Delay loading article slightly to give CSS time to settle
-    setTimeout(() => {
-      if (view.type === 'article' && view.file) {
-        loadArticle(view.file);
-      } else if (view.type === 'section' && view.page) {
-        const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-        if (targetBtn) targetBtn.click();
-      }
-    }, 100); // ← slight delay helps page stabilize
-  }
-
+}
       // Mode toggle
       const modeToggle = document.getElementById('mode-toggle');
 const backToTopBtn = document.getElementById('back-to-top');
@@ -687,7 +736,7 @@ modeToggle.addEventListener('click', () => {
   const isDark = document.body.classList.contains('dark-mode');
   modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
 });
-  document.body.classList.add('ready');
+
       document.addEventListener('click', (event) => {
   const searchContainer = document.getElementById('search-container');
   const searchBar = document.getElementById('search-bar');
@@ -838,7 +887,7 @@ buttons.forEach(btn => {
           <p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
           <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
         </div>`;
-    } else if (page === 'legal') {
+    } else if (page === 'tos') {
       mainContent.innerHTML = `
         <div class="content-page">
           <h2>Legal Disclaimer & Terms of Use</h2>
