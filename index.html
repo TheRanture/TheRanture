@@ -78,6 +78,22 @@
   hyphens: manual;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
+    #motto {
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #ccc;
+  padding: 6px 0 4px;
+  letter-spacing: 0.4px;
+  user-select: none;
+  transition: color 0.4s ease;
+}
+
+body.dark-mode #motto {
+  color: #aaa;
+}
+
 
 
 /* Headings */
@@ -637,6 +653,8 @@ body.dark-mode #search-funny {
   </div>
 </div>
     </header>
+<div id="motto">“Preserve, Provoke, Repeat.”</div>
+<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
 <div id="search-container">
   <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
     <!-- magnifier icon -->
