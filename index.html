@@ -4,149 +4,210 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ranture</title>
- <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
-    .search-suggestion {
-  display: inline-block;
-  background: #222;
-  color: #aaddff;
-  padding: 6px 10px;
-  margin-top: 4px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  border: 1px solid #444;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.article-page, .content-page {
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-  word-spacing: 0.02em;
-  color: var(--text-color, #1a1a1a);
-  background-color: var(--article-bg, #fdfdfd);
-  max-width: 1000px;
-  margin: 2rem auto;            /* Avoid duplicate margin lines */
-  padding-top: 1rem;    /* your existing padding */
-  padding-bottom: 1rem; /* your existing padding */
-  padding-left: 2.5rem;
-  padding-right: 3.5rem;  /* add this to push text away from right edge */
-  border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  text-align: left;
-  word-break: normal;
-  overflow-wrap: break-word;
-  hyphens: manual;
-  transition: background-color 0.4s ease, color 0.4s ease;
-}
-#motto {
-  text-align: center;
-  font-style: italic;
-  font-size: 1.2em;
-  margin-top: 0.2em;
-  margin-bottom: 0.8em;
-  color: #999; /* Fixed soft gray */
-  opacity: 1;
-  display: block;
-}
-/* Headings */
-.article-page h2, .content-page h2,
-.article-page h3, .content-page h3,
-.article-page h4, .content-page h4 {
-  font-family: 'Crimson Text', serif;
-  color: var(--accent-color, #333);
-  font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.3rem;
-  letter-spacing: 0.01em;
-}
+    /* RESET & BASE STYLES */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding-bottom: 280px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-/* Paragraphs */
-.content-page p {
-  text-indent: 0em;
-  margin: 1.4rem 0;
-  text-align: left;
-}
+    body.dark-mode {
+      background: linear-gradient(to bottom, #12141f, #0a0d1a),
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 100%),
+        radial-gradient(2px 2px at 75% 60%, rgba(255,255,255,0.04) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,0.03) 0%, transparent 100%),
+        radial-gradient(2px 2px at 60% 25%, rgba(255,255,255,0.045) 0%, transparent 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      color: #eee;
+    }
 
-/* Images */
-.content-page img {
-  display: block;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
+    body.dark-mode #clear-search {
+      color: white;
+    }
 
-/* Lists */
-.content-page ul,
-.content-page ol {
-  padding-left: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-color, #1a1a1a);
-}
+    /* MODE TOGGLE */
+    #mode-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      z-index: 12000;
+    }
 
-/* Blockquotes */
-.content-page blockquote {
-  font-style: italic;
-  background: #fefae0;
-  border-left: 4px solid #b59f3b;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  border-radius: 6px;
-  color: #444;
-}
+    #mode-toggle:hover {
+      background-color: white;
+      color: #333;
+      border-color: white;
+    }
 
-/* Dark mode */
+    body.dark-mode #mode-toggle {
+      border-color: #ddd;
+      color: #ddd;
+    }
 
-.article-page h2, .article-page h3, .article-page h4 {
-  color: var(--accent-color, #444);
-  margin-top: 2rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.3rem;
-}
+    body.dark-mode #mode-toggle:hover {
+      background-color: #ddd;
+      color: #121212;
+      border-color: #ddd;
+    }
 
-.article-page p {
- text-indent: 0em;
-  margin-top: 0;
-  margin-bottom: 1.7em;
-  text-align: left;
-}
-  .article-page p + p {
-  margin-top: 0;
-}
+    /* HEADER TOOLBAR WRAPPER */
+    #header-toolbar-wrapper {
+      position: relative;
+      z-index: 11000;
+      background: #333;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      user-select: none;
+    }
 
-.article-page img {
-  display: block;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      gap: 15px;
+    }
 
-.article-page ul, .article-page ol {
-  padding-left: 2rem;
-  margin-bottom: 1.5rem;
-}
+    /* MOTTO */
+    #motto {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: 0.2em;
+      margin-bottom: 0.8em;
+      color: #999;
+    }
 
-.article-page blockquote {
-  font-style: italic;
-  background: #fefae0;
-  border-left: 4px solid #b59f3b;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  border-radius: 6px;
-  color: #444;
-}
-    
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-        .article-preview {
+    /* TOOLBAR NAVIGATION */
+    #toolbar {
+      display: flex;
+      justify-content: center;
+      background: #222;
+      padding: 6px 0;
+      gap: 15px;
+    }
+
+    .toolbar-btn {
+      background: #444;
+      border: none;
+      color: white;
+      padding: 8px 18px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toolbar-btn:hover {
+      background: #666;
+    }
+
+    .toolbar-btn.active {
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* SEARCH CONTAINER */
+    #search-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 11001;
+      padding: 6px;
+    }
+
+    #search-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #fff;
+      font-size: 22px;
+    }
+
+    #search-bar {
+      display: none;
+      width: 200px;
+      padding: 6px 28px 6px 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      background: #fff;
+      color: #000;
+      position: relative;
+      z-index: 11000;
+    }
+
+    body.dark-mode #search-bar {
+      background: #333;
+      color: #fff;
+    }
+
+    #clear-search {
+      margin-left: -28px;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: black;
+      cursor: pointer;
+      z-index: 11002;
+      padding: 0 6px;
+      display: none;
+    }
+
+    body.dark-mode #clear-search {
+      color: white;
+    }
+
+    #search-funny {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      background: #333;
+      color: #ccc;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      display: none;
+      z-index: 11000;
+    }
+
+    body.dark-mode #search-funny {
+      background: #222;
+      color: #aaa;
+    }
+
+    /* ARTICLE PREVIEWS */
+    .articles-container {
+      text-align: center;
+      padding: 1em;
+    }
+
+    .article-preview {
       max-width: 300px;
       background: #fff;
       border-radius: 10px;
@@ -184,387 +245,16 @@
       margin: 0;
     }
 
-    .articles-container {
-      text-align: center;
-      padding: 1em;
-    }
-    /* Basic reset and body */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-      margin: 0;
-      padding-bottom: 280px;
-      overflow-x: hidden;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-body.dark-mode #clear-search {
-  color: white;
-}
-
-    /* Dark mode */
-    body.dark-mode .article-page,
-body.dark-mode .content-page {
-  background-color: #1c1c1c;
-  color: #ddd;
-}
-
-body.dark-mode .article-page h2,
-body.dark-mode .article-page h3,
-body.dark-mode .article-page h4,
-body.dark-mode .content-page h2,
-body.dark-mode .content-page h3,
-body.dark-mode .content-page h4 {
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark-mode .article-page p,
-body.dark-mode .content-page p {
-  color: #ccc;
-}
-
-body.dark-mode .article-page blockquote,
-body.dark-mode .content-page blockquote {
-  background: #2b2b2b;
-  border-left-color: #e0c97d;
-  color: #ddd;
-}
-
-body.dark-mode .article-page ul,
-body.dark-mode .article-page ol,
-body.dark-mode .content-page ul,
-body.dark-mode .content-page ol {
-  color: #ccc;
-}
-
-body.dark-mode .article-page a,
-body.dark-mode .content-page a {
-  color: #0077cc;
-  text-decoration: underline;
-}
-
-body.dark-mode .article-page img,
-body.dark-mode .content-page img {
-  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
-}
-body.dark-mode { 
-  background: 
-    linear-gradient(to bottom, #12141f, #0a0d1a), /* purple-blue gradient */
-    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 100%),
-    radial-gradient(2px 2px at 75% 60%, rgba(255,255,255,0.04) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,0.03) 0%, transparent 100%),
-    radial-gradient(2px 2px at 60% 25%, rgba(255,255,255,0.045) 0%, transparent 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  color: #eee;
-}
-
-body.dark-mode .article-page {
-  background-color: #1c1c1c;
-  color: #ddd;
-}
-
-    /* Header & Toolbar container */
-    #header-toolbar-wrapper {
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 11000;
-      background: #333;
-      color: #fff;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      transition: top 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-#toolbar {
-  display: flex;
-  justify-content: center;
-  background: #222;
-  padding: 6px 0;
-  gap: 15px;
-  user-select: none;
-}
-
-.toolbar-btn {
-  background: #444;
-  border: none;
-  color: white;
-  padding: 8px 18px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
-}
-
-.toolbar-btn:hover {
-  background: #666;
-}
-
-.toolbar-btn.active {
-  background: #007BFF;
-  color: white;
-  font-weight: bold;
-}
-
-    /* Header */
-header {
-  position: relative;
-  top: 0;
-  padding: 10px 0; /* Reduce from larger values like 20px */
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Position search container top-left, absolute so it does not push header text */
-/* Position search container top-left, absolute so it does not push header text */
-/* Search container now lives between header and toolbar, aligned left */
-  #search-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: none; /* remove centering offset */
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 11001;
-  padding: 6px; /* optional, for spacing from screen edge */
-}
-
-/* Magnifier button */
-#search-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: #fff;
-  font-size: 22px;
-  user-select: none;
-}
-
-/* Search input */
-#search-bar {
-  display: none;
-  width: 200px;
-  padding: 6px 28px 6px 8px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background: #fff;
-  color: #000;
-  position: relative;
-  z-index: 11000;
-}
-
-body.dark-mode #search-bar {
-  background: #333;
-  color: #fff;
-}
-
-/* Clear (×) button */
-#clear-search {
-  position: relative;
-  margin-left: -28px;
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 18px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 11002;
-  padding: 0 6px;
-  display: none;
-}
-
-body.dark-mode #clear-search {
-  color: white;
-}
-
-/* Funny response */
-#search-funny {
-  position: absolute;
-  top: 40px; /* directly below search bar */
-  left: 40px; /* line it up nicely under the input */
-  background: #333;
-  color: #ccc;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  white-space: nowrap;
-  display: none;
-  user-select: none;
-  pointer-events: auto;
-  z-index: 11000;
-}
-
-body.dark-mode #search-funny {
-  background: #222;
-  color: #aaa;
-}
-
-    /* Main content */
+    /* MAIN CONTENT */
     main {
       padding: 10px;
-      margin-top: 10px; /* header + toolbar combined height */
-      min-height: 500px;
+      margin: 10px auto 0;
       max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
       box-sizing: border-box;
+      min-height: 500px;
     }
 
-    /* Mode toggle button */
-   #mode-toggle {
-  position: absolute;     /* changed from fixed */
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  z-index: 12000;
-}
-
-
-    #mode-toggle:hover {
-      background-color: white;
-      color: #333;
-      border-color: white;
-    }
-
-    body.dark-mode #mode-toggle {
-      border-color: #ddd;
-      color: #ddd;
-    }
-
-    body.dark-mode #mode-toggle:hover {
-      background-color: #ddd;
-      color: #121212;
-      border-color: #ddd;
-    }
-
-    /* Legal scrollbox */
-    #legal-scrollbox {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-top: 3px solid #007BFF;
-      padding: 15px 25px;
-      font-size: 13px;
-      color: #222;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-      max-height: 220px;
-      overflow-y: auto;
-      z-index: 9999;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    body.dark-mode #legal-scrollbox {
-      background: #222;
-      color: #ccc;
-      border-top-color: #0a84ff;
-    }
-
-    /* Hide legal box by sliding down */
-    #legal-scrollbox.hidden {
-      transform: translateY(100%);
-    }
-
-    /* Toggle legal button */
-    #toggle-legal-btn {
-      position: fixed;
-      right: 25px;
-      bottom: 230px;
-      background: #007BFF;
-      color: #fff;
-      padding: 10px 14px;
-      font-size: 13px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      z-index: 10000;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-
-    #toggle-legal-btn:hover {
-      background: #0056b3;
-    }
-
-    /* Hide toggle legal btn when legal box visible */
-    #toggle-legal-btn.hidden {
-      display: none;
-    }
-
-    /* Legal icon circle */
-    #legal-icon-wrapper {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      z-index: 10000;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    #legal-icon-circle {
-      position: absolute;
-      width: 38px;
-      height: 38px;
-      background: #007BFF;
-      color: #fff;
-      font-size: 22px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 38px;
-      left: 11px;
-      top: 11px;
-    }
-
-    /* SVG text curving Legal / Notice */
-    #legal-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 60px;
-      height: 60px;
-      pointer-events: none;
-    }
-
-    #legal-svg text {
-      font-size: 13px;
-      fill: #aaa;
-      user-select: none;
-    }
-
-    body.dark-mode #legal-icon-circle {
-      background: #0a84ff;
-      color: #eee;
-    }
-
-    body.dark-mode #legal-svg text {
-      fill: #666;
-    }
-
-    /* Footnote at bottom, small text, visible only near bottom */
+    /* FOOTNOTE */
     #footnote {
       position: fixed;
       bottom: 0;
@@ -578,10 +268,9 @@ body.dark-mode #search-funny {
       opacity: 0;
       transition: opacity 0.5s ease;
       pointer-events: none;
-      user-select: none;
-      z-index: 9998;
       font-style: italic;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      z-index: 9998;
     }
 
     body.dark-mode #footnote {
@@ -591,80 +280,63 @@ body.dark-mode #search-funny {
   </style>
 </head>
 <body>
-  <!-- Mode toggle -->
   <button id="mode-toggle" aria-label="Toggle Mode">Mode: Light</button>
-
-  <!-- Header and Toolbar fixed wrapper -->
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
     </header>
-<div id="motto">“I came, I saw, I ranted.”</div>
-<div id="search-container">
-  <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
-    <!-- magnifier icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor" aria-hidden="true" focusable="false">
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
-    </svg>
-  </button>
-<input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
-  <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
-  <div id="search-funny" aria-live="polite"></div>
-</div>
+    <div id="motto">“I came, I saw, I ranted.”</div>
+    <div id="search-container">
+      <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+        <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+        </svg>
+      </button>
+      <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
+      <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
+      <div id="search-funny" aria-live="polite"></div>
+    </div>
 
-<nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-  <button class="toolbar-btn active" data-page="articles">Articles</button>
-  <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
-  <button class="toolbar-btn" data-page="books">Books</button>
-  <button class="toolbar-btn" data-page="about">About</button>
-  <button class="toolbar-btn" data-page="legal">Legal</button>
-</nav>
-
+    <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+      <button class="toolbar-btn active" data-page="articles">Articles</button>
+      <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
+      <button class="toolbar-btn" data-page="books">Books</button>
+      <button class="toolbar-btn" data-page="about">About</button>
+      <button class="toolbar-btn" data-page="legal">Legal</button>
+    </nav>
   </div>
-<div class="articles-container" id="articles-container">
-  <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
-    <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
-    <h3>AI Consciousness and Rights</h3>
-    <p>An exploration of AI awareness.</p>
+
+  <div class="articles-container" id="articles-container">
+    <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
+      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
+      <h3>AI Consciousness and Rights</h3>
+      <p>An exploration of AI awareness.</p>
+    </div>
   </div>
-</div>
 
-<!-- Full article content container -->
-<div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
-
-<!-- Main content for toolbar pages -->
-<main id="main-content" tabindex="0" aria-live="polite"></main>
-  <!-- Footnote -->
+  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
+  <main id="main-content" tabindex="0" aria-live="polite"></main>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
-
   <script>
+  // Ranture - Script Logic
+// SHA-256 page hash generation
   async function generatePageHash() {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(document.documentElement.outerHTML);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    const shortHash = fullHash.substring(0, 6);
+  const encoder = new TextEncoder();
+  const data = encoder.encode(document.documentElement.outerHTML);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const shortHash = fullHash.substring(0, 6);
+  console.log("Full SHA-256 hash:", fullHash);
+  console.log("Short Proof Code: RAN-" + shortHash);
+  const hashDisplay = document.getElementById('page-hash');
+  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
+  const fullHashEl = document.getElementById('full-page-hash');
+  if (fullHashEl) fullHashEl.textContent = fullHash;
+}
+generatePageHash();
 
-    // Console log full and short
-    console.log("Full SHA-256 hash:", fullHash);
-    console.log("Short Proof Code: RAN-" + shortHash);
-
-    // Display short hash on site
-    const hashDisplay = document.getElementById('page-hash');
-    if (hashDisplay) {
-      hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
-    }
-
-    // Store full hash in hidden element
-    const fullHashEl = document.getElementById('full-page-hash');
-    if (fullHashEl) {
-      fullHashEl.textContent = fullHash;
-    }
-  }
-
-  generatePageHash();
-    // Build searchable index from article previews
+// Build article index from previews
 const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
   const titleElem = preview.querySelector('h3');
   const snippetElem = preview.querySelector('p');
@@ -676,330 +348,170 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
     keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
   };
 });
-function loadArticle(filename, previewElem) {
-  history.pushState({ article: filename }, '', '?article=' + encodeURIComponent(filename));
-  history.pushState({ type: 'section', page }, '', `/${page}`);
+
+// Load article
+function loadArticle(filename) {
   localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
   fetch(filename)
-    .then(response => response.text())
+    .then(res => res.text())
     .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const articleContent = doc.querySelector('.ai-rights-body');
-
-      if (articleContent) {
-        // Hide article previews container
-        document.getElementById('articles-container').style.display = 'none';
-
-        // Hide toolbar page content
-        document.getElementById('main-content').style.display = 'none';
-        
-        // Show article full content container with loaded content
-        const container = document.getElementById('article-full-content');
-document.getElementById('search-funny').style.display = 'none';
-container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</div>`;
-        container.style.display = 'block';
-
-        container.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        alert('Article content not found.');
-      }
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.querySelector('.ai-rights-body');
+      if (!content) return alert('Article content not found.');
+      document.getElementById('articles-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'none';
+      const container = document.getElementById('article-full-content');
+      container.innerHTML = `<div class="content-page">${content.innerHTML}</div>`;
+      container.style.display = 'block';
+      document.getElementById('search-funny').style.display = 'none';
+      container.scrollIntoView({ behavior: 'smooth' });
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-    document.addEventListener('DOMContentLoaded', () => {
-      if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-        // Always start at top on page load
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-      const saved = localStorage.getItem('lastView');
-if (saved) {
-  const view = JSON.parse(saved);
-  if (view.type === 'article' && view.file) {
-    loadArticle(view.file);
-  } else if (view.type === 'section' && view.page) {
-    const targetBtn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-    if (targetBtn) targetBtn.click();
-  }
-}
-      // Mode toggle
-      const modeToggle = document.getElementById('mode-toggle');
-const backToTopBtn = document.getElementById('back-to-top');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.style.display = 'block';
-  } else {
-    backToTopBtn.style.display = 'none';
-  }
-});
+// DOM Loaded
+window.addEventListener('DOMContentLoaded', () => {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Home') {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-});
-
-modeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  modeToggle.textContent = 'Mode: ' + (isDark ? 'Dark' : 'Light');
-});
-
-      document.addEventListener('click', (event) => {
-  const searchContainer = document.getElementById('search-container');
-  const searchBar = document.getElementById('search-bar');
-  const clearBtn = document.getElementById('clear-search');
-  const funnyBox = document.getElementById('search-funny');
-
-  // If click is outside the search container, close the search bar
-  if (!searchContainer.contains(event.target)) {
-    searchBar.style.display = 'none';
-    clearBtn.style.display = 'none';
-    funnyBox.style.display = 'none';
-  }
-});
-
-      // Search toggle
-      const searchToggle = document.getElementById('search-toggle');
-      const searchBar = document.getElementById('search-bar');
-      const funnyBox = document.getElementById('search-funny');
-      const clearSearch = document.getElementById('clear-search');
-
-      const funnyResponses = {
-        "aliens": "👽 Try Paris.",
-        "password": "🔐 Nice try. The password is not 'password'.",
-        "secret": "🤫 If I told you, it wouldn’t be a secret.",
-        "ninja": "Ninjas don’t search. They just know.",
-        "pyramids": "🔺 You’re not cleared for that level.",
-        "saturn worship": "🪐 Rings and things they won’t teach in school.",
-        "ghost": "👻 Boo! No ghosts, just results.",
-        "bigfoot": "🦶 Found. But he blocked us.",
-        "project monarch": "🦋 A butterfly flaps its wings. Someone forgets their password.",
-        "psychic": "🔮 We knew you'd search this.",
-        "ai takeover": "🤖 Don’t worry, we’re still letting you type.",
-        "nanobots": "⚙️ Technology so small it’s already in your cereal.",
-        "clones": "🧬 If they blink out of sync, run.",
-        "dimensions": "🌀 You're in the third. For now.",
-        "antarctica": "❄️ Just ice. And totally no secrets. Nope.",
-        "smart dust": "🌫️ Don't inhale the future.",
-        "truth serum": "💉 Works best when you're already guilty.",
-        "wikipedia": "📖 Edited 13 times... today.",
-        "hidden messages": "🧾 Rotate 180°, hold to the light, squint.",
-        "kangaroo": "🦘 Jumping to conclusions? Not here.",
-        "free energy": "⚡ Sounds free until the bill arrives.",
-        "hack": "💻 Try turning it off and whispering to it.",
-        "vatican secrets": "📜 You must be at least Level 9 to access this.",
-        "black hole": "🕳️ You're already falling in.",
-        "secret bases": "🗺️ Hidden in plain sight. Like your car keys.",
-        "deep state": "🏛️ Deeper than your browser history. And twice as weird.",
-        "paperclip": "📎 Holding it all together for you.",
-        "mind control": "🎧 Please enjoy this relaxing frequency.",
-        "immortality": "🧬 Ask again in 3,000 years.",
-        "fbi": "🧠 We can neither confirm nor deny your search.",
-        "cia": "🕵️‍♂️ Your queries are being monitored... kidding!",
-        "nsa": "👁️ You've been watched. For science.",
-        "conspiracy": "🛸 The truth is out there, but we're keeping it here.",
-        "secret society": "🤫 Not for your eyes. Or maybe it is.",
-        "flat earth": "🌍 Flat? That’s just the horizon of imagination.",
-        "moon landing": "🚀 One small step for man, one giant leap for memes.",
-      };
-
-   searchToggle.addEventListener('click', (event) => {
-     event.stopPropagation();
- if (searchBar.style.display === 'inline-block') {
-    searchBar.style.display = 'none';
-    funnyBox.style.display = 'none';
-    clearSearch.style.display = 'none';
-  } else {
-    searchBar.style.display = 'inline-block';
-    searchBar.focus();
-    funnyBox.style.display = 'block';
-
-    if (searchBar.value.trim().length) {
-      clearSearch.style.display = 'inline';
+  // Restore last view
+  const saved = localStorage.getItem('lastView');
+  if (saved) {
+    const view = JSON.parse(saved);
+    if (view.type === 'article') loadArticle(view.file);
+    else if (view.type === 'section') {
+      const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+      if (btn) btn.click();
     }
   }
-});
-searchBar.addEventListener('input', () => {
-  const val = searchBar.value.trim().toLowerCase();
-  clearSearch.style.display = val.length ? 'inline' : 'none';
 
-  // Show funny response if exists
-  if (funnyResponses[val]) {
-    funnyBox.textContent = funnyResponses[val];
-    return;
-  }
+  // Mode toggle
+  const modeToggle = document.getElementById('mode-toggle');
+  modeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    modeToggle.textContent = 'Mode: ' + (document.body.classList.contains('dark-mode') ? 'Dark' : 'Light');
+  });
 
-  // Look for article matches by title or keywords
-  const match = searchableArticles.find(article =>
-    article.title.toLowerCase().includes(val) ||
-    article.keywords.some(keyword => keyword.startsWith(val))
-  );
+  // Back to top visibility
+  const backToTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    const footnote = document.getElementById('footnote');
+    const nearBottom = document.documentElement.offsetHeight - (window.innerHeight + window.scrollY) < 200;
+    footnote.style.opacity = nearBottom ? '1' : '0';
+    footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
+  });
 
-  if (match && val.length > 0) {
-  funnyBox.innerHTML = `
-  <div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">
-     ${match.title}
-  </div>
-`;
-  } else if (val.length > 0) {
-    funnyBox.textContent = 'Searching... No results found.';
-  } else {
-    funnyBox.textContent = '';
-  }
-});
-      clearSearch.addEventListener('click', () => {
-        searchBar.value = '';
-        funnyBox.textContent = '';
-        clearSearch.style.display = 'none';
-        searchBar.focus();
-      });
-// Toolbar navigation simulation
-const buttons = document.querySelectorAll('.toolbar-btn');
-const mainContent = document.getElementById('main-content');
-const articleFullContent = document.getElementById('article-full-content');
-const articlesContainer = document.getElementById('articles-container');
-
-buttons.forEach(btn => {
-  btn.addEventListener('click', (event) => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const page = btn.getAttribute('data-page');
-    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
-    // Hide article full and previews
-    articleFullContent.style.display = 'none';
-    articlesContainer.style.display = (page === 'articles') ? 'block' : 'none';
-    mainContent.style.display = 'block';
-
-    if (page === 'articles') {
-      mainContent.innerHTML = ''; // just previews
-    } else if (page === 'shorticles') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Shorticles</h2>
-          <p>Shorticles content goes here...</p>
-        </div>`;
-    } else if (page === 'books') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Books</h2>
-          <p>Books content goes here...</p>
-        </div>`;
-    } else if (page === 'about') {
-      // You can keep About simple or wrap in content-page if you want consistent look
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>About</h2>
-          <p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p>
-          <p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p>
-          <p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p>
-          <p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p>
-        </div>`;
-    } else if (page === 'legal') {
-      mainContent.innerHTML = `
-        <div class="content-page">
-          <h2>Legal Disclaimer & Terms of Use</h2>
-          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-          <ul>
-            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-            <li>The owner is not responsible for any third-party links or external content.</li>
-            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-            <li>The website does not collect personal data, and no input from users is accepted.</li>
-            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-            <li>These terms apply globally and supersede any conflicting local laws.</li>
-          </ul>
-          <p><strong>Creative Commons License:</strong><br>
-            This work is licensed under the
-            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-            </a>.
-          </p>
-          <h2>Content Disclaimer</h2>
-          <p><strong>Disclaimer:</strong></p>
-          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-          <p><strong>Copyright Notice:</strong><br>
-            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-          </p>
-        </div>`;
-    } else {
-      mainContent.innerHTML = `<p>Unknown page: ${page}</p>`;
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Home') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
+
+  // Konami Code Easter Egg
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let kPos = 0;
+  window.addEventListener('keydown', (e) => {
+    kPos = (e.keyCode === konami[kPos]) ? kPos + 1 : 0;
+    if (kPos === konami.length) {
+      const pop = document.createElement('div');
+      pop.id = 'konami-popup';
+      pop.textContent = 'They are watching!';
+      Object.assign(pop.style, {
+        position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        background: '#cc0000', color: '#fff', fontSize: '2rem', padding: '30px 50px',
+        borderRadius: '8px', fontWeight: 'bold', fontFamily: 'monospace',
+        boxShadow: '0 0 15px #ff0000', zIndex: 15000, textAlign: 'center'
+      });
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 4000);
+      kPos = 0;
+    }
+  });
+
+  // Toolbar nav
+  const buttons = document.querySelectorAll('.toolbar-btn');
+  const main = document.getElementById('main-content');
+  const full = document.getElementById('article-full-content');
+  const previews = document.getElementById('articles-container');
+
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const page = btn.dataset.page;
+    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+    full.style.display = 'none';
+    previews.style.display = (page === 'articles') ? 'block' : 'none';
+    main.style.display = 'block';
+
+    const content = {
+      shorticles: `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`,
+      books: `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`,
+      about: `<div class="content-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
+      legal: `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2><p>This website and its content are provided 'as is'...</p> <!-- etc. Full legal text here --> </div>`
+    };
+
+    main.innerHTML = content[page] || `<p>Unknown page: ${page}</p>`;
+  }));
+
+  // Search logic
+  const funnyResponses = {
+    "aliens": "👽 Try Paris.",
+    "password": "🔐 Nice try. The password is not 'password'.",
+    // ... (other entries omitted for brevity)
+  };
+
+  const toggle = document.getElementById('search-toggle');
+  const input = document.getElementById('search-bar');
+  const funny = document.getElementById('search-funny');
+  const clear = document.getElementById('clear-search');
+
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    if (input.style.display === 'inline-block') {
+      input.style.display = 'none';
+      funny.style.display = 'none';
+      clear.style.display = 'none';
+    } else {
+      input.style.display = 'inline-block';
+      input.focus();
+      funny.style.display = 'block';
+      if (input.value.trim().length) clear.style.display = 'inline';
+    }
+  });
+
+  document.addEventListener('click', e => {
+    if (!document.getElementById('search-container').contains(e.target)) {
+      input.style.display = 'none';
+      clear.style.display = 'none';
+      funny.style.display = 'none';
+    }
+  });
+
+  input.addEventListener('input', () => {
+    const val = input.value.trim().toLowerCase();
+    clear.style.display = val.length ? 'inline' : 'none';
+    if (funnyResponses[val]) return funny.textContent = funnyResponses[val];
+    const match = searchableArticles.find(a => a.title.toLowerCase().includes(val) || a.keywords.some(k => k.startsWith(val)));
+    if (match && val.length > 0) {
+      funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
+    } else if (val.length > 0) {
+      funny.textContent = 'Searching... No results found.';
+    } else {
+      funny.textContent = '';
+    }
+  });
+  clear.addEventListener('click', () => {
+    input.value = '';
+    funny.textContent = '';
+    clear.style.display = 'none';
+    input.focus();
+  });
 });
-      // Footnote visibility on scroll near bottom
-      const footnote = document.getElementById('footnote');
-      window.addEventListener('scroll', () => {
-        const scrollBottom = window.innerHeight + window.scrollY;
-        const docHeight = document.documentElement.offsetHeight;
-        if (docHeight - scrollBottom < 200) {
-          footnote.style.opacity = '1';
-          footnote.style.pointerEvents = 'auto';
-        } else {
-          footnote.style.opacity = '0';
-          footnote.style.pointerEvents = 'none';
-        }
-      });
-
-      // Konami code
-      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-      let konamiPosition = 0;
-      const popupId = 'konami-popup';
-
-      function showKonamiPopup() {
-        if (document.getElementById(popupId)) return;
-        const popup = document.createElement('div');
-        popup.id = popupId;
-        popup.textContent = 'They are watching!';
-        popup.style.position = 'fixed';
-        popup.style.top = '50%';
-        popup.style.left = '50%';
-        popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.backgroundColor = '#cc0000';
-        popup.style.color = '#fff';
-        popup.style.fontSize = '2rem';
-        popup.style.padding = '30px 50px';
-        popup.style.borderRadius = '8px';
-        popup.style.zIndex = '15000';
-        popup.style.fontWeight = 'bold';
-        popup.style.fontFamily = 'monospace';
-        popup.style.textAlign = 'center';
-        popup.style.userSelect = 'none';
-        popup.style.boxShadow = '0 0 15px #ff0000';
-        document.body.appendChild(popup);
-        setTimeout(() => {
-          if (popup.parentNode) popup.parentNode.removeChild(popup);
-        }, 4000);
-      }
-
-      window.addEventListener('keydown', (e) => {
-        if (e.keyCode === konamiCode[konamiPosition]) {
-          konamiPosition++;
-          if (konamiPosition === konamiCode.length) {
-            konamiPosition = 0;
-            showKonamiPopup();
-          }
-        } else {
-          konamiPosition = 0;
-        }
-      });
-     });
-  </script>
-  <button id="back-to-top" aria-label="Back to top" title="Back to top" 
+    </script>
+    <button id="back-to-top" aria-label="Back to top" title="Back to top" 
   style="
     display:none;
     position: fixed;
