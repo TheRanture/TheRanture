@@ -287,13 +287,13 @@
     </header>
     <div id="motto">“I came, I saw, I ranted.”</div>
     <div id="search-container">
-      <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
+      <button id="search-toggle" aria-label="Toggle Search">
         <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
         </svg>
       </button>
       <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
-      <button id="clear-search" title="Clear" aria-label="Clear Search">×</button>
+      <button id="clear-search" aria-label="Clear Search">×</button>
       <div id="search-funny" aria-live="polite"></div>
     </div>
 
@@ -447,10 +447,36 @@ window.addEventListener('DOMContentLoaded', () => {
     main.style.display = 'block';
 
     const content = {
+      articles: `<div class="content-page"><h2>Articles</h2><p>Articles content goes here...</p></div>`,
       shorticles: `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`,
       books: `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`,
       about: `<div class="content-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
-      legal: `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2><p>This website and its content are provided 'as is'...</p> <!-- etc. Full legal text here --> </div>`
+      legal: `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+          <ul>
+            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+            <li>The owner is not responsible for any third-party links or external content.</li>
+            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+            <li>The website does not collect personal data, and no input from users is accepted.</li>
+            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+            <li>These terms apply globally and supersede any conflicting local laws.</li>
+          </ul>
+          <p><strong>Creative Commons License:</strong><br>
+            This work is licensed under the
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+            </a>.
+          </p>
+          <h2>Content Disclaimer</h2>
+          <p><strong>Disclaimer:</strong></p>
+          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+          <p><strong>Copyright Notice:</strong><br>
+            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+          </p> <!-- etc. Full legal text here --> </div>`
     };
 
     main.innerHTML = content[page] || `<p>Unknown page: ${page}</p>`;
@@ -511,7 +537,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
     </script>
-    <button id="back-to-top" aria-label="Back to top" title="Back to top" 
+    <button id="back-to-top" aria-label="Back to top"
   style="
     display:none;
     position: fixed;
