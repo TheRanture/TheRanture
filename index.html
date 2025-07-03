@@ -41,54 +41,73 @@ body.dark-mode .textbed {
 }
 
 .handle {
-  width: 6px;
-  height: 24px;
-  background: #444;
+  width: 8px;
+  height: 28px;
+  background: linear-gradient(45deg, #5b3a29 0%, #7e5e45 50%, #4d3221 100%);
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 2px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px #3a2a1d, 0 0 4px rgba(0, 0, 0, 0.3);
 }
+    .handle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  border-radius: 3px;
+}
+
 
 .flame {
-  width: 14px;
-  height: 14px;
+ filter: blur(0.4px);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
   background: orange;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(-45deg);
   border-radius: 50% 50% 50% 0;
+  transform: translateX(-50%) rotate(-45deg);
   box-shadow: 0 0 8px orange;
-  animation: flicker 0.25s infinite alternate;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  opacity: 0.8;
+  animation: flickerFlame 0.4s infinite alternate ease-in-out;
 }
 
-@keyframes flicker {
-  0%   { transform: translateX(-50%) rotate(-45deg) scale(1); opacity: 1; }
-  100% { transform: translateX(-50%) rotate(-50deg) scale(1.1); opacity: 0.85; }
+@keyframes flickerFlame {
+  0% {
+    transform: translateX(-50%) rotate(-45deg) scale(1) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) rotate(-47deg) scale(1.1) translateY(-2px);
+  }
+  100% {
+    transform: translateX(-50%) rotate(-43deg) scale(1.2) translateY(-4px);
+  }
 }
 
-.smoke {
-  position: absolute;
-  top: 0;
-  left: 50%;
+.torch .flame:nth-child(1) {
+  animation-delay: 0s;
+}
+.torch .flame:nth-child(2) {
+  animation-delay: 0.1s;
+  background: #ff9933;
+  width: 8px;
+  height: 8px;
+}
+.torch .flame:nth-child(3) {
+  animation-delay: 0.2s;
+  background: #ffd966;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: rgba(200,200,200,0.4);
-  transform: translateX(-50%) translateY(0);
-  opacity: 0;
-  animation: none;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-body.dark-mode .flame {
-  opacity: 0;
-  animation: none;
 }
 
 body.dark-mode .smoke {
@@ -390,7 +409,6 @@ body.dark-mode #search-bar::placeholder {
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
     <div class="handle"></div>
-    <div class="flame"></div>
     <div class="smoke"></div>
   </div>
 </button>
@@ -429,27 +447,61 @@ body.dark-mode #search-bar::placeholder {
   <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
   <main id="main-content" tabindex="0" aria-live="polite"></main>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
+  <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
   <script>
-  // Ranture - Script Logic
-// SHA-256 page hash generation
-  async function generatePageHash() {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(document.documentElement.outerHTML);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  const shortHash = fullHash.substring(0, 6);
-  console.log("Full SHA-256 hash:", fullHash);
-  console.log("Short Proof Code: RAN-" + shortHash);
-  const hashDisplay = document.getElementById('page-hash');
-  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
-  const fullHashEl = document.getElementById('full-page-hash');
-  if (fullHashEl) fullHashEl.textContent = fullHash;
+    try {
+  const dm = localStorage.getItem('darkMode');
+  if (dm === '1') document.body.classList.add('dark-mode');
+} catch (e) {}
+    document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('search-toggle');
+  const input = document.getElementById('search-bar');
+  const funny = document.getElementById('search-funny');
+  const clear = document.getElementById('clear-search');
+  const torch = document.querySelector('.torch');
+if (torch) {
+  torch.querySelectorAll('.flame').forEach(f => f.remove()); // remove old flames
+  for (let i = 0; i < 6; i++) {
+    const flame = document.createElement('div');
+    flame.classList.add('flame');
+    flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
+    flame.style.width = `${6 + Math.random() * 8}px`;
+    flame.style.height = `${6 + Math.random() * 10}px`;
+    flame.style.animationDelay = `${Math.random() * 0.6}s`;
+    flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ffaa00'][Math.floor(Math.random() * 4)];
+    flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+    torch.appendChild(flame);
+  }
 }
-generatePageHash();
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 
-// Build article index from previews
-const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+  // Restore last view
+let saved = null;
+try {
+  saved = localStorage.getItem('lastView');
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+
+if (saved) {
+  try {
+    const view = JSON.parse(saved);
+    if (view.type === 'article') loadArticle(view.file);
+    else if (view.type === 'section') {
+      const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+      if (btn) btn.click();
+    }
+  } catch (e) {
+    console.warn('Invalid saved data:', e);
+  }
+}
+
+    input.addEventListener('input', () => {
+    const val = input.value.trim().toLowerCase();
+    clear.style.display = val.length ? 'inline' : 'none';
+    if (funnyResponses[val]) return funny.textContent = funnyResponses[val];
+  const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
   const titleElem = preview.querySelector('h3');
   const snippetElem = preview.querySelector('p');
   const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
@@ -460,58 +512,41 @@ const searchableArticles = Array.from(document.querySelectorAll('.article-previe
     keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
   };
 });
-
-// Load article
-function loadArticle(filename) {
-  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
-  fetch(filename)
-    .then(res => res.text())
-    .then(html => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const content = doc.querySelector('.ai-rights-body');
-      if (!content) return alert('Article content not found.');
-      document.getElementById('articles-container').style.display = 'none';
-      document.getElementById('main-content').style.display = 'none';
-      const container = document.getElementById('article-full-content');
-      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
-      container.style.display = 'block';
-      document.getElementById('search-funny').style.display = 'none';
-      container.scrollIntoView({ behavior: 'smooth' });
-    })
-    .catch(err => alert('Failed to load article: ' + err));
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  // Restore last view
-  const saved = localStorage.getItem('lastView');
-  if (saved) {
-    const view = JSON.parse(saved);
-    if (view.type === 'article') loadArticle(view.file);
-    else if (view.type === 'section') {
-      const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-      if (btn) btn.click();
+    const match = searchableArticles.find(a => a.title.toLowerCase().includes(val) || a.keywords.some(k => k.startsWith(val)));
+    if (match && val.length > 0) {
+      funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
+    } else if (val.length > 0) {
+      funny.textContent = 'Searching... No results found.';
+    } else {
+      funny.textContent = '';
     }
-  }
-
+  });
+  clear.addEventListener('click', () => {
+    input.value = '';
+    funny.textContent = '';
+    clear.style.display = 'none';
+    input.focus();
+  });
+});
   // Mode toggle setup
   const modeToggle = document.getElementById('mode-toggle');
   const darkActive = document.body.classList.contains('dark-mode');
   modeToggle.setAttribute('aria-pressed', darkActive);
 
-  modeToggle.addEventListener('click', () => {
-    const toggled = document.body.classList.toggle('dark-mode');
-    modeToggle.setAttribute('aria-pressed', toggled);
-  });
+modeToggle.addEventListener('click', () => {
+  const toggled = document.body.classList.toggle('dark-mode');
+  modeToggle.setAttribute('aria-pressed', toggled);
+  try {
+    localStorage.setItem('darkMode', toggled ? '1' : '0');
+  } catch (e) {}
+});
 
   // Back to top visibility
   const backToTop = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
     backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
     const footnote = document.getElementById('footnote');
-    const nearBottom = document.documentElement.offsetHeight - (window.innerHeight + window.scrollY) < 200;
+   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
     footnote.style.opacity = nearBottom ? '1' : '0';
     footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
   });
@@ -555,7 +590,11 @@ window.addEventListener('DOMContentLoaded', () => {
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const page = btn.dataset.page;
-    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
     full.style.display = 'none';
     previews.style.display = (page === 'articles') ? 'block' : 'none';
     main.style.display = 'block';
@@ -603,12 +642,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // ... (other entries omitted for brevity)
   };
 
-  const toggle = document.getElementById('search-toggle');
-  const input = document.getElementById('search-bar');
-  const funny = document.getElementById('search-funny');
-  const clear = document.getElementById('clear-search');
-
-  toggle.addEventListener('click', e => {
+ toggle.addEventListener('click', e => {
     e.stopPropagation();
     if (input.style.display === 'inline-block') {
       input.style.display = 'none';
@@ -629,27 +663,46 @@ window.addEventListener('DOMContentLoaded', () => {
       funny.style.display = 'none';
     }
   });
-
-  input.addEventListener('input', () => {
-    const val = input.value.trim().toLowerCase();
-    clear.style.display = val.length ? 'inline' : 'none';
-    if (funnyResponses[val]) return funny.textContent = funnyResponses[val];
-    const match = searchableArticles.find(a => a.title.toLowerCase().includes(val) || a.keywords.some(k => k.startsWith(val)));
-    if (match && val.length > 0) {
-      funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
-    } else if (val.length > 0) {
-      funny.textContent = 'Searching... No results found.';
-    } else {
-      funny.textContent = '';
-    }
-  });
-  clear.addEventListener('click', () => {
-    input.value = '';
-    funny.textContent = '';
-    clear.style.display = 'none';
-    input.focus();
-  });
-});
+  // Ranture - Script Logic
+// SHA-256 page hash generation
+  async function generatePageHash() {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(document.documentElement.outerHTML);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const shortHash = fullHash.substring(0, 6);
+  console.log("Full SHA-256 hash:", fullHash);
+  console.log("Short Proof Code: RAN-" + shortHash);
+  const hashDisplay = document.getElementById('page-hash');
+  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
+  const fullHashEl = document.getElementById('full-page-hash');
+  if (fullHashEl) fullHashEl.textContent = fullHash;
+}
+generatePageHash();
+// Load article
+function loadArticle(filename) {
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+  fetch(filename)
+    .then(res => res.text())
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.querySelector('.ai-rights-body');
+      if (!content) return alert('Article content not found.');
+      document.getElementById('articles-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'none';
+      const container = document.getElementById('article-full-content');
+      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
+      container.style.display = 'block';
+      document.getElementById('search-funny').style.display = 'none';
+      container.scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(err => alert('Failed to load article: ' + err));
+}
 </script>
   </body>
 </html>
