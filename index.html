@@ -696,10 +696,31 @@ container.innerHTML = `<div class="content-page">${articleContent.innerHTML}</di
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
+        const starCount = 10; // Fewer but larger stars
+  const stars = Array.from({ length: starCount }).map(() => {
+    const x = Math.floor(Math.random() * 100);
+    const y = Math.floor(Math.random() * 100);
+    const size = (Math.random() * 2 + 1.5).toFixed(2); // 1.5px to 3.5px
+    const tint = Math.random();
+    let color;
+
+    if (tint < 0.4) {
+      color = `rgba(255, 255, 255, ${Math.random() * 0.06 + 0.02})`; // white
+    } else if (tint < 0.7) {
+      color = `rgba(173, 216, 255, ${Math.random() * 0.05 + 0.02})`; // bluish
+    } else {
+      color = `rgba(255, 192, 203, ${Math.random() * 0.05 + 0.02})`; // reddish-pinkish
+    }
+
+    return `radial-gradient(${size}px ${size}px at ${x}% ${y}%, ${color} 0%, transparent 100%)`;
+  }).join(", ");
+  
+  document.body.style.setProperty("--stars", stars);
+});
         // Always start at top on page load
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
