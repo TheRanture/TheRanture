@@ -6,6 +6,24 @@
   <title>Ranture</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
+  .textbed {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1.5em 2em;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 1.5em auto;
+  color: #222;
+  font-family: 'Crimson Text', 'Lora', serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+body.dark-mode .textbed {
+  background: rgba(30, 30, 30, 0.85);
+  color: #ddd;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
     /* RESET & BASE STYLES */
     body {
       font-family: Arial, sans-serif;
@@ -361,7 +379,7 @@ function loadArticle(filename) {
       document.getElementById('articles-container').style.display = 'none';
       document.getElementById('main-content').style.display = 'none';
       const container = document.getElementById('article-full-content');
-      container.innerHTML = `<div class="content-page">${content.innerHTML}</div>`;
+      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
       container.style.display = 'block';
       document.getElementById('search-funny').style.display = 'none';
       container.scrollIntoView({ behavior: 'smooth' });
@@ -447,11 +465,11 @@ window.addEventListener('DOMContentLoaded', () => {
     main.style.display = 'block';
 
     const content = {
-      articles: `<div class="content-page"><h2>Articles</h2><p>Articles content goes here...</p></div>`,
-      shorticles: `<div class="content-page"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`,
-      books: `<div class="content-page"><h2>Books</h2><p>Books content goes here...</p></div>`,
-      about: `<div class="content-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
-      legal: `<div class="content-page"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+      articles: `<div class="textbed"><h2>Articles</h2><p>Articles content goes here...</p></div>`,
+      shorticles: `<div class="textbed"><h2>Shorticles</h2><p>Shorticles content goes here...</p></div>`,
+      books: `<div class="tetbed"><h2>Books</h2><p>Books content goes here...</p></div>`,
+      about: `<div class="textbed-page"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
+      legal: `<div class="textbed-page"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
           <ul>
             <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
             <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
