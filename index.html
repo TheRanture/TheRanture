@@ -6,20 +6,11 @@
   <title>Ranture</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
-    main, #article-full-content {
-  background: linear-gradient(to bottom, #1a1b3a, #161632);
-  padding: 2em 0;
-}
-
-body.dark-mode main,
-body.dark-mode #article-full-content {
-  background-color: #0e0f23;
-}
   .textbed {
-  background: rgba(255, 255, 255, 0.85);
+  background: #fdfaf7;
   padding: 1.5em 2em;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   max-width: 900px;
   margin: 1.5em auto;
   color: #222;
@@ -29,9 +20,16 @@ body.dark-mode #article-full-content {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 body.dark-mode .textbed {
-  background: rgba(30, 30, 30, 0.85);
-  color: #ddd;
+  background: #1e1e1e;
+  color: #d0d0d0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+/* Link Darkmode Style */
+    body.dark-mode a {
+  color: #dab76a;
+}
+body.dark-mode a:hover {
+  color: #ffe5a3;
 }
     /* RESET & BASE STYLES */
     body {
@@ -185,12 +183,14 @@ body.dark-mode .textbed {
       position: relative;
       z-index: 11000;
     }
-
-    body.dark-mode #search-bar {
-      background: #333;
-      color: #fff;
-    }
-
+body.dark-mode #search-bar {
+  background: #2a2236;
+  color: #f0e6ff;
+  border: 1px solid #4b3b60;
+}
+body.dark-mode #search-bar::placeholder {
+  color: #b89edc;
+}
     #clear-search {
       margin-left: -28px;
       background: transparent;
