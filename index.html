@@ -6,6 +6,43 @@
   <title>Ranture</title>
  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
+#site-motto {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  color: #bbb;
+  text-align: center;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.motto-part {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin: 0 0.2em;
+}
+
+/* Animation timing */
+#came.show { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+#saw.show { opacity: 1; transform: translateY(0); transition-delay: 1s; }
+#ranted.show { opacity: 1; transform: translateY(0); transition-delay: 1.8s; }
+
+/* Glitchy shake after delay */
+@keyframes shakeRotate {
+  0% { transform: rotate(0deg) translate(0, 0); }
+  20% { transform: rotate(-1deg) translate(-1px, 1px); }
+  40% { transform: rotate(1deg) translate(2px, -1px); }
+  60% { transform: rotate(-2deg) translate(-2px, 2px); }
+  80% { transform: rotate(1deg) translate(1px, -2px); }
+  100% { transform: rotate(0deg) translate(0, 0); }
+}
+
+.ranted-glitch {
+  animation: shakeRotate 0.4s ease-in-out infinite;
+  color: #f33;
+}
+
     .search-suggestion {
   display: inline-block;
   background: #222;
@@ -590,6 +627,12 @@ body.dark-mode #search-funny {
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
+      <p id="site-motto">I came, I saw, I ranted.</p>
+<div id="site-motto">
+  <span class="motto-part" id="came">I came,</span>
+  <span class="motto-part" id="saw">I saw,</span>
+  <span class="motto-part" id="ranted">I ranted.</span>
+</div>
     </header>
 <div id="search-container">
   <button id="search-toggle" aria-label="Toggle Search" title="Toggle search bar">
@@ -1012,5 +1055,19 @@ buttons.forEach(btn => {
 >
   ↑
 </button>
+    window.addEventListener('DOMContentLoaded', () => {
+    const came = document.getElementById('came');
+    const saw = document.getElementById('saw');
+    const ranted = document.getElementById('ranted');
+
+    setTimeout(() => came.classList.add('show'), 200);
+    setTimeout(() => saw.classList.add('show'), 1000);
+    setTimeout(() => ranted.classList.add('show'), 1800);
+
+    // Add glitch after delay
+    setTimeout(() => {
+      ranted.classList.add('ranted-glitch');
+    }, 2800);
+  });
 </body>
 </html>
