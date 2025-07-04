@@ -469,7 +469,7 @@ flame.style.left = '50%';
 flame.style.transform = 'translateX(-50%)';
 
   // More realistic flame size
-flame.style.width = `${6 + Math.random() * 6}px`;
+flame.style.width = `${10 + Math.random() * 6}px`; // Wider core
 flame.style.height = `${10 + Math.random() * 10}px`;
 
   // Softer animation and flicker
@@ -482,7 +482,7 @@ flame.style.height = `${10 + Math.random() * 10}px`;
 
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
-  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
+  flame.style.borderRadius = '60% 60% 50% 50% / 70% 70% 50% 50%'; // Rounder, thicker middle
   flame.style.clipPath = 'polygon(50% 0%, 60% 20%, 80% 30%, 60% 50%, 70% 80%, 50% 100%, 30% 80%, 40% 50%, 20% 30%, 40% 20%)';
 
   torch.appendChild(flame);
