@@ -420,11 +420,7 @@
       <button class="toolbar-btn" data-page="legal">Legal</button>
     </nav>
   </div>
-  <button class="toolbar-btn" onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
-<button onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
-
-
-  <!-- Containers for dynamic content -->
+ <!-- Containers for dynamic content -->
   <main id="main-content" tabindex="0" aria-live="polite"></main>
 <div id="article-content" tabindex="0" style="max-width: 900px; margin: 1em auto; display:none;"></div>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
@@ -479,9 +475,6 @@
       `
     }
   ];
-
-  const toolbarButtons = document.querySelectorAll('.toolbar-btn');
-  
   // Function to create article preview box
   function createArticlePreview(article, index) {
     const preview = document.createElement('div');
@@ -610,8 +603,9 @@ function closeArticle() {
 }
 document.addEventListener('DOMContentLoaded', () => {
   renderTorchFlame();
-  const mainContent = document.getElementById('main-content');
+const mainContent = document.getElementById('main-content');
   const articleContent = document.getElementById('article-content');
+    const toolbarButtons = document.querySelectorAll('.toolbar-btn');
 // Add smoke
 
 
