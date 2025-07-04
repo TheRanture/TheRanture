@@ -119,30 +119,30 @@ body.dark-mode .smoke {
 body.dark-mode a:hover {
   color: #ffe5a3;
 }
-/* RESET & BASE STYLES */
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
-  margin: 0;
-  padding-bottom: 280px;
-  overflow-x: hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
+    /* RESET & BASE STYLES */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding-bottom: 280px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-body.dark-mode {
+    body.dark-mode {
   background: linear-gradient(to bottom, 
     transparent 0px, 
     transparent 160px, 
     #0f112a 160px, 
     #0f112a 100%);
   color: #eee;
-}
+    }
 
 body.dark-mode #clear-search {
   color: black; /* ← this fixes it permanently */
 }
-.search-suggestion {
+    .search-suggestion {
   display: inline-block;
   padding: 6px 12px;
   background: #eee;
@@ -159,7 +159,7 @@ body.dark-mode .search-suggestion {
   font-size: 15px;
   box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
 }
-.search-suggestion:hover {
+    .search-suggestion:hover {
   background: #ddd;
   color: #000;
 }
@@ -168,101 +168,101 @@ body.dark-mode .search-suggestion:hover {
   background: #e0e0e5;
   color: #000;
 }
-/* MODE TOGGLE */
-/* HEADER TOOLBAR WRAPPER */
-#header-toolbar-wrapper {
-  position: relative;
-  z-index: 11000;
-  background: #333;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  user-select: none;
-}
+    /* MODE TOGGLE */
+    /* HEADER TOOLBAR WRAPPER */
+    #header-toolbar-wrapper {
+      position: relative;
+      z-index: 11000;
+      background: #333;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      user-select: none;
+    }
 
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  gap: 15px;
-}
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      gap: 15px;
+    }
 
-/* MOTTO */
-#motto {
-  text-align: center;
-  font-style: italic;
-  font-size: 1.2em;
-  margin-top: 0.2em;
-  margin-bottom: 0.8em;
-  color: #999;
-}
+    /* MOTTO */
+    #motto {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: 0.2em;
+      margin-bottom: 0.8em;
+      color: #999;
+    }
 
-/* TOOLBAR NAVIGATION */
-#toolbar {
-  display: flex;
-  justify-content: center;
-  background: #222;
-  padding: 6px 0;
-  gap: 15px;
-}
+    /* TOOLBAR NAVIGATION */
+    #toolbar {
+      display: flex;
+      justify-content: center;
+      background: #222;
+      padding: 6px 0;
+      gap: 15px;
+    }
 
-.toolbar-btn {
-  background: #444;
-  border: none;
-  color: white;
-  padding: 8px 18px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    .toolbar-btn {
+      background: #444;
+      border: none;
+      color: white;
+      padding: 8px 18px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-.toolbar-btn:hover {
-  background: #666;
-}
+    .toolbar-btn:hover {
+      background: #666;
+    }
 
-.toolbar-btn.active {
-  background: #007BFF;
-  color: white;
-  font-weight: bold;
-}
+    .toolbar-btn.active {
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+    }
 
-/* SEARCH CONTAINER */
-#search-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 11001;
-  padding: 6px;
-}
+    /* SEARCH CONTAINER */
+    #search-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 11001;
+      padding: 6px;
+    }
 
-#search-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: #fff;
-  font-size: 22px;
-}
+    #search-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #fff;
+      font-size: 22px;
+    }
 
-#search-bar {
-  display: none;
-  width: 200px;
-  padding: 6px 28px 6px 8px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background: #fff;
-  color: #000;
-  position: relative;
-  z-index: 11000;
-}
+    #search-bar {
+      display: none;
+      width: 200px;
+      padding: 6px 28px 6px 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      background: #fff;
+      color: #000;
+      position: relative;
+      z-index: 11000;
+    }
 body.dark-mode #search-bar {
   background-color: #f4f4f8;  /* soft off-white */
   color: #111;                /* dark text for readability */
@@ -273,136 +273,136 @@ body.dark-mode #search-bar {
 body.dark-mode #search-bar::placeholder {
   color: #777; /* slightly dimmed hint text */
 }
-#clear-search {
-  margin-left: -28px;
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  color: black;
-  cursor: pointer;
-  z-index: 11002;
-  padding: 0 6px;
-  display: none;
-}
+    #clear-search {
+      margin-left: -28px;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: black;
+      cursor: pointer;
+      z-index: 11002;
+      padding: 0 6px;
+      display: none;
+    }
 
-body.dark-mode #clear-search {
-  color: black;
-}
+    body.dark-mode #clear-search {
+      color: black;
+    }
 
-#search-funny {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  background: #333;
-  color: #ccc;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  white-space: nowrap;
-  display: none;
-  z-index: 11000;
-}
+    #search-funny {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      background: #333;
+      color: #ccc;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      display: none;
+      z-index: 11000;
+    }
 
-body.dark-mode #search-funny {
-  background: #222;
-  color: #aaa;
-}
+    body.dark-mode #search-funny {
+      background: #222;
+      color: #aaa;
+    }
 
-/* ARTICLE PREVIEWS */
-.articles-container {
-  text-align: center;
-  padding: 1em;
-}
+    /* ARTICLE PREVIEWS */
+    .articles-container {
+      text-align: center;
+      padding: 1em;
+    }
 
-.article-preview {
-  max-width: 300px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 1em;
-  margin: 1em;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
-  display: inline-block;
-  vertical-align: top;
-  text-align: left;
-}
+    .article-preview {
+      max-width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1em;
+      margin: 1em;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+    }
 
-.article-preview:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
+    .article-preview:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
 
-.preview-image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 0.8em;
+    .preview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.8em;
   min-height: 150px;
   background: #ccc url('fallback.png') center center no-repeat;
   background-size: cover;
-}
+    }
 
-.article-preview h3 {
-  margin: 0 0 0.5em;
-  font-family: 'Palatino Linotype', serif;
-  color: #333;
-}
+    .article-preview h3 {
+      margin: 0 0 0.5em;
+      font-family: 'Palatino Linotype', serif;
+      color: #333;
+    }
 
-.article-preview p {
-  font-size: 0.9em;
-  color: #555;
-  line-height: 1.3;
-  margin: 0;
-}
+    .article-preview p {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.3;
+      margin: 0;
+    }
 
-/* MAIN CONTENT */
-main {
-  padding: 10px;
-  margin: 10px auto 0;
-  max-width: 900px;
-  box-sizing: border-box;
-  min-height: 500px;
-}
+    /* MAIN CONTENT */
+    main {
+      padding: 10px;
+      margin: 10px auto 0;
+      max-width: 900px;
+      box-sizing: border-box;
+      min-height: 500px;
+    }
 
-/* FOOTNOTE */
-#footnote {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: 12px;
-  color: #666;
-  background: rgba(245, 245, 245, 0.9);
-  padding: 6px 12px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  font-style: italic;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 9998;
-}
+    /* FOOTNOTE */
+    #footnote {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 12px;
+      color: #666;
+      background: rgba(245, 245, 245, 0.9);
+      padding: 6px 12px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      font-style: italic;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      z-index: 9998;
+    }
 
-body.dark-mode #footnote {
-  color: #bbb;
-  background: rgba(18, 18, 18, 0.9);
-}
+    body.dark-mode #footnote {
+      color: #bbb;
+      background: rgba(18, 18, 18, 0.9);
+    }
   </style>
 </head>
 <body>
-  <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode" aria-pressed="false">
-    <div class="torch">
-      <div class="handle"></div>
-      <div class="smoke"></div>
-    </div>
-  </button>
+  <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
+  <div class="torch">
+    <div class="handle"></div>
+    <div class="smoke"></div>
+  </div>
+</button>
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
     </header>
     <div id="motto">“I came, I saw, I ranted.”</div>
     <div id="search-container">
-      <button id="search-toggle" aria-label="Toggle Search" aria-expanded="false" aria-controls="search-bar">
+      <button id="search-toggle" aria-label="Toggle Search">
         <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
         </svg>
@@ -421,7 +421,7 @@ body.dark-mode #footnote {
   </div>
 
   <div class="articles-container" id="articles-container">
-    <div class="article-preview" data-file="ai-rights.html" tabindex="0" role="button" aria-pressed="false">
+    <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
       <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" loading="lazy" />
       <h3>AI Consciousness and Rights</h3>
       <p>An exploration of AI awareness.</p>
@@ -431,286 +431,331 @@ body.dark-mode #footnote {
   <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
   <main id="main-content" tabindex="0" aria-live="polite"></main>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
-  <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;font-size:24px;cursor:pointer;z-index:12000;">⬆</button>
-
+  <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
   <script>
+    const forceRedraw = (el) => {
+  el.style.display = 'none';
+  void el.offsetHeight;
+  el.style.display = 'block';
+};
+    try {
+  const dm = localStorage.getItem('darkMode');
+  if (dm === '1') document.body.classList.add('dark-mode');
+} catch (e) {}
 document.addEventListener('DOMContentLoaded', () => {
-
-  const clipShapes = [
-    'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
-    'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
-    'polygon(50% 0%, 58% 10%, 70% 26%, 64% 48%, 68% 66%, 50% 96%, 32% 66%, 36% 48%, 30% 26%, 42% 10%)'
-  ];
-
-  // Flame elements setup
-  const torch = document.querySelector('.torch');
-  torch.innerHTML = ''; // Clear existing flames and handle
-
-  // Add handle back
-  const handle = document.createElement('div');
-  handle.classList.add('handle');
-  torch.appendChild(handle);
-
-  // Create flames with varied clip-path and animation
-  for (let i = 0; i < 6; i++) {
-    const flame = document.createElement('div');
-    flame.classList.add('flame');
-    flame.style.width = `${8 + i*2}px`;
-    flame.style.height = `${8 + i*2}px`;
-    flame.style.background = `rgba(255, ${128 + i*20}, 0, ${0.6 - i*0.1})`;
-    flame.style.left = `${50 + (Math.random() - 0.5) * 20}%`;
-    flame.style.bottom = `${28 + i * 4}px`;
-    flame.style.clipPath = clipShapes[i % clipShapes.length];
-    flame.style.animation = `flame-flicker ${2 + i*0.3}s ease-in-out infinite`;
-    torch.appendChild(flame);
+  const toggle = document.getElementById('search-toggle');
+  const input = document.getElementById('search-bar');
+  const funny = document.getElementById('search-funny');
+  const clear = document.getElementById('clear-search');
+  toggle.addEventListener('click', () => {
+  const isVisible = window.getComputedStyle(input).display !== 'none';
+  if (isVisible) {
+    input.style.display = 'none';
+    clear.style.display = 'none';
+    funny.style.display = 'none';
+  } else {
+    input.style.display = 'block';
+    input.focus();
   }
+});
+const torch = document.querySelector('.torch');
+for (let i = 0; i < 6; i++) {
+  const flame = document.createElement('div');
+  flame.classList.add('flame');
 
-  // Add smoke
-  const smoke = document.createElement('div');
-  smoke.classList.add('smoke');
-  smoke.style.position = 'absolute';
-  smoke.style.width = '12px';
-  smoke.style.height = '12px';
-  smoke.style.background = 'rgba(180,180,180,0.15)';
-  smoke.style.borderRadius = '50%';
-  smoke.style.left = '50%';
-  smoke.style.bottom = '72px';
-  smoke.style.animation = 'rise 2.2s infinite ease-in-out';
-  torch.appendChild(smoke);
+  // Position above handle consistently
+  flame.style.bottom = '28px'; // aligns with top of handle
+flame.style.left = '50%';
+flame.style.transform = 'translateX(-50%)';
 
-  // Flame animation keyframes
-  const styleFlames = document.createElement('style');
-  styleFlames.textContent = `
-    @keyframes flame-flicker {
-      0%, 100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-        filter: drop-shadow(0 0 1px #ff7700);
-      }
-      50% {
-        transform: scale(1.2) translateY(-3px);
-        opacity: 0.8;
-        filter: drop-shadow(0 0 8px #ffbb33);
-      }
-    }
-  `;
-  document.head.appendChild(styleFlames);
+  // More realistic flame size
+flame.style.width = `${6 + Math.random() * 6}px`;
+flame.style.height = `${10 + Math.random() * 10}px`;
 
-  // Mode toggle logic
-  const modeToggle = document.getElementById('mode-toggle');
-  modeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    let pressed = modeToggle.getAttribute('aria-pressed') === 'true';
-    modeToggle.setAttribute('aria-pressed', !pressed);
-    if (document.body.classList.contains('dark-mode')) {
-      localStorage.setItem('darkMode', 'true');
-    } else {
-      localStorage.removeItem('darkMode');
-    }
-  });
+  // Softer animation and flicker
+  flame.style.animationDelay = `${Math.random() * 0.4}s`;
 
-  // Restore dark mode state
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-    modeToggle.setAttribute('aria-pressed', 'true');
-  }
+  // Gentle orange hues
+  flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
+  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
+  flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
 
-  // Search toggle
-  const searchToggle = document.getElementById('search-toggle');
-  const searchBar = document.getElementById('search-bar');
-  const clearSearch = document.getElementById('clear-search');
-  const searchFunny = document.getElementById('search-funny');
+  // Subtle randomness
+  flame.style.transformOrigin = '50% 100%';
+  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
 
-  function hideSearch() {
-    searchBar.style.display = 'none';
-    clearSearch.style.display = 'none';
-    searchFunny.style.display = 'none';
-    searchToggle.setAttribute('aria-expanded', 'false');
-    searchBar.value = '';
-  }
+  torch.appendChild(flame);
+}
+let lastFlameUpdate = 0;
+const flameUpdateInterval = 85; // update every ~50ms (20 FPS)
 
-  function showSearch() {
-    searchBar.style.display = 'inline-block';
-    clearSearch.style.display = searchBar.value ? 'inline-block' : 'none';
-    searchToggle.setAttribute('aria-expanded', 'true');
-    searchBar.focus();
-  }
+function animateFlames(timestamp) {
+  if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
+    const flames = document.querySelectorAll('.flame');
+    flames.forEach(flame => {
+      const scaleX = 0.9 + Math.random() * 0.3;
+      const scaleY = 1.0 + Math.random() * 0.7;
+      const rotate = -10 + Math.random() * 20; // more subtle range
+      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
+      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
+      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 
-  searchToggle.addEventListener('click', () => {
-    if (searchBar.style.display === 'inline-block') {
-      hideSearch();
-    } else {
-      showSearch();
-    }
-  });
-
-  clearSearch.addEventListener('click', () => {
-    searchBar.value = '';
-    clearSearch.style.display = 'none';
-    searchFunny.style.display = 'none';
-    searchBar.focus();
-  });
-
-  // Search input handler
-  searchBar.addEventListener('input', () => {
-    if (searchBar.value.trim() === '') {
-      clearSearch.style.display = 'none';
-      searchFunny.style.display = 'none';
-      return;
-    }
-    clearSearch.style.display = 'inline-block';
-
-    // Example funny suggestions or easter eggs
-    const funnyTexts = [
-      "Try 'nothing', it's quite effective.",
-      "Searching for 'meaning of life'...",
-      "Are you sure you want to search that?",
-      "Error 404: Results not found.",
-      "In search of the lost semicolon.",
-      "Searching... or just procrastinating?"
-    ];
-    const rand = funnyTexts[Math.floor(Math.random() * funnyTexts.length)];
-    searchFunny.textContent = rand;
-    searchFunny.style.display = 'block';
-  });
-
-  // Toolbar navigation
-  const toolbarButtons = document.querySelectorAll('.toolbar-btn');
-  const articlesContainer = document.getElementById('articles-container');
-  const mainContent = document.getElementById('main-content');
-  const articleFullContent = document.getElementById('article-full-content');
-
-  // Example pages content mapping (file or text)
-  const pagesContent = {
-    articles: `
-      <h2>Articles</h2>
-      <p>Welcome to the articles section. Click a preview to read more.</p>
-      <div class="article-preview" data-file="ai-rights.html" tabindex="0" role="button" aria-pressed="false">
-        <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" loading="lazy" />
-        <h3>AI Consciousness and Rights</h3>
-        <p>An exploration of AI awareness.</p>
-      </div>
-    `,
-    shorticles: `<h2>Shorticles</h2><p>Short, sharp insights and rants.</p>`,
-    books: `<h2>Books</h2><p>Upcoming releases and book reviews.</p>`,
-    about: `<h2>About Ranture</h2><p>Information about this site and its creator.</p>`,
-    legal: `<h2>Legal Notice</h2><p>© Count Rantula — All Rants Reserved</p>`
-  };
-
-  function setActiveButton(btn) {
-    toolbarButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  function loadPage(page) {
-    articleFullContent.style.display = 'none';
-    mainContent.style.display = 'block';
-    mainContent.innerHTML = pagesContent[page] || '<p>Page not found.</p>';
-  }
-
-  toolbarButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const page = button.getAttribute('data-page');
-      setActiveButton(button);
-      loadPage(page);
+      flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+      flame.style.transform = `
+  translateX(-50%)
+  translate(${offsetX}px, ${offsetY}px)
+  rotate(${rotate}deg)
+  scale(${scaleX}, ${scaleY})
+`;
+      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
     });
-  });
 
-  // Initially load articles page
-  loadPage('articles');
-
-  // Article preview click loads full article from file
-  function loadArticle(file) {
-    fetch(file)
-      .then(res => {
-        if (!res.ok) throw new Error('Network error');
-        return res.text();
-      })
-      .then(html => {
-        mainContent.style.display = 'none';
-        articleFullContent.style.display = 'block';
-        articleFullContent.innerHTML = html;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      })
-      .catch(() => {
-        articleFullContent.innerHTML = '<p>Failed to load article.</p>';
-      });
+    lastFlameUpdate = timestamp;
   }
 
-  document.body.addEventListener('click', e => {
-    const preview = e.target.closest('.article-preview');
-    if (preview) {
-      const file = preview.getAttribute('data-file');
-      if (file) {
-        loadArticle(file);
+  requestAnimationFrame(animateFlames);
+}
+
+requestAnimationFrame(animateFlames);
+
+// Start the flame update loop
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  let saved = null;
+  try {
+    saved = localStorage.getItem('lastView');
+  } catch (e) {
+    console.warn('localStorage not available:', e);
+  }
+
+  if (saved) {
+    try {
+      const view = JSON.parse(saved);
+      if (view.type === 'article') loadArticle(view.file);
+      else if (view.type === 'section') {
+        const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+        if (btn) btn.click();
       }
+    } catch (e) {
+      console.warn('Invalid saved data:', e);
     }
+  }
+
+input.addEventListener('input', () => {
+  const val = input.value.trim().toLowerCase();
+  clear.style.display = val.length ? 'inline' : 'none';
+
+  if (val.length === 0) {
+    funny.textContent = '';
+    funny.style.display = 'none';
+    return;
+  }
+
+  if (funnyResponses[val]) {
+    funny.textContent = funnyResponses[val];
+    funny.style.display = 'block';  // ← make sure it's shown
+    return;
+  }
+
+  const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+    const titleElem = preview.querySelector('h3');
+    const snippetElem = preview.querySelector('p');
+    const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
+    return {
+      title: titleElem?.textContent.trim() || '',
+      snippet: snippetElem?.textContent.trim() || '',
+      file: fileMatch ? fileMatch[1] : '',
+      keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+    };
   });
 
-  // Accessibility: also open article on Enter key press
-  document.body.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      const preview = e.target.closest('.article-preview');
-      if (preview) {
-        const file = preview.getAttribute('data-file');
-        if (file) {
-          loadArticle(file);
-        }
-      }
-    }
-  });
+  const match = searchableArticles.find(a => 
+    a.title.toLowerCase().includes(val) || 
+    a.keywords.some(k => k.startsWith(val))
+  );
 
-  // Back to top button
+  if (match) {
+    funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
+  } else {
+    funny.textContent = 'Searching... No results found.';
+  }
+
+  funny.style.display = 'block';  // ← ensure it's always visible
+});
+clear.addEventListener('click', () => {
+  input.value = '';
+  funny.textContent = '';
+  funny.style.display = 'none';  // ← make sure it hides
+  clear.style.display = 'none';
+  input.focus();
+});
+});
+  // Mode toggle setup
+  const modeToggle = document.getElementById('mode-toggle');
+  const darkActive = document.body.classList.contains('dark-mode');
+  modeToggle.setAttribute('aria-pressed', darkActive);
+
+modeToggle.addEventListener('click', () => {
+  const toggled = document.body.classList.toggle('dark-mode');
+  modeToggle.setAttribute('aria-pressed', toggled);
+  try {
+    localStorage.setItem('darkMode', toggled ? '1' : '0');
+  } catch (e) {}
+});
+
+  // Back to top visibility
   const backToTop = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      backToTop.style.display = 'block';
-      document.getElementById('footnote').style.opacity = '1';
-    } else {
-      backToTop.style.display = 'none';
-      document.getElementById('footnote').style.opacity = '0';
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    const footnote = document.getElementById('footnote');
+   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    footnote.style.opacity = nearBottom ? '1' : '0';
+    footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
+  });
+
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Home') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
 
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Konami code Easter egg
-  const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-  let konamiPosition = 0;
-  window.addEventListener('keydown', e => {
-    if (e.keyCode === konamiCode[konamiPosition]) {
-      konamiPosition++;
-      if (konamiPosition === konamiCode.length) {
-        alert('They are watching!');
-        konamiPosition = 0;
-      }
-    } else {
-      konamiPosition = 0;
+  // Konami Code Easter Egg
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let kPos = 0;
+  window.addEventListener('keydown', (e) => {
+    kPos = (e.keyCode === konami[kPos]) ? kPos + 1 : 0;
+    if (kPos === konami.length) {
+      const pop = document.createElement('div');
+      pop.id = 'konami-popup';
+      pop.textContent = 'They are watching!';
+      Object.assign(pop.style, {
+        position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        background: '#cc0000', color: '#fff', fontSize: '2rem', padding: '30px 50px',
+        borderRadius: '8px', fontWeight: 'bold', fontFamily: 'monospace',
+        boxShadow: '0 0 15px #ff0000', zIndex: 15000, textAlign: 'center'
+      });
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 4000);
+      kPos = 0;
     }
   });
 
-  // Generate SHA-256 page hash (console only)
+  // Toolbar nav
+  const buttons = document.querySelectorAll('.toolbar-btn');
+  const main = document.getElementById('main-content');
+  const full = document.getElementById('article-full-content');
+  const previews = document.getElementById('articles-container');
+
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const page = btn.dataset.page;
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+    full.style.display = 'none';
+    previews.style.display = (page === 'articles') ? 'block' : 'none';
+    main.style.display = 'block';
+    void previews.offsetHeight;
+
+    const content = {
+      about: `<div class="textbed"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
+      legal: `<div class="textbed"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+          <ul>
+            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+            <li>The owner is not responsible for any third-party links or external content.</li>
+            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+            <li>The website does not collect personal data, and no input from users is accepted.</li>
+            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+            <li>These terms apply globally and supersede any conflicting local laws.</li>
+          </ul>
+          <p><strong>Creative Commons License:</strong><br>
+            This work is licensed under the
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+            </a>.
+          </p>
+          <h2>Content Disclaimer</h2>
+          <p><strong>Disclaimer:</strong></p>
+          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+          <p><strong>Copyright Notice:</strong><br>
+            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+          </p> <!-- etc. Full legal text here --> </div>`
+    };
+
+if (content[page]) {
+  main.innerHTML = content[page];
+} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+  main.innerHTML = ''; // Do nothing for those tabs
+} else {
+  main.innerHTML = `<p>Unknown page: ${page}</p>`;
+}
+  }));
+
+  // Search logic
+  const funnyResponses = {
+    "aliens": "👽 Try Paris.",
+    "password": "🔐 Nice try. The password is not 'password'.",
+    // ... (other entries omitted for brevity)
+  };
+  document.addEventListener('click', e => {
+    if (!document.getElementById('search-container').contains(e.target)) {
+      input.style.display = 'none';
+      clear.style.display = 'none';
+      funny.style.display = 'none';
+    }
+  });
+  // Ranture - Script Logic
+// SHA-256 page hash generation
   async function generatePageHash() {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(document.documentElement.outerHTML);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    console.log('Page SHA-256 hash:', hashHex);
-  }
-  generatePageHash();
-
-  // Accessibility focus outlines
-  document.body.addEventListener('mousedown', () => {
-    document.body.style.outline = 'none';
-  });
-  document.body.addEventListener('keydown', () => {
-    document.body.style.outline = '';
-  });
-
-});
-  </script>
-</body>
+  const encoder = new TextEncoder();
+  const data = encoder.encode(document.documentElement.outerHTML);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const shortHash = fullHash.substring(0, 6);
+  console.log("Full SHA-256 hash:", fullHash);
+  console.log("Short Proof Code: RAN-" + shortHash);
+  const hashDisplay = document.getElementById('page-hash');
+  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
+  const fullHashEl = document.getElementById('full-page-hash');
+  if (fullHashEl) fullHashEl.textContent = fullHash;
+}
+generatePageHash();
+// Load article
+function loadArticle(filename) {
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+  fetch(filename)
+    .then(res => res.text())
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.querySelector('.ai-rights-body');
+      if (!content) return alert('Article content not found.');
+      document.getElementById('articles-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'none';
+      const container = document.getElementById('article-full-content');
+      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
+      container.style.display = 'block';
+      document.getElementById('search-funny').style.display = 'none';
+      container.scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(err => alert('Failed to load article: ' + err));
+}
+</script>
+  </body>
 </html>
