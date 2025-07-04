@@ -46,7 +46,6 @@ body.dark-mode .textbed {
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50%;
   transition: transform 0.05s ease-out, opacity 0.05s ease-out, filter 0.05s ease-out;
 }
 
@@ -464,12 +463,12 @@ for (let i = 0; i < 6; i++) {
   flame.classList.add('flame');
 
   // Position above handle consistently
-  flame.style.bottom = '28px'; // aligns with top of handle
+flame.style.bottom = '28px'; // aligns with top of handle
 flame.style.left = '50%';
 flame.style.transform = 'translateX(-50%)';
 
   // More realistic flame size
-flame.style.width = `${6 + Math.random() * 6}px`;
+flame.style.width = `${8 + Math.random() * 8}px`;
 flame.style.height = `${10 + Math.random() * 10}px`;
 
   // Softer animation and flicker
