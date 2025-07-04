@@ -544,32 +544,37 @@ function renderTorchFlame() {
   ];
 
   const colors = [
-    { r: 255, g: 85, b: 0 },    // Deep orange
-    { r: 255, g: 100, b: 10 },  // Slightly brighter
-    { r: 255, g: 140, b: 20 },  // Soft orange
-    { r: 255, g: 180, b: 50 }   // Lighter blend
+    'rgba(255, 85, 0, 0.5)',   // Deep orange
+    'rgba(255, 120, 0, 0.45)', // Orange
+    'rgba(255, 180, 30, 0.35)',// Warm yellow
+    'rgba(255, 60, 10, 0.4)',  // Reddish orange
+    'rgba(255, 100, 20, 0.4)'  // Muted orange
   ];
 
-  for (let i = 0; i < 8; i++) {
+  const flameCount = 7;
+
+  for (let i = 0; i < flameCount; i++) {
     const flame = document.createElement('div');
     flame.classList.add('flame');
 
-    const c = colors[i % colors.length];
-    const opacity = 0.3 + (i * 0.07);
-    const size = 18 + i * 3;
-
+    const size = 20 + Math.floor(Math.random() * 18); // 20px–38px
     flame.style.width = `${size}px`;
     flame.style.height = `${size}px`;
-    flame.style.background = `rgba(${c.r}, ${c.g}, ${c.b}, ${opacity})`;
+
+    flame.style.background = colors[i % colors.length];
     flame.style.clipPath = clipShapes[i % clipShapes.length];
 
-    flame.style.position = 'absolute';
+    // Random offset to break perfect stacking
+    const offsetX = -50 + Math.floor(Math.random() * 16) - 8; // -58% to -42%
+    const offsetY = 26 + Math.floor(Math.random() * 6); // 26px–32px
+
     flame.style.left = '50%';
-    flame.style.bottom = '28px';
-    flame.style.transform = 'translateX(-50%)';
-    flame.style.animation = `flame-flicker ${1.2 + Math.random() * 0.4}s ease-in-out infinite`;
-    flame.style.animationDelay = `${i * 0.1}s`;
-    flame.style.filter = 'blur(0.4px)';
+    flame.style.bottom = `${offsetY}px`;
+    flame.style.transform = `translateX(${offsetX}%)`;
+    flame.style.position = 'absolute';
+
+    flame.style.animation = `flame-flicker ${1 + Math.random() * 0.6}s ease-in-out infinite`;
+    flame.style.animationDelay = `${Math.random() * 0.3}s`;
 
     torch.appendChild(flame);
   }
