@@ -544,7 +544,7 @@ function renderTorchFlame() {
   for (let i = 0; i < 6; i++) {
     const flame = document.createElement('div');
     flame.classList.add('flame');
-
+const xOffset = (Math.random() - 0.5) * 10; // between -5px and +5px
     const size = 10 + i * 2;
     flame.style.width = `${size}px`;
     flame.style.height = `${size * 1.3}px`;
@@ -555,7 +555,8 @@ function renderTorchFlame() {
     flame.style.animationDelay = `${Math.random() * 0.3}s`;
 
     flame.style.position = 'absolute';
-    flame.style.left = `${45 + Math.random() * 10}%`;
+flame.style.left = '50%';
+flame.style.transform = 'translateX(-50%)';
     flame.style.bottom = `${26 + Math.random() * 4}px`;
     flame.style.transformOrigin = 'bottom center';
     flame.style.filter = 'blur(0.3px) drop-shadow(0 0 2px orange)';
