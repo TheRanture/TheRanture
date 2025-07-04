@@ -521,13 +521,37 @@ if (saved) {
       funny.textContent = '';
     }
   });
-  clear.addEventListener('click', () => {
-    input.value = '';
-    funny.textContent = '';
-    clear.style.display = 'none';
-    input.focus();
-  });
+clear.addEventListener('click', () => {
+  input.value = '';
+  funny.textContent = '';
+  clear.style.display = 'none';
+  input.focus();
 });
+
+// Correctly placed toggle listener
+toggle.addEventListener('click', e => {
+  e.stopPropagation();
+  if (input.style.display === 'inline-block') {
+    input.style.display = 'none';
+    funny.style.display = 'none';
+    clear.style.display = 'none';
+  } else {
+    input.style.display = 'inline-block';
+    input.focus();
+    funny.style.display = 'block';
+    if (input.value.trim().length) clear.style.display = 'inline';
+  }
+});
+
+// Correctly placed click-outside-to-hide logic
+document.addEventListener('click', e => {
+  if (!document.getElementById('search-container').contains(e.target)) {
+    input.style.display = 'none';
+    clear.style.display = 'none';
+    funny.style.display = 'none';
+  }
+});
+
   // Mode toggle setup
   const modeToggle = document.getElementById('mode-toggle');
   const darkActive = document.body.classList.contains('dark-mode');
@@ -641,28 +665,6 @@ try {
     "password": "🔐 Nice try. The password is not 'password'.",
     // ... (other entries omitted for brevity)
   };
-
- toggle.addEventListener('click', e => {
-    e.stopPropagation();
-    if (input.style.display === 'inline-block') {
-      input.style.display = 'none';
-      funny.style.display = 'none';
-      clear.style.display = 'none';
-    } else {
-      input.style.display = 'inline-block';
-      input.focus();
-      funny.style.display = 'block';
-      if (input.value.trim().length) clear.style.display = 'inline';
-    }
-  });
-
-  document.addEventListener('click', e => {
-    if (!document.getElementById('search-container').contains(e.target)) {
-      input.style.display = 'none';
-      clear.style.display = 'none';
-      funny.style.display = 'none';
-    }
-  });
   // Ranture - Script Logic
 // SHA-256 page hash generation
   async function generatePageHash() {
