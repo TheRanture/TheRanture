@@ -472,23 +472,40 @@ for (let i = 0; i < 6; i++) {
   flame.style.transform = 'translateX(-50%)';
 
   // Bigger, fatter flames
-  const width = 12 + Math.random() * 14;  // slightly bigger
-  const height = 16 + Math.random() * 18; // slightly taller
-  flame.style.width = `${width}px`;
-  flame.style.height = `${height}px`;
+const width = 18 + Math.random() * 14;  // wider
+const height = 36 + Math.random() * 30; // taller
+flame.style.width = `${width}px`;
+flame.style.height = `${height}px`;
 
-  // More varied, spiky shapes with random polygon clip-path for jagged edges
-  const spikes = Math.floor(4 + Math.random() * 5); // 4 to 8 spikes
-  let clipPathPoints = [];
-  for (let j = 0; j < spikes; j++) {
-    // x between 0% and 100%, y oscillates between 20% and 100%
-    const x = (j / (spikes - 1)) * 100;
-    const y = 20 + Math.random() * 80;
-    clipPathPoints.push(`${x}% ${y}%`);
-  }
-  // Close the bottom polygon (bottom right and bottom left corners)
-  clipPathPoints.push('100% 100%', '0% 100%');
-  flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
+
+// Define clip-path for natural flame shape with slender spikes and smooth base
+const basePoints = [
+  '0% 100%',
+  '25% 85%',
+  '75% 85%',
+  '100% 100%'
+];
+const waistPoint = '50% 70%';
+const spikeCount = 4;
+const topBaseY = 20;
+const spikes = [];
+
+for (let i = 0; i < spikeCount; i++) {
+  const x = 30 + i * (40 / (spikeCount - 1));
+  const peakY = topBaseY - Math.random() * 15;
+  spikes.push(`${x - 1}% ${topBaseY + 10}%`);
+  spikes.push(`${x}% ${peakY}%`);
+  spikes.push(`${x + 1}% ${topBaseY + 10}%`);
+}
+
+const clipPathPoints = [
+  ...basePoints,
+  waistPoint,
+  ...spikes,
+  '0% 40%'
+];
+
+flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
 
   // Orange color palette, deeper and richer
   const colors = [
