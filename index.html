@@ -472,8 +472,8 @@ flame.style.left = '50%';
 flame.style.transform = 'translateX(-50%)';
 
   // More realistic flame size
-flame.style.width = `${8 + Math.random() * 8}px`;
-flame.style.height = `${10 + Math.random() * 10}px`;
+flame.style.width = `${14 + Math.random() * 10}px`;
+flame.style.height = `${18 + Math.random() * 12}px`;
 
   // Softer animation and flicker
   flame.style.animationDelay = `${Math.random() * 0.4}s`;
@@ -491,7 +491,7 @@ const chosenColor = baseColors[Math.floor(Math.random() * baseColors.length)];
 
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
-  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
+  flame.style.borderRadius = '40% 40% 20% 20% / 80% 80% 20% 20%';
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
