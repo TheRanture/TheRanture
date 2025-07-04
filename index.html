@@ -466,34 +466,62 @@ for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
   flame.classList.add('flame');
 
-  // Consistent position above handle
+  // Position above handle consistently
   flame.style.bottom = '28px';
   flame.style.left = '50%';
   flame.style.transform = 'translateX(-50%)';
 
   // Bigger, fatter flames
-  const width = 10 + Math.random() * 12;  // wider
-  const height = 14 + Math.random() * 16; // taller
+  const width = 12 + Math.random() * 14;  // slightly bigger
+  const height = 16 + Math.random() * 18; // slightly taller
   flame.style.width = `${width}px`;
   flame.style.height = `${height}px`;
 
-  // Spiky/rounded shape (closer to Flame 1)
-  flame.style.borderRadius = '50% 50% 20% 20% / 50% 50% 20% 20%';
+  // More varied, spiky shapes with random polygon clip-path for jagged edges
+  const spikes = Math.floor(4 + Math.random() * 5); // 4 to 8 spikes
+  let clipPathPoints = [];
+  for (let j = 0; j < spikes; j++) {
+    // x between 0% and 100%, y oscillates between 20% and 100%
+    const x = (j / (spikes - 1)) * 100;
+    const y = 20 + Math.random() * 80;
+    clipPathPoints.push(`${x}% ${y}%`);
+  }
+  // Close the bottom polygon (bottom right and bottom left corners)
+  clipPathPoints.push('100% 100%', '0% 100%');
+  flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
 
-  // Warmer, deeper coloring (like Flame 4)
+  // Orange color palette, deeper and richer
   const colors = [
-    '#ff7700', // deep orange
-    '#ffaa00', // bright orange
-    '#ffff66', // soft yellow
-    '#ffffff'  // occasional white center
+    'rgba(255, 130, 0, 0.8)',   // deep orange, stronger alpha
+    'rgba(255, 170, 0, 0.7)',   // bright orange
+    'rgba(255, 200, 80, 0.5)',  // yellowish-orange softer
+    'rgba(255, 255, 180, 0.4)'  // pale yellow for glow
   ];
-  const chosenColor = colors[Math.floor(Math.random() * colors.length)];
-  flame.style.background = `radial-gradient(circle at 50% 60%, ${chosenColor}, transparent 70%)`;
+  // Pick a base color and add a white highlight center sometimes
+  const baseColor = colors[Math.floor(Math.random() * colors.length)];
+  flame.style.background = `radial-gradient(circle at 50% 60%, ${baseColor}, transparent 70%)`;
 
-  flame.style.opacity = (0.65 + Math.random() * 0.25).toFixed(2);
+  // Add white "hot spot" occasionally near center to simulate hottest part
+  if (Math.random() < 0.3) {
+    const whiteSpot = document.createElement('div');
+    whiteSpot.style.position = 'absolute';
+    whiteSpot.style.width = `${width / 4}px`;
+    whiteSpot.style.height = `${height / 4}px`;
+    whiteSpot.style.borderRadius = '50%';
+    whiteSpot.style.background = 'rgba(255,255,255,0.8)';
+    whiteSpot.style.top = `${height * 0.4}px`;
+    whiteSpot.style.left = '50%';
+    whiteSpot.style.transform = 'translateX(-50%)';
+    whiteSpot.style.filter = 'blur(2px)';
+    flame.appendChild(whiteSpot);
+  }
+
+  flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
   flame.style.filter = `blur(${0.3 + Math.random() * 0.6}px)`;
 
   flame.style.transformOrigin = '50% 100%';
+  flame.style.position = 'absolute'; // ensure positioning
+
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
