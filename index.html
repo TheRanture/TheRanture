@@ -158,9 +158,9 @@ body.dark-mode a:hover {
   color: #eee;
     }
 
-    body.dark-mode #clear-search {
-      color: black;
-    }
+body.dark-mode #clear-search {
+  color: black; /* ← this fixes it permanently */
+}
     .search-suggestion {
   display: inline-block;
   padding: 6px 12px;
@@ -305,7 +305,7 @@ body.dark-mode #search-bar::placeholder {
     }
 
     body.dark-mode #clear-search {
-      color: white;
+      color: black;
     }
 
     #search-funny {
