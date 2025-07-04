@@ -85,15 +85,17 @@ body.dark-mode .textbed {
 @keyframes flickerFlame {
   0% {
     transform: translateX(-50%) rotate(-45deg) scale(1) translateY(0);
+    opacity: 0.6;
   }
   50% {
     transform: translateX(-50%) rotate(-47deg) scale(1.1) translateY(-2px);
+    opacity: 0.9;
   }
   100% {
     transform: translateX(-50%) rotate(-43deg) scale(1.2) translateY(-4px);
+    opacity: 0.7;
   }
 }
-
 .torch .flame:nth-child(1) {
   animation-delay: 0s;
 }
@@ -477,23 +479,37 @@ document.addEventListener('DOMContentLoaded', () => {
     input.focus();
   }
 });
-  const torch = document.querySelector('.torch');
+for (let i = 0; i < 6; i++) {
+  const flame = document.createElement('div');
+  flame.classList.add('flame');
 
-  if (torch) {
-    torch.querySelectorAll('.flame').forEach(f => f.remove());
-    for (let i = 0; i < 6; i++) {
-      const flame = document.createElement('div');
-      flame.classList.add('flame');
-      flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
-      flame.style.width = `${6 + Math.random() * 8}px`;
-      flame.style.height = `${6 + Math.random() * 10}px`;
-      flame.style.animationDelay = `${Math.random() * 0.6}s`;
-      flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ffaa00'][Math.floor(Math.random() * 4)];
-      flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-      torch.appendChild(flame);
-    }
-  }
+  // Slight horizontal jitter (left/right offset)
+  flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
 
+  // Slight vertical offset to prevent stacking
+  flame.style.bottom = `${18 + Math.random() * 4}px`;
+
+  // Random width and height
+  flame.style.width = `${6 + Math.random() * 8}px`;
+  flame.style.height = `${6 + Math.random() * 10}px`;
+
+  // Delay flicker differently for each
+  flame.style.animationDelay = `${Math.random() * 0.6}s`;
+
+  // Vary flame colors slightly
+  flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ff3300'][Math.floor(Math.random() * 4)];
+
+  // Random flame opacity for depth effect
+  flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+
+  // Subtle blur
+  flame.style.filter = `blur(${0.3 + Math.random() * 0.4}px)`;
+
+  // Slightly different pivot point for scale/rotate
+  flame.style.transformOrigin = `${40 + Math.random() * 20}% bottom`;
+
+  torch.appendChild(flame);
+}
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
