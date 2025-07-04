@@ -404,7 +404,7 @@ body.dark-mode #search-bar::placeholder {
     <div id="search-container">
       <button id="search-toggle" aria-label="Toggle Search">
         <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4"/>
         </svg>
       </button>
       <input type="text" id="search-bar" placeholder="Search..." aria-label="Search" autocomplete="off" />
@@ -436,341 +436,171 @@ body.dark-mode #search-bar::placeholder {
     const clipShapes = [
   'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
   'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
-  'polygon(50% 0%, 58% 16%, 76% 34%, 62% 56%, 70% 74%, 50% 100%, 30% 74%, 36% 56%, 24% 34%, 42% 16%)'
+  'polygon(50% 0%, 65% 17%, 78% 33%, 70% 54%, 76% 74%, 50% 96%, 24% 74%, 30% 54%, 22% 33%, 35% 17%)'
 ];
-    function setHTML(container, htmlString) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, 'text/html');
-  const fragment = document.createDocumentFragment();
-
-  Array.from(doc.body.childNodes).forEach(node => {
-    fragment.appendChild(node);
-  });
-
-  container.replaceChildren(fragment);
-}
-    function throttle(fn, wait) {
-  let lastTime = 0;
-  return function (...args) {
-    const now = Date.now();
-    if (now - lastTime >= wait) {
-      lastTime = now;
-      fn.apply(this, args);
-    }
-  };
-}
-    const forceRedraw = (el) => {
-  el.style.display = 'none';
-  void el.offsetHeight;
-  el.style.display = 'block';
-};
-    try {
-  const dm = localStorage.getItem('darkMode');
-  if (dm === '1') document.body.classList.add('dark-mode');
-} catch (e) {}
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.article-preview').forEach(preview => {
-  preview.addEventListener('click', () => {
-    const filename = preview.getAttribute('data-file');
-    if (filename) loadArticle(filename);
-  });
-});
-  const toggle = document.getElementById('search-toggle');
-  const input = document.getElementById('search-bar');
-  const funny = document.getElementById('search-funny');
-  const clear = document.getElementById('clear-search');
-  toggle.addEventListener('click', () => {
-  const isVisible = window.getComputedStyle(input).display !== 'none';
-  if (isVisible) {
-    input.style.display = 'none';
-    clear.style.display = 'none';
-    funny.style.display = 'none';
-  } else {
-    input.style.display = 'block';
-    input.focus();
-  }
-});
-const torch = document.querySelector('.torch');
-const leftOffsets = ['40%', '50%', '60%', '45%'];
-for (let i = 0; i < 4; i++) {
-  const flame = document.createElement('div');
-  flame.classList.add('flame');
-
-  // Position above handle consistently
-  flame.style.bottom = '28px'; // aligns with top of handle
-flame.style.left = leftOffsets[i];
-flame.style.transform = 'translateX(-50%)';
-  // Softer animation and flicker
-  flame.style.animationDelay = `${Math.random() * 0.4}s`;
-
-  // Gentle orange hues
-  flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
-  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
-  flame.style.filter = `blur(${0.1 + Math.random() * 0.5}px)`;
-
-  // Subtle randomness
-  flame.style.transformOrigin = '50% 100%';
-  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 50% 50%';
-flame.style.width = `${12 + Math.random() * 6}px`;
-flame.style.height = `${24 + Math.random() * 8}px`;
-flame.style.boxShadow = '0 0 8px rgba(255, 100, 0, 0.5)';
-  torch.appendChild(flame);
-}
-let lastFlameUpdate = 0;
-const flameUpdateInterval = 120; // update every ~50ms (20 FPS)
-
-function animateFlames(timestamp) {
-  if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
-    const flames = document.querySelectorAll('.flame');
-    flames.forEach(flame => {
-      const scaleX = 0.7 + Math.random() * 0.4;
-      const scaleY = 0.9 + Math.random() * 0.6;
-      const rotate = -15 + Math.random() * 30;
-      const offsetX = -2 + Math.random() * 4;
-      const offsetY = -1 + Math.random() * 2;
- const colors = ['#ff6600', '#ff9933', '#ffcc33', '#ffaa00', '#ffee99'];
- flame.style.transform = `
-        translateX(-50%)
-        translate(${offsetX}px, ${offsetY}px)
-        rotate(${rotate}deg)
-        scale(${scaleX}, ${scaleY})
-      `;
-      flame.style.opacity = 0.5 + Math.random() * 0.3;
-    });
-    lastFlameUpdate = timestamp;
-  }
-  requestAnimationFrame(animateFlames);
-}
-  requestAnimationFrame(animateFlames);
-}
-// Start the flame update loop
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  let saved = null;
-  try {
-    saved = localStorage.getItem('lastView');
-  } catch (e) {
-    console.warn('localStorage not available:', e);
-  }
-
-  if (saved) {
-    try {
-      const view = JSON.parse(saved);
-      if (view.type === 'article') loadArticle(view.file);
-      else if (view.type === 'section') {
-        const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-        if (btn) btn.click();
+    const torch = document.querySelector('.torch');
+    if (torch) {
+      for (let i = 0; i < 3; i++) {
+        const flame = document.createElement('div');
+        flame.classList.add('flame');
+        flame.style.width = `${6 + i * 4}px`;
+        flame.style.height = `${6 + i * 4}px`;
+        flame.style.background = i === 0 ? '#FF6633' : i === 1 ? '#FF9933' : '#FFD966';
+        flame.style.clipPath = clipShapes[i];
+        flame.style.left = '50%';
+        flame.style.bottom = '28px';
+        flame.style.position = 'absolute';
+        flame.style.animation = `flicker ${0.5 + i * 0.3}s ease-in-out infinite`;
+        torch.appendChild(flame);
       }
-    } catch (e) {
-      console.warn('Invalid saved data:', e);
     }
-  }
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`
+      @keyframes flicker {
+        0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; filter: brightness(1); }
+        50% { transform: translateX(-52%) translateY(-3px) scale(1.1); opacity: 0.85; filter: brightness(1.1); }
+      }
+    `, styleSheet.cssRules.length);
 
-input.addEventListener('input', () => {
-  const val = input.value.trim().toLowerCase();
-  clear.style.display = val.length ? 'inline' : 'none';
+    // Dark mode toggle logic
+    const modeToggleBtn = document.getElementById('mode-toggle');
+    modeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+    // Apply saved mode on load
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
 
-  if (val.length === 0) {
-    funny.textContent = '';
-    funny.style.display = 'none';
-    return;
-  }
+    // Search bar toggle
+    const searchToggleBtn = document.getElementById('search-toggle');
+    const searchBar = document.getElementById('search-bar');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const searchFunny = document.getElementById('search-funny');
 
-  if (funnyResponses[val]) {
-    funny.textContent = funnyResponses[val];
-    funny.style.display = 'block';
-    return;
-  }
+    searchToggleBtn.addEventListener('click', () => {
+      if (searchBar.style.display === 'inline-block') {
+        searchBar.style.display = 'none';
+        clearSearchBtn.style.display = 'none';
+        searchBar.value = '';
+        searchFunny.style.display = 'none';
+      } else {
+        searchBar.style.display = 'inline-block';
+        searchBar.focus();
+      }
+    });
 
-  const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
-    return {
-      title: preview.querySelector('h3')?.textContent.trim() || '',
-      snippet: preview.querySelector('p')?.textContent.trim() || '',
-      file: preview.getAttribute('data-file') || '',
-      keywords: (preview.querySelector('h3')?.textContent.toLowerCase().split(/\s+/) || [])
-    };
-  });
+    clearSearchBtn.addEventListener('click', () => {
+      searchBar.value = '';
+      clearSearchBtn.style.display = 'none';
+      searchFunny.style.display = 'none';
+      searchBar.focus();
+    });
 
-  const match = searchableArticles.find(a => 
-    a.title.toLowerCase().includes(val) || 
-    a.keywords.some(k => k.startsWith(val))
-  );
+    searchBar.addEventListener('input', () => {
+      if (searchBar.value.trim() !== '') {
+        clearSearchBtn.style.display = 'inline-block';
+        const funnyResponses = [
+          "Ranting about that, huh?",
+          "Searching... but the rant is strong!",
+          "Hmm, what would Count Rantula say?",
+          "Hold on, conjuring some chaos...",
+          "Are you sure you want to know?"
+        ];
+        const randomResponse = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
+        searchFunny.textContent = randomResponse;
+        searchFunny.style.display = 'block';
+      } else {
+        clearSearchBtn.style.display = 'none';
+        searchFunny.style.display = 'none';
+      }
+    });
 
-  if (match && match.file) {
-    funny.innerHTML = `<div class="search-suggestion" tabindex="0" role="button" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
-  } else {
-    funny.textContent = 'Searching... No results found.';
-  }
+    // Toolbar buttons navigation and content loading
+    const toolbarButtons = document.querySelectorAll('.toolbar-btn');
+    const articlesContainer = document.getElementById('articles-container');
+    const articleFullContent = document.getElementById('article-full-content');
+    const mainContent = document.getElementById('main-content');
 
-  funny.style.display = 'block';
-});
+    toolbarButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toolbarButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const page = btn.getAttribute('data-page');
+        loadPage(page);
+      });
+    });
 
-  // Mode toggle setup
-  const modeToggle = document.getElementById('mode-toggle');
-  const darkActive = document.body.classList.contains('dark-mode');
-  modeToggle.setAttribute('aria-pressed', darkActive);
+    function loadPage(page) {
+      articleFullContent.style.display = 'none';
+      articlesContainer.style.display = 'none';
+      mainContent.style.display = 'block';
+      searchFunny.style.display = 'none';
+      searchBar.style.display = 'none';
+      clearSearchBtn.style.display = 'none';
+      searchBar.value = '';
+      if (page === 'articles') {
+        articlesContainer.style.display = 'block';
+        mainContent.innerHTML = '';
+      } else {
+        // For demonstration, load simple text; replace with AJAX if needed
+        mainContent.innerHTML = `<div class="textbed"><h2>${page.charAt(0).toUpperCase() + page.slice(1)}</h2><p>Content for the ${page} page.</p></div>`;
+      }
+      window.scrollTo(0, 0);
+    }
 
-modeToggle.addEventListener('click', () => {
-  const toggled = document.body.classList.toggle('dark-mode');
-  modeToggle.setAttribute('aria-pressed', toggled);
-  try {
-    localStorage.setItem('darkMode', toggled ? '1' : '0');
-  } catch (e) {}
-});
+    // Load article preview
+    document.querySelectorAll('.article-preview').forEach(preview => {
+      preview.addEventListener('click', () => {
+        const file = preview.getAttribute('data-file');
+        fetch(file).then(response => response.text()).then(html => {
+          articleFullContent.innerHTML = html;
+          articleFullContent.style.display = 'block';
+          articlesContainer.style.display = 'none';
+          mainContent.style.display = 'none';
+          window.scrollTo(0, 0);
+        });
+      });
+    });
 
-  // Back to top visibility
-  const backToTop = document.getElementById('back-to-top');
-window.addEventListener('scroll', throttle(() => {
-  backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
-  const footnote = document.getElementById('footnote');
-  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-  footnote.style.opacity = nearBottom ? '1' : '0';
-  footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
-}, 150));  // runs max every 150ms
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Home') {
-      e.preventDefault();
+    // Back to top button logic
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+        document.getElementById('footnote').style.opacity = '1';
+      } else {
+        backToTopBtn.style.display = 'none';
+        document.getElementById('footnote').style.opacity = '0';
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
+    });
 
-  // Konami Code Easter Egg
-  const konami = [38,38,40,40,37,39,37,39,66,65];
-  let kPos = 0;
-  window.addEventListener('keydown', (e) => {
-    kPos = (e.keyCode === konami[kPos]) ? kPos + 1 : 0;
-    if (kPos === konami.length) {
-      const pop = document.createElement('div');
-      pop.id = 'konami-popup';
-      pop.textContent = 'They are watching!';
-      Object.assign(pop.style, {
-        position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        background: '#cc0000', color: '#fff', fontSize: '2rem', padding: '30px 50px',
-        borderRadius: '8px', fontWeight: 'bold', fontFamily: 'monospace',
-        boxShadow: '0 0 15px #ff0000', zIndex: 15000, textAlign: 'center'
-      });
-      document.body.appendChild(pop);
-      setTimeout(() => pop.remove(), 4000);
-      kPos = 0;
-    }
-  });
+    // Konami code Easter egg
+    const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    let konamiPosition = 0;
+    window.addEventListener('keydown', (e) => {
+      if (e.keyCode === konamiCode[konamiPosition]) {
+        konamiPosition++;
+        if (konamiPosition === konamiCode.length) {
+          alert("They are watching!");
+          konamiPosition = 0;
+        }
+      } else {
+        konamiPosition = 0;
+      }
+    });
 
-  // Toolbar nav
-  const buttons = document.querySelectorAll('.toolbar-btn');
-  const main = document.getElementById('main-content');
-  const full = document.getElementById('article-full-content');
-  const previews = document.getElementById('articles-container');
+    // Show footnote initially after 5 seconds
+    setTimeout(() => {
+      document.getElementById('footnote').style.opacity = '1';
+    }, 5000);
 
-  buttons.forEach(btn => btn.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const page = btn.dataset.page;
-try {
-  localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
-} catch (e) {
-  console.warn('localStorage not available:', e);
-}
-    full.style.display = 'none';
-    previews.style.display = (page === 'articles') ? 'block' : 'none';
-    main.style.display = 'block';
-    void previews.offsetHeight;
-
-    const content = {
-      about: `<div class="textbed"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
-      legal: `<div class="textbed"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-          <ul>
-            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-            <li>The owner is not responsible for any third-party links or external content.</li>
-            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-            <li>The website does not collect personal data, and no input from users is accepted.</li>
-            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-            <li>These terms apply globally and supersede any conflicting local laws.</li>
-          </ul>
-          <p><strong>Creative Commons License:</strong><br>
-            This work is licensed under the
-            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-            </a>.
-          </p>
-          <h2>Content Disclaimer</h2>
-          <p><strong>Disclaimer:</strong></p>
-          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-          <p><strong>Copyright Notice:</strong><br>
-            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-          </p> <!-- etc. Full legal text here --> </div>`
-    };
-
-if (content[page]) {
-  setHTML(main, content[page]);
-} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
-setHTML(main, content[page]);
-} else {
-setHTML(main, content[page]);
-}
-  }));
-
-  // Search logic
-  const funnyResponses = {
-    "aliens": "👽 Try Paris.",
-    "password": "🔐 Nice try. The password is not 'password'.",
-    // ... (other entries omitted for brevity)
-  };
-  document.addEventListener('click', e => {
-    if (!document.getElementById('search-container').contains(e.target)) {
-      input.style.display = 'none';
-      clear.style.display = 'none';
-      funny.style.display = 'none';
-    }
-  });
-  // Ranture - Script Logic
-// SHA-256 page hash generation
-  async function generatePageHash() {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(document.documentElement.outerHTML);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  const shortHash = fullHash.substring(0, 6);
-  console.log("Full SHA-256 hash:", fullHash);
-  console.log("Short Proof Code: RAN-" + shortHash);
-  const hashDisplay = document.getElementById('page-hash');
-  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
-  const fullHashEl = document.getElementById('full-page-hash');
-  if (fullHashEl) fullHashEl.textContent = fullHash;
-}
-generatePageHash();
-// Load article
-function loadArticle(filename) {
-  try {
-    localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
-  } catch (e) {
-    console.warn('localStorage not available:', e);
-  }
-  fetch(filename)
-    .then(res => res.text())
-    .then(html => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const content = doc.querySelector('.ai-rights-body');
-      if (!content) return alert('Article content not found.');
-      document.getElementById('articles-container').style.display = 'none';
-      document.getElementById('main-content').style.display = 'none';
-      const container = document.getElementById('article-full-content');
-      setHTML(container, `<div class="textbed">${content.innerHTML}</div>`);
-      container.style.display = 'block';
-      document.getElementById('search-funny').style.display = 'none';
-      requestAnimationFrame(() => {
-        container.scrollIntoView({ behavior: 'smooth' });
-      });
-    })
-    .catch(err => alert('Failed to load article: ' + err));
-}
-</script>
-  </body>
+    // On page load, show articles
+    loadPage('articles');
+  </script>
+</body>
 </html>
