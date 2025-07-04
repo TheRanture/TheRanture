@@ -458,6 +458,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('search-bar');
   const funny = document.getElementById('search-funny');
   const clear = document.getElementById('clear-search');
+  toggle.addEventListener('click', () => {
+  const isVisible = window.getComputedStyle(input).display !== 'none';
+  if (isVisible) {
+    input.style.display = 'none';
+    clear.style.display = 'none';
+    funny.style.display = 'none';
+  } else {
+    input.style.display = 'block';
+    input.focus();
+  }
+});
   const torch = document.querySelector('.torch');
 
   if (torch) {
