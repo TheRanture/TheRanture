@@ -465,11 +465,12 @@ for (let i = 0; i < 6; i++) {
 
   // Position above handle consistently
   flame.style.bottom = '28px'; // aligns with top of handle
-  flame.style.left = `${48 + (Math.random() * 4 - 2)}%`;
+flame.style.left = '50%';
+flame.style.transform = 'translateX(-50%)';
 
   // More realistic flame size
-  flame.style.width = `${4 + Math.random() * 4}px`;
-  flame.style.height = `${6 + Math.random() * 6}px`;
+flame.style.width = `${6 + Math.random() * 6}px`;
+flame.style.height = `${10 + Math.random() * 10}px`;
 
   // Softer animation and flicker
   flame.style.animationDelay = `${Math.random() * 0.4}s`;
@@ -486,7 +487,7 @@ for (let i = 0; i < 6; i++) {
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
-const flameUpdateInterval = 100; // update every ~50ms (20 FPS)
+const flameUpdateInterval = 85; // update every ~50ms (20 FPS)
 
 function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
