@@ -483,8 +483,10 @@ flame.style.height = `${10 + Math.random() * 10}px`;
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '65% 65% 50% 50% / 75% 75% 55% 55%';
+  flame.style.width = `${20 + Math.random() * 10}px`;
+flame.style.height = `${30 + Math.random() * 10}px`;
   flame.style.clipPath = 'polygon(50% 0%, 60% 20%, 80% 30%, 60% 50%, 70% 80%, 50% 100%, 30% 80%, 40% 50%, 20% 30%, 40% 20%)';
-
+flame.style.boxShadow = '0 0 8px rgba(255, 100, 0, 0.5)';
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
@@ -501,9 +503,9 @@ function animateFlames(timestamp) {
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 const clipShapes = [
-  'polygon(50% 0%, 65% 25%, 85% 40%, 65% 55%, 75% 80%, 50% 100%, 25% 80%, 35% 55%, 15% 40%, 35% 25%)',
-  'polygon(50% 0%, 68% 28%, 88% 42%, 68% 58%, 78% 82%, 50% 100%, 22% 82%, 32% 58%, 12% 42%, 32% 28%)',
-  'polygon(50% 0%, 70% 30%, 90% 45%, 70% 60%, 80% 85%, 50% 100%, 20% 85%, 30% 60%, 10% 45%, 30% 30%)'
+  'polygon(50% 0%, 70% 20%, 95% 45%, 75% 65%, 85% 90%, 50% 100%, 15% 90%, 25% 65%, 5% 45%, 30% 20%)',
+  'polygon(50% 0%, 75% 25%, 98% 50%, 78% 70%, 88% 95%, 50% 100%, 12% 95%, 22% 70%, 2% 50%, 25% 25%)',
+  'polygon(50% 0%, 80% 30%, 100% 50%, 80% 75%, 90% 100%, 50% 100%, 10% 100%, 20% 75%, 0% 50%, 20% 30%)'
 ];
 
 flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)];
