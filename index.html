@@ -562,12 +562,11 @@ function renderTorchFlame() {
     flame.style.clipPath = clipShapes[i % clipShapes.length];
 
     // Random offset to break perfect stacking
-    const offsetX = -50 + Math.floor(Math.random() * 16) - 8; // -58% to -42%
-    const offsetY = 26 + Math.floor(Math.random() * 6); // 26px–32px
+ const offsetY = 26 + Math.floor(Math.random() * 6); // 26px–32px
 
-    flame.style.left = '50%';
-    flame.style.bottom = `${offsetY}px`;
-    flame.style.transform = `translateX(${offsetX}%)`;
+flame.style.left = '50%';
+flame.style.bottom = `${offsetY}px`;
+flame.style.transform = `translateX(-50%)`; // Always center horizontally
     flame.style.position = 'absolute';
 
     flame.style.animation = `flame-flicker ${1 + Math.random() * 0.6}s ease-in-out infinite`;
