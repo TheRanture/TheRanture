@@ -65,35 +65,41 @@ body.dark-mode .textbed {
   pointer-events: none;
   border-radius: 3px;
 }
-
-
 .flame {
- filter: blur(0.4px);
   position: absolute;
   bottom: 20px;
   left: 50%;
   width: 10px;
-  height: 10px;
+  height: 18px;
   background: orange;
-  border-radius: 50% 50% 50% 0;
-  transform: translateX(-50%) rotate(-45deg);
-  box-shadow: 0 0 8px orange;
+  border-radius: 40% 40% 50% 50% / 50% 50% 30% 30%; /* more flame-like */
+  transform: translateX(-50%) rotate(-20deg);
+  box-shadow: 0 0 10px orange;
   opacity: 0.8;
-  animation: flickerFlame 0.4s infinite alternate ease-in-out;
+  animation: flickerFlame 0.5s infinite alternate ease-in-out;
+  transform-origin: center bottom;
+  filter: blur(0.4px);
 }
-
 @keyframes flickerFlame {
   0% {
-    transform: translateX(-50%) rotate(-45deg) scale(1) translateY(0);
+    transform: translateX(-50%) rotate(-15deg) scaleX(1) scaleY(1.1);
     opacity: 0.6;
   }
+  25% {
+    transform: translateX(-52%) rotate(-5deg) scaleX(1.1) scaleY(1.3);
+    opacity: 0.75;
+  }
   50% {
-    transform: translateX(-50%) rotate(-47deg) scale(1.1) translateY(-2px);
+    transform: translateX(-48%) rotate(10deg) scaleX(0.95) scaleY(1.5);
     opacity: 0.9;
   }
-  100% {
-    transform: translateX(-50%) rotate(-43deg) scale(1.2) translateY(-4px);
+  75% {
+    transform: translateX(-50%) rotate(-10deg) scaleX(1.05) scaleY(1.3);
     opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-50%) rotate(-20deg) scaleX(1) scaleY(1);
+    opacity: 0.8;
   }
 }
 .torch .flame:nth-child(1) {
@@ -508,6 +514,8 @@ for (let i = 0; i < 6; i++) {
 
   // Slightly different pivot point for scale/rotate
   flame.style.transformOrigin = `${40 + Math.random() * 20}% bottom`;
+
+  flame.style.borderRadius = `${30 + Math.random() * 20}% ${30 + Math.random() * 20}% ${40 + Math.random() * 20}% ${40 + Math.random() * 20%} / ${50 + Math.random() * 10}% ${50 + Math.random() * 10}% ${30 + Math.random() * 20}% ${30 + Math.random() * 20}%`;
 
   torch.appendChild(flame);
 }
