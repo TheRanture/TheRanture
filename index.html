@@ -648,21 +648,6 @@ try {
     "password": "🔐 Nice try. The password is not 'password'.",
     // ... (other entries omitted for brevity)
   };
-
- toggle.addEventListener('click', e => {
-    e.stopPropagation();
-    if (input.style.display === 'inline-block') {
-      input.style.display = 'none';
-      funny.style.display = 'none';
-      clear.style.display = 'none';
-    } else {
-      input.style.display = 'inline-block';
-      input.focus();
-      funny.style.display = 'block';
-      if (input.value.trim().length) clear.style.display = 'inline';
-    }
-  });
-
   document.addEventListener('click', e => {
     if (!document.getElementById('search-container').contains(e.target)) {
       input.style.display = 'none';
