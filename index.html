@@ -413,15 +413,16 @@
       <div id="search-funny" aria-live="polite"></div>
     </div>
     <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
-      <button class="toolbar-btn" onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
       <button class="toolbar-btn active" data-page="articles">Articles</button>
-      <button onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
       <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
       <button class="toolbar-btn" data-page="books">Books</button>
       <button class="toolbar-btn" data-page="about">About</button>
       <button class="toolbar-btn" data-page="legal">Legal</button>
     </nav>
   </div>
+  <button class="toolbar-btn" onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
+<button onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
+
 
   <!-- Containers for dynamic content -->
   <main id="main-content" tabindex="0" aria-live="polite"></main>
@@ -430,8 +431,7 @@
   <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;font-size:24px;cursor:pointer;z-index:12000;">⬆</button>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-      async function loadArticle(filename) {
+       async function loadArticle(filename) {
   try {
     const response = await fetch(filename);
     if (!response.ok) throw new Error('Cannot load ' + filename);
@@ -446,85 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Article content not found in ' + filename);
       return;
     }
-  const mainContent = document.getElementById('main-content');
-  const articleContent = document.getElementById('article-content');
-  
-
-  const clipShapes = [
-    'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
-    'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
-    'polygon(50% 0%, 58% 10%, 70% 26%, 64% 48%, 68% 66%, 50% 96%, 32% 66%, 36% 48%, 30% 26%, 42% 10%)'
-  ];
-
-  // Flame elements setup
-  const torch = document.querySelector('.torch');
-  torch.innerHTML = ''; // Clear existing flames and handle
-
-  // Add handle back
-  const handle = document.createElement('div');
-  handle.classList.add('handle');
-  torch.appendChild(handle);
-
-  // Create flames with varied clip-path and animation
-  for (let i = 0; i < 6; i++) {
-    const flame = document.createElement('div');
-    flame.classList.add('flame');
-    flame.style.width = `${8 + i*2}px`;
-    flame.style.height = `${8 + i*2}px`;
-    flame.style.background = `rgba(255, ${128 + i*20}, 0, ${0.6 - i*0.1})`;
-    flame.style.left = `${50 + (Math.random() - 0.5) * 20}%`;
-    flame.style.bottom = `${28 + i * 4}px`;
-    flame.style.clipPath = clipShapes[i % clipShapes.length];
-    flame.style.animation = `flame-flicker ${2 + i*0.3}s ease-in-out infinite`;
-    torch.appendChild(flame);
-    
-  }
-
-  // Add smoke
-  const smoke = document.createElement('div');
-  smoke.classList.add('smoke');
-  smoke.style.position = 'absolute';
-  smoke.style.width = '12px';
-  smoke.style.height = '12px';
-  smoke.style.background = 'rgba(180,180,180,0.15)';
-  smoke.style.borderRadius = '50%';
-  smoke.style.left = '50%';
-  smoke.style.bottom = '52px';
-  smoke.style.transform = 'translateX(-50%)';
-  smoke.style.animation = 'rise 1.5s infinite ease-in-out';
-  torch.appendChild(smoke);
-
-  // Flame flicker keyframes
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @keyframes flame-flicker {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translateY(-4px) scale(1.1); opacity: 0.8; }
-    }
-    @keyframes rise {
-      0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.4; }
-      100% { transform: translateX(-50%) translateY(-20px) scale(1.6); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
-
-  // MODE TOGGLE
-  const modeToggle = document.getElementById('mode-toggle');
-  const body = document.body;
-  modeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    modeToggle.setAttribute('aria-pressed', body.classList.contains('dark-mode'));
-  });
-
-  // PAGE CONTENTS
-  const pagesContent = {
-    shorticles: `<div class="textbed"><h2>Shorticles</h2><p>Short, sharp rants and observations on life’s absurdities, politics, and everything in-between. Quick shots of sharp wit.</p></div>`,
-    books: `<div class="textbed"><h2>Books</h2><p>Reviews and reflections on the literature that shaped me — from dark fantasy to dystopian futures.</p></div>`,
-    about: `<div class="textbed"><h2>About Ranture</h2><p>Ranture is your portal to honest, raw, and unfiltered takes. Created to provoke thought, laughter, and maybe some frustration.</p></div>`,
-    legal: `<div class="textbed"><h2>Legal</h2><p>All content is © Count Rantula. Unauthorized copying or redistribution is prohibited. Use at your own risk.</p></div>`
-  };
-
-  // ARTICLES DATA
+      // ARTICLES DATA
   const articles = [
     {
       title: "The Firebrand's Manifesto",
@@ -592,7 +514,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return preview;
   }
+function renderTorchFlame() {
+  const clipShapes = [
+    'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
+    'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
+    'polygon(50% 0%, 58% 10%, 70% 26%, 64% 48%, 68% 66%, 50% 96%, 32% 66%, 36% 48%, 30% 26%, 42% 10%)'
+  ];
 
+  const torch = document.querySelector('.torch');
+  torch.innerHTML = '';
+
+  const handle = document.createElement('div');
+  handle.classList.add('handle');
+  torch.appendChild(handle);
+
+  for (let i = 0; i < 6; i++) {
+    const flame = document.createElement('div');
+    flame.classList.add('flame');
+    flame.style.width = `${8 + i*2}px`;
+    flame.style.height = `${8 + i*2}px`;
+    flame.style.background = `rgba(255, ${128 + i*20}, 0, ${0.6 - i*0.1})`;
+    flame.style.left = `${50 + (Math.random() - 0.5) * 20}%`;
+    flame.style.bottom = `${28 + i * 4}px`;
+    flame.style.clipPath = clipShapes[i % clipShapes.length];
+    flame.style.animation = `flame-flicker ${2 + i*0.3}s ease-in-out infinite`;
+    torch.appendChild(flame);
+  }
+
+  const smoke = document.createElement('div');
+  smoke.classList.add('smoke');
+  smoke.style.position = 'absolute';
+  smoke.style.width = '12px';
+  smoke.style.height = '12px';
+  smoke.style.background = 'rgba(180,180,180,0.15)';
+  smoke.style.borderRadius = '50%';
+  smoke.style.left = '50%';
+  smoke.style.bottom = '52px';
+  smoke.style.transform = 'translateX(-50%)';
+  smoke.style.animation = 'rise 1.5s infinite ease-in-out';
+  torch.appendChild(smoke);
+
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes flame-flicker {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-4px) scale(1.1); opacity: 0.8; }
+    }
+    @keyframes rise {
+      0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.4; }
+      100% { transform: translateX(-50%) translateY(-20px) scale(1.6); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+}
   // Load Articles tab
   function loadArticlesTab() {
     mainContent.innerHTML = '';
@@ -634,6 +608,55 @@ function closeArticle() {
   mainContent.style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  renderTorchFlame();
+  const mainContent = document.getElementById('main-content');
+  const articleContent = document.getElementById('article-content');
+// Add smoke
+  const smoke = document.createElement('div');
+  smoke.classList.add('smoke');
+  smoke.style.position = 'absolute';
+  smoke.style.width = '12px';
+  smoke.style.height = '12px';
+  smoke.style.background = 'rgba(180,180,180,0.15)';
+  smoke.style.borderRadius = '50%';
+  smoke.style.left = '50%';
+  smoke.style.bottom = '52px';
+  smoke.style.transform = 'translateX(-50%)';
+  smoke.style.animation = 'rise 1.5s infinite ease-in-out';
+  torch.appendChild(smoke);
+
+  // Flame flicker keyframes
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes flame-flicker {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-4px) scale(1.1); opacity: 0.8; }
+    }
+    @keyframes rise {
+      0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.4; }
+      100% { transform: translateX(-50%) translateY(-20px) scale(1.6); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // MODE TOGGLE
+  const modeToggle = document.getElementById('mode-toggle');
+  const body = document.body;
+  modeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    modeToggle.setAttribute('aria-pressed', body.classList.contains('dark-mode'));
+  });
+
+  // PAGE CONTENTS
+  const pagesContent = {
+    shorticles: `<div class="textbed"><h2>Shorticles</h2><p>Short, sharp rants and observations on life’s absurdities, politics, and everything in-between. Quick shots of sharp wit.</p></div>`,
+    books: `<div class="textbed"><h2>Books</h2><p>Reviews and reflections on the literature that shaped me — from dark fantasy to dystopian futures.</p></div>`,
+    about: `<div class="textbed"><h2>About Ranture</h2><p>Ranture is your portal to honest, raw, and unfiltered takes. Created to provoke thought, laughter, and maybe some frustration.</p></div>`,
+    legal: `<div class="textbed"><h2>Legal</h2><p>All content is © Count Rantula. Unauthorized copying or redistribution is prohibited. Use at your own risk.</p></div>`
+  };
+
+
   // Toolbar click handler
   toolbarButtons.forEach(btn => {
     btn.addEventListener('click', () => {
