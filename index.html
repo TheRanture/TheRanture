@@ -478,37 +478,41 @@ flame.style.height = `${34 + Math.random() * 4}px`;
   // Gentle orange hues
   flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
   flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
-  flame.style.filter = `blur(${0.6 + Math.random()}px)`;
+  flame.style.filter = `blur(${0.1 + Math.random() * 0.5}px)`;
 
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 50% 50%';
- flame.style.clipPath = 'polygon(50% 0%, 58% 10%, 68% 25%, 62% 45%, 70% 65%, 52% 100%, 34% 65%, 40% 45%, 32% 25%, 42% 10%)';
-flame.style.width = `${24 + Math.random() * 6}px`; // Fatter base
-flame.style.height = `${38 + Math.random() * 4}px`; // Moderate height
+const clipShapes = [
+  'polygon(50% 0%, 62% 10%, 75% 35%, 65% 50%, 70% 80%, 50% 100%, 30% 80%, 35% 55%, 25% 35%, 38% 10%)',
+  'polygon(48% 0%, 60% 15%, 78% 38%, 66% 58%, 70% 85%, 50% 100%, 30% 85%, 35% 60%, 22% 38%, 40% 15%)',
+  'polygon(50% 0%, 58% 12%, 74% 28%, 64% 52%, 70% 74%, 50% 98%, 28% 74%, 34% 54%, 22% 32%, 42% 14%)'
+];
+flame.style.width = `${28 + Math.random() * 8}px`;
+flame.style.height = `${48 + Math.random() * 12}px`;
 flame.style.boxShadow = '0 0 8px rgba(255, 100, 0, 0.5)';
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
-const flameUpdateInterval = 85; // update every ~50ms (20 FPS)
+const flameUpdateInterval = 95; // update every ~50ms (20 FPS)
 
 function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
-      const scaleX = 0.9 + Math.random() * 0.3;
-      const scaleY = 1.0 + Math.random() * 0.7;
-      const rotate = -10 + Math.random() * 20; // more subtle range
-      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
-      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
-      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
+const scaleX = 0.7 + Math.random() * 0.6;
+const scaleY = 0.9 + Math.random() * 1.0;
+const rotate = -25 + Math.random() * 50;
+const offsetX = -3 + Math.random() * 6;
+const offsetY = -2 + Math.random() * 4;
+ const colors = ['#ff6600', '#ff9933', '#ffcc33', '#ffaa00', '#ffee99'];
 const clipShapes = [
   'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
   'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
   'polygon(50% 0%, 58% 16%, 76% 34%, 62% 56%, 70% 74%, 50% 100%, 30% 74%, 36% 56%, 24% 34%, 42% 16%)'
 ];
 flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)];
-      flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+flame.style.background = colors[Math.floor(Math.random() * colors.length)];
       flame.style.transform = `
   translateX(-50%)
   translate(${offsetX}px, ${offsetY}px)
@@ -516,8 +520,7 @@ flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)]
   scale(${scaleX}, ${scaleY})
 `;
 flame.style.opacity = 0.4 + Math.random() * 0.4;
-flame.style.filter = `blur(${0.5 + Math.random() * 1}px)`;
-
+flame.style.filter = `blur(${0.1 + Math.random() * 0.5}px)`;
     });
 
     lastFlameUpdate = timestamp;
