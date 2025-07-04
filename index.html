@@ -443,11 +443,13 @@ body.dark-mode #search-bar::placeholder {
   const dm = localStorage.getItem('darkMode');
   if (dm === '1') document.body.classList.add('dark-mode');
 } catch (e) {}
+const input = document.getElementById('search-bar');
+const funny = document.getElementById('search-funny');
+const clear = document.getElementById('clear-search');
+const toggle = document.getElementById('search-toggle');
+
 document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('search-toggle');
-  const input = document.getElementById('search-bar');
-  const funny = document.getElementById('search-funny');
-  const clear = document.getElementById('clear-search');
+
   toggle.addEventListener('click', () => {
   const isVisible = window.getComputedStyle(input).display !== 'none';
   if (isVisible) {
@@ -508,14 +510,14 @@ function animateFlames(timestamp) {
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 const chosenColor = colors[Math.floor(Math.random() * colors.length)];
-      flame.style.transform = `
+      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
+  flame.style.transform = `
   translateX(-50%)
   translate(${offsetX}px, ${offsetY}px)
   rotate(${rotate}deg)
   scale(${scaleX}, ${scaleY})
 `;
-      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
-      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
     });
 
     lastFlameUpdate = timestamp;
