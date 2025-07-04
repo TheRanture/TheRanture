@@ -465,36 +465,67 @@ const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
   flame.classList.add('flame');
+  flame.style.position = 'absolute';
+  flame.style.bottom = '28px';
+  flame.style.left = '50%';
+  flame.style.transform = 'translateX(-50%)';
 
-  // Position above handle consistently
-flame.style.bottom = '28px'; // aligns with top of handle
-flame.style.left = '50%';
-flame.style.transform = 'translateX(-50%)';
+  // Container size
+  const baseW = 20 + Math.random() * 10;
+  const baseH = baseW * 1.6;
+  flame.style.width = `${baseW}px`;
+  flame.style.height = `${baseH}px`;
 
-  // More realistic flame size
-flame.style.width = `${14 + Math.random() * 10}px`;
-flame.style.height = `${18 + Math.random() * 12}px`;
+  // Make inner structure
+  flame.innerHTML = `
+    <div class="flame-base"></div>
+    <div class="flame-jag"></div>
+  `;
 
-  // Softer animation and flicker
-  flame.style.animationDelay = `${Math.random() * 0.4}s`;
-flame.style.clipPath = 'polygon(50% 0%, 60% 20%, 70% 10%, 80% 30%, 60% 50%, 70% 80%, 50% 100%, 30% 80%, 40% 50%, 20% 30%, 30% 10%, 40% 20%)';
+  flame.style.pointerEvents = 'none';
 
-  // Gentle orange hues
-  const baseColors = [
-  'rgba(255, 102, 0, 0.6)',    // semi-transparent orange
-  'rgba(255, 153, 51, 0.5)',   // lighter orange, more transparent
-  'rgba(255, 204, 102, 0.4)'   // pale orange, even more transparent
-];
-const chosenColor = baseColors[Math.floor(Math.random() * baseColors.length)];
-  flame.style.background = `radial-gradient(circle at center, ${chosenColor} 30%, transparent 80%)`;
-  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
-  flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
+  // Add styles via JS
+  const base = flame.querySelector('.flame-base');
+  base.style.position = 'absolute';
+  base.style.bottom = '0';
+  base.style.left = '50%';
+  base.style.transform = 'translateX(-50%)';
+  base.style.width = `${baseW * 0.9}px`;
+  base.style.height = `${baseH * 0.4}px`;
+  base.style.borderRadius = '50%';
+  base.style.background = 'radial-gradient(circle, rgba(255, 100, 0, 0.7) 0%, transparent 80%)';
+  base.style.opacity = '0.7';
+  base.style.filter = 'blur(1px)';
 
-  // Subtle randomness
-  flame.style.transformOrigin = '50% 100%';
-  flame.style.borderRadius = '40% 40% 20% 20% / 80% 80% 20% 20%';
+  const jag = flame.querySelector('.flame-jag');
+  jag.style.position = 'absolute';
+  jag.style.bottom = `${baseH * 0.3}px`;
+  jag.style.left = '50%';
+  jag.style.transform = 'translateX(-50%)';
+  jag.style.width = `${baseW}px`;
+  jag.style.height = `${baseH * 0.7}px`;
+  jag.style.background = 'radial-gradient(circle, rgba(255, 150, 50, 0.5), transparent 70%)';
+  jag.style.clipPath = `
+    polygon(
+      50% 0%,
+      60% 10%,
+      70% 5%,
+      80% 20%,
+      65% 40%,
+      75% 65%,
+      50% 100%,
+      25% 65%,
+      35% 40%,
+      20% 20%,
+      30% 5%,
+      40% 10%
+    )`;
+  jag.style.opacity = '0.6';
+  jag.style.filter = 'blur(0.6px)';
+
   torch.appendChild(flame);
 }
+
 let lastFlameUpdate = 0;
 const flameUpdateInterval = 92; // update every ~50ms (20 FPS)
 
