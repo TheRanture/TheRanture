@@ -421,7 +421,7 @@ body.dark-mode #search-bar::placeholder {
   </div>
 
   <div class="articles-container" id="articles-container">
-    <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
+<div class="article-preview" data-file="ai-rights.html">
       <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" loading="lazy" />
       <h3>AI Consciousness and Rights</h3>
       <p>An exploration of AI awareness.</p>
@@ -433,6 +433,32 @@ body.dark-mode #search-bar::placeholder {
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
   <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
   <script>
+    const clipShapes = [
+  'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
+  'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
+  'polygon(50% 0%, 58% 16%, 76% 34%, 62% 56%, 70% 74%, 50% 100%, 30% 74%, 36% 56%, 24% 34%, 42% 16%)'
+];
+    function setHTML(container, htmlString) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const fragment = document.createDocumentFragment();
+
+  Array.from(doc.body.childNodes).forEach(node => {
+    fragment.appendChild(node);
+  });
+
+  container.replaceChildren(fragment);
+}
+    function throttle(fn, wait) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= wait) {
+      lastTime = now;
+      fn.apply(this, args);
+    }
+  };
+}
     const forceRedraw = (el) => {
   el.style.display = 'none';
   void el.offsetHeight;
@@ -443,6 +469,12 @@ body.dark-mode #search-bar::placeholder {
   if (dm === '1') document.body.classList.add('dark-mode');
 } catch (e) {}
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.article-preview').forEach(preview => {
+  preview.addEventListener('click', () => {
+    const filename = preview.getAttribute('data-file');
+    if (filename) loadArticle(filename);
+  });
+});
   const toggle = document.getElementById('search-toggle');
   const input = document.getElementById('search-bar');
   const funny = document.getElementById('search-funny');
@@ -483,34 +515,29 @@ flame.style.height = `${34 + Math.random() * 4}px`;
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 50% 50%';
-const clipShapes = [
-  'polygon(50% 0%, 62% 10%, 75% 35%, 65% 50%, 70% 80%, 50% 100%, 30% 80%, 35% 55%, 25% 35%, 38% 10%)',
-  'polygon(48% 0%, 60% 15%, 78% 38%, 66% 58%, 70% 85%, 50% 100%, 30% 85%, 35% 60%, 22% 38%, 40% 15%)',
-  'polygon(50% 0%, 58% 12%, 74% 28%, 64% 52%, 70% 74%, 50% 98%, 28% 74%, 34% 54%, 22% 32%, 42% 14%)'
-];
 flame.style.width = `${28 + Math.random() * 8}px`;
 flame.style.height = `${48 + Math.random() * 12}px`;
 flame.style.boxShadow = '0 0 8px rgba(255, 100, 0, 0.5)';
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
-const flameUpdateInterval = 95; // update every ~50ms (20 FPS)
+const flameUpdateInterval = 120; // update every ~50ms (20 FPS)
 
 function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
+        if (!flame.dataset.clipPath) {
+    const shape = clipShapes[Math.floor(Math.random() * clipShapes.length)];
+    flame.style.clipPath = shape;
+    flame.dataset.clipPath = shape;
+  }
 const scaleX = 0.7 + Math.random() * 0.6;
 const scaleY = 0.9 + Math.random() * 1.0;
 const rotate = -25 + Math.random() * 50;
 const offsetX = -3 + Math.random() * 6;
 const offsetY = -2 + Math.random() * 4;
  const colors = ['#ff6600', '#ff9933', '#ffcc33', '#ffaa00', '#ffee99'];
-const clipShapes = [
-  'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
-  'polygon(50% 0%, 62% 14%, 74% 30%, 66% 52%, 72% 72%, 50% 98%, 28% 72%, 34% 52%, 26% 30%, 38% 14%)',
-  'polygon(50% 0%, 58% 16%, 76% 34%, 62% 56%, 70% 74%, 50% 100%, 30% 74%, 36% 56%, 24% 34%, 42% 16%)'
-];
 flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)];
 flame.style.background = colors[Math.floor(Math.random() * colors.length)];
       flame.style.transform = `
@@ -525,12 +552,8 @@ flame.style.filter = `blur(${0.1 + Math.random() * 0.5}px)`;
 
     lastFlameUpdate = timestamp;
   }
-
   requestAnimationFrame(animateFlames);
 }
-
-requestAnimationFrame(animateFlames);
-
 // Start the flame update loop
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
@@ -567,19 +590,16 @@ input.addEventListener('input', () => {
 
   if (funnyResponses[val]) {
     funny.textContent = funnyResponses[val];
-    funny.style.display = 'block';  // ← make sure it's shown
+    funny.style.display = 'block';
     return;
   }
 
   const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
-    const titleElem = preview.querySelector('h3');
-    const snippetElem = preview.querySelector('p');
-    const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
     return {
-      title: titleElem?.textContent.trim() || '',
-      snippet: snippetElem?.textContent.trim() || '',
-      file: fileMatch ? fileMatch[1] : '',
-      keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+      title: preview.querySelector('h3')?.textContent.trim() || '',
+      snippet: preview.querySelector('p')?.textContent.trim() || '',
+      file: preview.getAttribute('data-file') || '',
+      keywords: (preview.querySelector('h3')?.textContent.toLowerCase().split(/\s+/) || [])
     };
   });
 
@@ -588,22 +608,15 @@ input.addEventListener('input', () => {
     a.keywords.some(k => k.startsWith(val))
   );
 
-  if (match) {
-    funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
+  if (match && match.file) {
+    funny.innerHTML = `<div class="search-suggestion" tabindex="0" role="button" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
   } else {
     funny.textContent = 'Searching... No results found.';
   }
 
-  funny.style.display = 'block';  // ← ensure it's always visible
+  funny.style.display = 'block';
 });
-clear.addEventListener('click', () => {
-  input.value = '';
-  funny.textContent = '';
-  funny.style.display = 'none';  // ← make sure it hides
-  clear.style.display = 'none';
-  input.focus();
-});
-});
+
   // Mode toggle setup
   const modeToggle = document.getElementById('mode-toggle');
   const darkActive = document.body.classList.contains('dark-mode');
@@ -619,14 +632,13 @@ modeToggle.addEventListener('click', () => {
 
   // Back to top visibility
   const backToTop = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
-    const footnote = document.getElementById('footnote');
-   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-    footnote.style.opacity = nearBottom ? '1' : '0';
-    footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
-  });
-
+window.addEventListener('scroll', throttle(() => {
+  backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  const footnote = document.getElementById('footnote');
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+  footnote.style.opacity = nearBottom ? '1' : '0';
+  footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
+}, 150));  // runs max every 150ms
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Home') {
@@ -707,11 +719,11 @@ try {
     };
 
 if (content[page]) {
-  main.innerHTML = content[page];
+  setHTML(main, content[page]);
 } else if (page === 'articles' || page === 'shorticles' || page === 'books') {
-  main.innerHTML = ''; // Do nothing for those tabs
+setHTML(main, content[page]);
 } else {
-  main.innerHTML = `<p>Unknown page: ${page}</p>`;
+setHTML(main, content[page]);
 }
   }));
 
@@ -747,11 +759,11 @@ if (content[page]) {
 generatePageHash();
 // Load article
 function loadArticle(filename) {
-try {
-  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
-} catch (e) {
-  console.warn('localStorage not available:', e);
-}
+  try {
+    localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+  } catch (e) {
+    console.warn('localStorage not available:', e);
+  }
   fetch(filename)
     .then(res => res.text())
     .then(html => {
@@ -761,10 +773,12 @@ try {
       document.getElementById('articles-container').style.display = 'none';
       document.getElementById('main-content').style.display = 'none';
       const container = document.getElementById('article-full-content');
-      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
+      setHTML(container, `<div class="textbed">${content.innerHTML}</div>`);
       container.style.display = 'block';
       document.getElementById('search-funny').style.display = 'none';
-      container.scrollIntoView({ behavior: 'smooth' });
+      requestAnimationFrame(() => {
+        container.scrollIntoView({ behavior: 'smooth' });
+      });
     })
     .catch(err => alert('Failed to load article: ' + err));
 }
