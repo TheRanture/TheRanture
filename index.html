@@ -499,27 +499,20 @@ for (let i = 0; i < 6; i++) {
 
   const jag = flame.querySelector('.flame-jag');
   jag.style.position = 'absolute';
-  jag.style.bottom = `${baseH * 0.3}px`;
+  jag.style.bottom = `${baseH * 0.38}px`; // increase from 0.3 to lift the top flame slightly
   jag.style.left = '50%';
   jag.style.transform = 'translateX(-50%)';
   jag.style.width = `${baseW}px`;
   jag.style.height = `${baseH * 0.7}px`;
   jag.style.background = 'radial-gradient(circle, rgba(255, 150, 50, 0.5), transparent 70%)';
-  jag.style.clipPath = `
-    polygon(
-      50% 0%,
-      60% 10%,
-      70% 5%,
-      80% 20%,
-      65% 40%,
-      75% 65%,
-      50% 100%,
-      25% 65%,
-      35% 40%,
-      20% 20%,
-      30% 5%,
-      40% 10%
-    )`;
+ jag.style.clipPath = `
+  polygon(
+    50% 0%,
+    62% 8%, 72% 4%, 85% 18%, 68% 38%, 78% 60%,
+    50% 100%,
+    22% 60%, 32% 38%, 15% 18%, 28% 4%, 38% 8%
+  )`;
+
   jag.style.opacity = '0.6';
   jag.style.filter = 'blur(0.6px)';
 
@@ -531,23 +524,20 @@ const flameUpdateInterval = 92; // update every ~50ms (20 FPS)
 
 function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
-    const flames = document.querySelectorAll('.flame');
-    flames.forEach(flame => {
-      const scaleX = 0.9 + Math.random() * 0.3;
+    const jagFlames = document.querySelectorAll('.flame-jag');
+    jagFlames.forEach(jag => {
+      const scaleX = 0.9 + Math.random() * 0.4;
       const scaleY = 1.0 + Math.random() * 0.7;
-      const rotate = -10 + Math.random() * 20; // more subtle range
-      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
-      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
-      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
-const chosenColor = colors[Math.floor(Math.random() * colors.length)];
-      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
-      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
-  flame.style.transform = `
-  translateX(-50%)
-  translate(${offsetX}px, ${offsetY}px)
-  rotate(${rotate}deg)
-  scale(${scaleX}, ${scaleY})
-`;
+      const rotate = -10 + Math.random() * 20;
+      const offsetX = -1.5 + Math.random() * 3;
+      const offsetY = -2 + Math.random() * 4;
+
+      jag.style.transform = `
+        translateX(-50%)
+        translate(${offsetX}px, ${offsetY}px)
+        rotate(${rotate}deg)
+        scale(${scaleX}, ${scaleY})
+      `;
     });
 
     lastFlameUpdate = timestamp;
@@ -555,7 +545,6 @@ const chosenColor = colors[Math.floor(Math.random() * colors.length)];
 
   requestAnimationFrame(animateFlames);
 }
-
 requestAnimationFrame(animateFlames);
 
 // Start the flame update loop
