@@ -492,8 +492,6 @@ const chosenColor = baseColors[Math.floor(Math.random() * baseColors.length)];
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
-flame.style.transform = `translateX(-50%) translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
-
   torch.appendChild(flame);
 }
 let lastFlameUpdate = 0;
