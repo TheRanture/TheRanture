@@ -356,6 +356,9 @@ body.dark-mode #search-bar::placeholder {
       height: auto;
       border-radius: 8px;
       margin-bottom: 0.8em;
+  min-height: 150px;
+  background: #ccc url('fallback.png') center center no-repeat;
+  background-size: cover;
     }
 
     .article-preview h3 {
@@ -438,7 +441,7 @@ body.dark-mode #search-bar::placeholder {
 
   <div class="articles-container" id="articles-container">
     <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
-      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" />
+      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" loading="lazy" />
       <h3>AI Consciousness and Rights</h3>
       <p>An exploration of AI awareness.</p>
     </div>
@@ -449,6 +452,11 @@ body.dark-mode #search-bar::placeholder {
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
   <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
   <script>
+    const forceRedraw = (el) => {
+  el.style.display = 'none';
+  void el.offsetHeight;
+  el.style.display = 'block';
+};
     try {
   const dm = localStorage.getItem('darkMode');
   if (dm === '1') document.body.classList.add('dark-mode');
@@ -628,6 +636,7 @@ try {
     full.style.display = 'none';
     previews.style.display = (page === 'articles') ? 'block' : 'none';
     main.style.display = 'block';
+    void previews.offsetHeight;
 
     const content = {
       about: `<div class="textbed"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
