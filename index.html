@@ -413,7 +413,9 @@
       <div id="search-funny" aria-live="polite"></div>
     </div>
     <nav id="toolbar" role="navigation" aria-label="Primary site navigation">
+      <button class="toolbar-btn" onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
       <button class="toolbar-btn active" data-page="articles">Articles</button>
+      <button onclick="loadArticle('ai-rights.html')">Load AI Rights Article</button>
       <button class="toolbar-btn" data-page="shorticles">Shorticles</button>
       <button class="toolbar-btn" data-page="books">Books</button>
       <button class="toolbar-btn" data-page="about">About</button>
@@ -423,12 +425,15 @@
 
   <!-- Containers for dynamic content -->
   <main id="main-content" tabindex="0" aria-live="polite"></main>
-  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
+<div id="article-content" tabindex="0" style="max-width: 900px; margin: 1em auto; display:none;"></div>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
   <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;font-size:24px;cursor:pointer;z-index:12000;">⬆</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  const mainContent = document.getElementById('main-content');
+  const articleContent = document.getElementById('article-content');
+  
 
   const clipShapes = [
     'polygon(50% 0%, 60% 12%, 72% 28%, 64% 50%, 70% 70%, 50% 100%, 30% 70%, 36% 50%, 28% 28%, 40% 12%)',
@@ -538,9 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const toolbarButtons = document.querySelectorAll('.toolbar-btn');
-  const mainContent = document.getElementById('main-content');
-  const articleFullContent = document.getElementById('article-full-content');
-
+  
   // Function to create article preview box
   function createArticlePreview(article, index) {
     const preview = document.createElement('div');
@@ -598,20 +601,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (index < 0 || index >= articles.length) return;
 
     const article = articles[index];
-    articleFullContent.innerHTML = article.content;
-    articleFullContent.style.display = 'block';
+    articleContent.innerHTML = article.content;
+    articleContent.style.display = 'block';
     mainContent.style.display = 'none';
+    articleContent.focus();
 
     // Scroll to top when article loads
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Close article full content view
-  function closeArticle() {
-    articleFullContent.style.display = 'none';
-    mainContent.style.display = 'block';
-  }
-
+function closeArticle() {
+  const articleContent = document.getElementById('article-content');
+  const mainContent = document.getElementById('main-content');
+  articleContent.style.display = 'none';
+  mainContent.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
   // Toolbar click handler
   toolbarButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -697,12 +703,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close full article if user presses Escape
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && articleFullContent.style.display === 'block') {
+    if (e.key === 'Escape' && articleContent.style.display === 'block') {
       closeArticle();
     }
   });
 
 });
+ async function loadArticle(filename) {
+  try {
+    const response = await fetch(filename);
+    if (!response.ok) throw new Error('Cannot load ' + filename);
+
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+
+    const article = doc.querySelector('.ai-rights-body') || doc.body;
+
+    if (!article) {
+      alert('Article content not found in ' + filename);
+      return;
+    }
+
+    articleContent.innerHTML = `
+      <button id="back-to-articles" aria-label="Back to Articles">← Back to Articles</button>
+    `;
+    mainContent.style.display = 'none';
+
+    document.getElementById('back-to-articles').addEventListener('click', closeArticle);
+
+    articleContent.scrollIntoView({ behavior: 'smooth' });
+
+  } catch (err) {
+    alert('Error loading article: ' + err.message);
+  }
+}
 </script>
 </body>
 </html>
