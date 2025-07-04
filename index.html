@@ -453,65 +453,71 @@ body.dark-mode #search-bar::placeholder {
   const dm = localStorage.getItem('darkMode');
   if (dm === '1') document.body.classList.add('dark-mode');
 } catch (e) {}
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('search-toggle');
   const input = document.getElementById('search-bar');
   const funny = document.getElementById('search-funny');
   const clear = document.getElementById('clear-search');
   const torch = document.querySelector('.torch');
-if (torch) {
-  torch.querySelectorAll('.flame').forEach(f => f.remove()); // remove old flames
-  for (let i = 0; i < 6; i++) {
-    const flame = document.createElement('div');
-    flame.classList.add('flame');
-    flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
-    flame.style.width = `${6 + Math.random() * 8}px`;
-    flame.style.height = `${6 + Math.random() * 10}px`;
-    flame.style.animationDelay = `${Math.random() * 0.6}s`;
-    flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ffaa00'][Math.floor(Math.random() * 4)];
-    flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-    torch.appendChild(flame);
+
+  if (torch) {
+    torch.querySelectorAll('.flame').forEach(f => f.remove());
+    for (let i = 0; i < 6; i++) {
+      const flame = document.createElement('div');
+      flame.classList.add('flame');
+      flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
+      flame.style.width = `${6 + Math.random() * 8}px`;
+      flame.style.height = `${6 + Math.random() * 10}px`;
+      flame.style.animationDelay = `${Math.random() * 0.6}s`;
+      flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ffaa00'][Math.floor(Math.random() * 4)];
+      flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+      torch.appendChild(flame);
+    }
   }
-}
-            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
-  // Restore last view
-let saved = null;
-try {
-  saved = localStorage.getItem('lastView');
-} catch (e) {
-  console.warn('localStorage not available:', e);
-}
-
-if (saved) {
+  let saved = null;
   try {
-    const view = JSON.parse(saved);
-    if (view.type === 'article') loadArticle(view.file);
-    else if (view.type === 'section') {
-      const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
-      if (btn) btn.click();
-    }
+    saved = localStorage.getItem('lastView');
   } catch (e) {
-    console.warn('Invalid saved data:', e);
+    console.warn('localStorage not available:', e);
   }
-}
 
-    input.addEventListener('input', () => {
+  if (saved) {
+    try {
+      const view = JSON.parse(saved);
+      if (view.type === 'article') loadArticle(view.file);
+      else if (view.type === 'section') {
+        const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+        if (btn) btn.click();
+      }
+    } catch (e) {
+      console.warn('Invalid saved data:', e);
+    }
+  }
+
+  input.addEventListener('input', () => {
     const val = input.value.trim().toLowerCase();
     clear.style.display = val.length ? 'inline' : 'none';
-    if (funnyResponses[val]) return funny.textContent = funnyResponses[val];
-  const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
-  const titleElem = preview.querySelector('h3');
-  const snippetElem = preview.querySelector('p');
-  const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
-  return {
-    title: titleElem?.textContent.trim() || '',
-    snippet: snippetElem?.textContent.trim() || '',
-    file: fileMatch ? fileMatch[1] : '',
-    keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
-  };
-});
+    if (funnyResponses[val]) {
+      funny.textContent = funnyResponses[val];
+      return;
+    }
+
+    const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+      const titleElem = preview.querySelector('h3');
+      const snippetElem = preview.querySelector('p');
+      const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
+      return {
+        title: titleElem?.textContent.trim() || '',
+        snippet: snippetElem?.textContent.trim() || '',
+        file: fileMatch ? fileMatch[1] : '',
+        keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+      };
+    });
+
     const match = searchableArticles.find(a => a.title.toLowerCase().includes(val) || a.keywords.some(k => k.startsWith(val)));
     if (match && val.length > 0) {
       funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
@@ -521,6 +527,7 @@ if (saved) {
       funny.textContent = '';
     }
   });
+
   clear.addEventListener('click', () => {
     input.value = '';
     funny.textContent = '';
