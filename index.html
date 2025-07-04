@@ -65,43 +65,6 @@ body.dark-mode .textbed {
   pointer-events: none;
   border-radius: 3px;
 }
-.flame {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  width: 10px;
-  height: 18px;
-  background: orange;
-  border-radius: 40% 40% 50% 50% / 50% 50% 30% 30%; /* more flame-like */
-  transform: translateX(-50%) rotate(-20deg);
-  box-shadow: 0 0 10px orange;
-  opacity: 0.8;
-  animation: flickerFlame 0.5s infinite alternate ease-in-out;
-  transform-origin: center bottom;
-  filter: blur(0.4px);
-}
-@keyframes flickerFlame {
-  0% {
-    transform: translateX(-50%) rotate(-15deg) scaleX(1) scaleY(1.1);
-    opacity: 0.6;
-  }
-  25% {
-    transform: translateX(-52%) rotate(-5deg) scaleX(1.1) scaleY(1.3);
-    opacity: 0.75;
-  }
-  50% {
-    transform: translateX(-48%) rotate(10deg) scaleX(0.95) scaleY(1.5);
-    opacity: 0.9;
-  }
-  75% {
-    transform: translateX(-50%) rotate(-10deg) scaleX(1.05) scaleY(1.3);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateX(-50%) rotate(-20deg) scaleX(1) scaleY(1);
-    opacity: 0.8;
-  }
-}
 .torch .flame:nth-child(1) {
   animation-delay: 0s;
 }
@@ -520,6 +483,30 @@ for (let i = 0; i < 6; i++) {
 
   torch.appendChild(flame);
 }
+  function updateFlames() {
+  const flames = document.querySelectorAll('.flame');
+  flames.forEach(flame => {
+    const scaleX = 0.9 + Math.random() * 0.3;
+    const scaleY = 1.0 + Math.random() * 0.7;
+    const rotate = -20 + Math.random() * 40 - 10; // -30 to +10
+    const offsetX = -3 + Math.random() * 6; // jitter side to side
+    const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
+    const offsetY = -1 + Math.random() * 2; // up/down jitter (±1px)
+    
+    flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+    flame.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+    flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+    flame.style.filter = `blur(${0.2 + Math.random() * 0.6}px)`;
+  });
+
+  // Randomize next update interval for real-world irregularity
+  const next = 80 + Math.random() * 500;
+  setTimeout(updateFlames, next);
+}
+
+// Start the flame update loop
+updateFlames();
+
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
