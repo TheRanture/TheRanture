@@ -431,6 +431,21 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+      async function loadArticle(filename) {
+  try {
+    const response = await fetch(filename);
+    if (!response.ok) throw new Error('Cannot load ' + filename);
+
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+
+    const article = doc.querySelector('.ai-rights-body') || doc.body;
+
+    if (!article) {
+      alert('Article content not found in ' + filename);
+      return;
+    }
   const mainContent = document.getElementById('main-content');
   const articleContent = document.getElementById('article-content');
   
@@ -462,6 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     flame.style.clipPath = clipShapes[i % clipShapes.length];
     flame.style.animation = `flame-flicker ${2 + i*0.3}s ease-in-out infinite`;
     torch.appendChild(flame);
+    
   }
 
   // Add smoke
@@ -709,35 +725,6 @@ function closeArticle() {
   });
 
 });
- async function loadArticle(filename) {
-  try {
-    const response = await fetch(filename);
-    if (!response.ok) throw new Error('Cannot load ' + filename);
-
-    const text = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-
-    const article = doc.querySelector('.ai-rights-body') || doc.body;
-
-    if (!article) {
-      alert('Article content not found in ' + filename);
-      return;
-    }
-
-    articleContent.innerHTML = `
-      <button id="back-to-articles" aria-label="Back to Articles">← Back to Articles</button>
-    `;
-    mainContent.style.display = 'none';
-
-    document.getElementById('back-to-articles').addEventListener('click', closeArticle);
-
-    articleContent.scrollIntoView({ behavior: 'smooth' });
-
-  } catch (err) {
-    alert('Error loading article: ' + err.message);
-  }
-}
 </script>
 </body>
 </html>
