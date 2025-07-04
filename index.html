@@ -550,12 +550,13 @@ input.addEventListener('input', () => {
 
   funny.style.display = 'block';  // ← ensure it's always visible
 });
-  clear.addEventListener('click', () => {
-    input.value = '';
-    funny.textContent = '';
-    clear.style.display = 'none';
-    input.focus();
-  });
+clear.addEventListener('click', () => {
+  input.value = '';
+  funny.textContent = '';
+  funny.style.display = 'none';  // ← make sure it hides
+  clear.style.display = 'none';
+  input.focus();
+});
 });
   // Mode toggle setup
   const modeToggle = document.getElementById('mode-toggle');
