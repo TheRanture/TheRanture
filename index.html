@@ -61,35 +61,20 @@
     height: 48px;
     padding: 0;
   }
-  .torch::before {
-  content: '';
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: radial-gradient(rgba(255, 120, 20, 0.25), transparent 70%);
-  filter: blur(6px);
-  z-index: 0;
+.torch { position: relative; width:32px; height:60px; }
+.flame {
+  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+  width:20px; height:40px;
+  background: radial-gradient(circle at bottom, #ff0, #f80, #c00);
+  border-radius:50% 50% 25% 25%;
+  animation: flicker 0.3s infinite ease-in-out;
+  filter: blur(2px);
 }
-  .torch {
-    position: relative;
-    width: 100%;
-    height: 48px;
-    overflow: visible; /* change to hidden if you want clipping */
-  }
-
-  .torch .flame {
-    will-change: transform, opacity;
-    position: absolute;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    transition: transform 0.05s ease-out, opacity 0.05s ease-out, filter 0.05s ease-out;
-  }
+@keyframes flicker {
+  0%,100%{transform:translateX(-50%) scaleY(1) rotate(0);}
+  50%{transform:translateX(-50%) scaleY(1.2) rotate(2deg);}
+}
+.smoke { /* your smoke styles here */ }
 
   .handle {
     width: 8px;
@@ -432,9 +417,10 @@
 </head>
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode" aria-pressed="false">
-    <div class="torch">
-      <div class="handle"></div>
-      <div class="smoke"></div>
+<div class="torch">
+  <div class="flame"></div>
+  <div class="smoke"></div>
+</div>
     </div>
   </button>
   <div id="header-toolbar-wrapper">
@@ -532,6 +518,15 @@
     });
     return preview;
   }
+  function jitter() {
+  const f = document.querySelector('.flame');
+  const sx = 0.9 + Math.random()*0.2;
+  const sy = 0.9 + Math.random()*0.4;
+  const rot = (Math.random()*4 - 2) + 'deg';
+  f.style.transform = `translateX(-50%) scale(${sx},${sy}) rotate(${rot})`;
+}
+setInterval(jitter, 100 + Math.random()*200);
+
 function renderTorchFlame() {
   const torch = document.querySelector('.torch');
   torch.querySelectorAll('.flame').forEach(el => el.remove());
