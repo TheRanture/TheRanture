@@ -491,19 +491,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 const torch = document.querySelector('.torch');
-for (let i = 0; i < 6; i++) {
+const leftOffsets = ['40%', '50%', '60%', '45%'];
+for (let i = 0; i < 4; i++) {
   const flame = document.createElement('div');
   flame.classList.add('flame');
 
   // Position above handle consistently
   flame.style.bottom = '28px'; // aligns with top of handle
-flame.style.left = '50%';
+flame.style.left = leftOffsets[i];
 flame.style.transform = 'translateX(-50%)';
-
-  // More realistic flame size
-flame.style.width = `${12 + Math.random() * 4}px`;
-flame.style.height = `${34 + Math.random() * 4}px`;
-
   // Softer animation and flicker
   flame.style.animationDelay = `${Math.random() * 0.4}s`;
 
@@ -515,8 +511,8 @@ flame.style.height = `${34 + Math.random() * 4}px`;
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 50% 50%';
-flame.style.width = `${28 + Math.random() * 8}px`;
-flame.style.height = `${48 + Math.random() * 12}px`;
+flame.style.width = `${12 + Math.random() * 6}px`;
+flame.style.height = `${24 + Math.random() * 8}px`;
 flame.style.boxShadow = '0 0 8px rgba(255, 100, 0, 0.5)';
   torch.appendChild(flame);
 }
@@ -527,31 +523,24 @@ function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
-        if (!flame.dataset.clipPath) {
-    const shape = clipShapes[Math.floor(Math.random() * clipShapes.length)];
-    flame.style.clipPath = shape;
-    flame.dataset.clipPath = shape;
-  }
-const scaleX = 0.7 + Math.random() * 0.6;
-const scaleY = 0.9 + Math.random() * 1.0;
-const rotate = -25 + Math.random() * 50;
-const offsetX = -3 + Math.random() * 6;
-const offsetY = -2 + Math.random() * 4;
+      const scaleX = 0.7 + Math.random() * 0.4;
+      const scaleY = 0.9 + Math.random() * 0.6;
+      const rotate = -15 + Math.random() * 30;
+      const offsetX = -2 + Math.random() * 4;
+      const offsetY = -1 + Math.random() * 2;
  const colors = ['#ff6600', '#ff9933', '#ffcc33', '#ffaa00', '#ffee99'];
-flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)];
-flame.style.background = colors[Math.floor(Math.random() * colors.length)];
-      flame.style.transform = `
-  translateX(-50%)
-  translate(${offsetX}px, ${offsetY}px)
-  rotate(${rotate}deg)
-  scale(${scaleX}, ${scaleY})
-`;
-flame.style.opacity = 0.4 + Math.random() * 0.4;
-flame.style.filter = `blur(${0.1 + Math.random() * 0.5}px)`;
+ flame.style.transform = `
+        translateX(-50%)
+        translate(${offsetX}px, ${offsetY}px)
+        rotate(${rotate}deg)
+        scale(${scaleX}, ${scaleY})
+      `;
+      flame.style.opacity = 0.5 + Math.random() * 0.3;
     });
-
     lastFlameUpdate = timestamp;
   }
+  requestAnimationFrame(animateFlames);
+}
   requestAnimationFrame(animateFlames);
 }
 // Start the flame update loop
