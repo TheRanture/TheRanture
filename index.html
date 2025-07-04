@@ -6,432 +6,403 @@
   <title>Ranture</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
-@keyframes flame-flicker {
+  .textbed {
+  background: #fdfaf7;
+  padding: 1.5em 2em;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 1.5em auto;
+  color: #222;
+  font-family: 'Crimson Text', 'Lora', serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+body.dark-mode .textbed {
+  background: #1e1e1e;
+  color: #d0d0d0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+    .torch-mode {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 32px;
+  height: 48px;
+  padding: 0;
+}
+.torch {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  overflow: visible; /* change to hidden if you want clipping */
+}
+
+.torch .flame {
+  will-change: transform, opacity;
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  transition: transform 0.05s ease-out, opacity 0.05s ease-out, filter 0.05s ease-out;
+}
+
+.handle {
+  width: 8px;
+  height: 28px;
+  background: linear-gradient(45deg, #5b3a29 0%, #7e5e45 50%, #4d3221 100%);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px #3a2a1d, 0 0 4px rgba(0, 0, 0, 0.3);
+}
+    .handle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  border-radius: 3px;
+}
+.torch .flame:nth-child(1) {
+  animation-delay: 0s;
+}
+.torch .flame:nth-child(2) {
+  animation-delay: 0.1s;
+  background: #ff9933;
+  width: 8px;
+  height: 8px;
+}
+.torch .flame:nth-child(3) {
+  animation-delay: 0.2s;
+  background: #ffd966;
+  width: 6px;
+  height: 6px;
+}
+
+body.dark-mode .smoke {
+  animation: rise 1.5s infinite;
+  opacity: 1;
+}
+ #mode-toggle.torch-mode {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 12000;
+}
+
+@keyframes rise {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg) skewX(0deg);
-    opacity: 1;
-  }
-  20% {
-    transform: translate(-2px, -3px) scale(1.1) rotate(3deg) skewX(10deg);
-    opacity: 0.9;
-  }
-  40% {
-    transform: translate(2px, -2px) scale(0.95) rotate(-3deg) skewX(-8deg);
-    opacity: 0.85;
-  }
-  60% {
-    transform: translate(-1px, -4px) scale(1.05) rotate(1deg) skewX(6deg);
-    opacity: 0.8;
-  }
-  80% {
-    transform: translate(2px, -1px) scale(1.08) rotate(-2deg) skewX(-6deg);
-    opacity: 0.9;
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.4;
   }
   100% {
-    transform: translate(0, 0) scale(1) rotate(0deg) skewX(0deg);
-    opacity: 1;
-  }
-}
-
-  /* Your existing styles unchanged ... */
-  .textbed {
-    background: #fdfaf7;
-    padding: 1.5em 2em;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    max-width: 900px;
-    margin: 1.5em auto;
-    color: #222;
-    font-family: 'Crimson Text', 'Lora', serif;
-    line-height: 1.6;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  body.dark-mode .textbed {
-    background: #1e1e1e;
-    color: #d0d0d0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  }
-  .torch-mode {
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    width: 32px;
-    height: 48px;
-    padding: 0;
-  }
-.torch { position: relative; width:32px; height:60px; }
-.flame {
-  z-index: 1;
-  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-  width:20px; height:40px;
-  background: radial-gradient(circle at bottom, #ff0, #f80, #c00);
-  border-radius:50% 50% 25% 25%;
-  animation: flicker 0.3s infinite ease-in-out;
-  filter: blur(2px);
-}
-@keyframes flicker {
-  0%,100%{transform:translateX(-50%) scaleY(1) rotate(0);}
-  50%{transform:translateX(-50%) scaleY(1.2) rotate(2deg);}
-}
-.smoke { /* your smoke styles here */ }
-
-  .handle {
-    width: 8px;
-    height: 28px;
-    background: linear-gradient(45deg, #5b3a29 0%, #7e5e45 50%, #4d3221 100%);
-    z-index: 10;
-    position: relative;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 3px;
-    box-shadow: inset 0 0 2px #3a2a1d, 0 0 4px rgba(0, 0, 0, 0.3);
-  }
-  .handle::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.05) 0px,
-      rgba(255,255,255,0.05) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    pointer-events: none;
-    border-radius: 3px;
-  }
-  .torch .flame:nth-child(1) {
-    animation-delay: 0s;
-  }
-  .torch .flame:nth-child(2) {
-    animation-delay: 0.1s;
-    background: #ff9933;
-    width: 8px;
-    height: 8px;
-  }
-  .torch .flame:nth-child(3) {
-    animation-delay: 0.2s;
-    background: #ffd966;
-    width: 6px;
-    height: 6px;
-  }
-
-  body.dark-mode .smoke {
-    animation: rise 1.5s infinite;
-    opacity: 1;
-  }
-  #mode-toggle.torch-mode {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 12000;
-  }
-
-  @keyframes rise {
-    0% {
-      transform: translateX(-50%) translateY(0) scale(1);
-      opacity: 0.4;
-    }
-    100% {
-      transform: translateX(-50%) translateY(-20px) scale(1.6);
-      opacity: 0;
-    }
-  }
-  /* Link Darkmode Style */
-  body.dark-mode a {
-    color: #dab76a;
-  }
-  body.dark-mode a:hover {
-    color: #ffe5a3;
-  }
-  /* RESET & BASE STYLES */
-  body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
-    margin: 0;
-    padding-bottom: 280px;
-    overflow-x: hidden;
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
-
-  body.dark-mode {
-    background: linear-gradient(to bottom, 
-      transparent 0px, 
-      transparent 160px, 
-      #0f112a 160px, 
-      #0f112a 100%);
-    color: #eee;
-  }
-
-  body.dark-mode #clear-search {
-    color: black; /* ← this fixes it permanently */
-  }
-  .search-suggestion {
-    display: inline-block;
-    padding: 6px 12px;
-    background: #eee;
-    color: #111;
-    font-size: 15px; /* increased from ~12px */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  body.dark-mode .search-suggestion {
-    background: #f4f4f8;  /* soft light */
-    color: #111;
-    font-size: 15px;
-    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
-  }
-  .search-suggestion:hover {
-    background: #ddd;
-    color: #000;
-  }
-
-  body.dark-mode .search-suggestion:hover {
-    background: #e0e0e5;
-    color: #000;
-  }
-  /* MODE TOGGLE */
-  /* HEADER TOOLBAR WRAPPER */
-  #header-toolbar-wrapper {
-    position: relative;
-    z-index: 11000;
-    background: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    user-select: none;
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0;
-    gap: 15px;
-  }
-
-  /* MOTTO */
-  #motto {
-    text-align: center;
-    font-style: italic;
-    font-size: 1.2em;
-    margin-top: 0.2em;
-    margin-bottom: 0.8em;
-    color: #999;
-  }
-
-  /* TOOLBAR NAVIGATION */
-  #toolbar {
-    display: flex;
-    justify-content: center;
-    background: #222;
-    padding: 6px 0;
-    gap: 15px;
-  }
-
-  .toolbar-btn {
-    background: #444;
-    border: none;
-    color: white;
-    padding: 8px 18px;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .toolbar-btn:hover {
-    background: #666;
-  }
-
-  .toolbar-btn.active {
-    background: #007BFF;
-    color: white;
-    font-weight: bold;
-  }
-
-  /* SEARCH CONTAINER */
-  #search-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 11001;
-    padding: 6px;
-  }
-
-  #search-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    color: #fff;
-    font-size: 22px;
-  }
-
-  #search-bar {
-    display: none;
-    width: 200px;
-    padding: 6px 28px 6px 8px;
-    font-size: 14px;
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    background: #fff;
-    color: #000;
-    position: relative;
-    z-index: 11000;
-  }
-  body.dark-mode #search-bar {
-    background-color: #f4f4f8;  /* soft off-white */
-    color: #111;                /* dark text for readability */
-    border: 1px solid #aaa;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
-  }
-
-  body.dark-mode #search-bar::placeholder {
-    color: #777; /* slightly dimmed hint text */
-  }
-  #clear-search {
-    margin-left: -28px;
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    color: black;
-    cursor: pointer;
-    z-index: 11002;
-    padding: 0 6px;
-    display: none;
-  }
-
-  body.dark-mode #clear-search {
-    color: black;
-  }
-
-  #search-funny {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    background: #333;
-    color: #ccc;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 3px;
-    white-space: nowrap;
-    display: none;
-    z-index: 11000;
-  }
-
-  body.dark-mode #search-funny {
-    background: #222;
-    color: #aaa;
-  }
-
-  /* ARTICLE PREVIEWS */
-  .articles-container {
-    text-align: center;
-    padding: 1em;
-  }
-
-  .article-preview {
-    max-width: 300px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 1em;
-    margin: 1em;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    display: inline-block;
-    vertical-align: top;
-    text-align: left;
-  }
-
-  .article-preview:hover {
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-  }
-
-  .preview-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 0.8em;
-    min-height: 150px;
-    background: #ccc url('fallback.png') center center no-repeat;
-    background-size: cover;
-  }
-
-  .article-preview h3 {
-    margin: 0 0 0.5em;
-    font-family: 'Palatino Linotype', serif;
-    color: #333;
-  }
-
-  .article-preview p {
-    font-size: 0.9em;
-    color: #555;
-    line-height: 1.3;
-    margin: 0;
-  }
-
-  /* MAIN CONTENT */
-  main {
-    padding: 10px;
-    margin: 10px auto 0;
-    max-width: 900px;
-    box-sizing: border-box;
-    min-height: 500px;
-  }
-
-  /* FOOTNOTE */
-  #footnote {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    font-size: 12px;
-    color: #666;
-    background: rgba(245, 245, 245, 0.9);
-    padding: 6px 12px;
-    text-align: center;
+    transform: translateX(-50%) translateY(-20px) scale(1.6);
     opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    font-style: italic;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    z-index: 9998;
   }
+}
+/* Link Darkmode Style */
+    body.dark-mode a {
+  color: #dab76a;
+}
+body.dark-mode a:hover {
+  color: #ffe5a3;
+}
+    /* RESET & BASE STYLES */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding-bottom: 280px;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-  body.dark-mode #footnote {
-    color: #bbb;
-    background: rgba(18, 18, 18, 0.9);
-  }
+    body.dark-mode {
+  background: linear-gradient(to bottom, 
+    transparent 0px, 
+    transparent 160px, 
+    #0f112a 160px, 
+    #0f112a 100%);
+  color: #eee;
+    }
+
+body.dark-mode #clear-search {
+  color: black; /* ← this fixes it permanently */
+}
+    .search-suggestion {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #eee;
+  color: #111;
+  font-size: 15px; /* increased from ~12px */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+body.dark-mode .search-suggestion {
+  background: #f4f4f8;  /* soft light */
+  color: #111;
+  font-size: 15px;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
+}
+    .search-suggestion:hover {
+  background: #ddd;
+  color: #000;
+}
+
+body.dark-mode .search-suggestion:hover {
+  background: #e0e0e5;
+  color: #000;
+}
+    /* MODE TOGGLE */
+    /* HEADER TOOLBAR WRAPPER */
+    #header-toolbar-wrapper {
+      position: relative;
+      z-index: 11000;
+      background: #333;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      gap: 15px;
+    }
+
+    /* MOTTO */
+    #motto {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: 0.2em;
+      margin-bottom: 0.8em;
+      color: #999;
+    }
+
+    /* TOOLBAR NAVIGATION */
+    #toolbar {
+      display: flex;
+      justify-content: center;
+      background: #222;
+      padding: 6px 0;
+      gap: 15px;
+    }
+
+    .toolbar-btn {
+      background: #444;
+      border: none;
+      color: white;
+      padding: 8px 18px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toolbar-btn:hover {
+      background: #666;
+    }
+
+    .toolbar-btn.active {
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* SEARCH CONTAINER */
+    #search-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 11001;
+      padding: 6px;
+    }
+
+    #search-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #fff;
+      font-size: 22px;
+    }
+
+    #search-bar {
+      display: none;
+      width: 200px;
+      padding: 6px 28px 6px 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      background: #fff;
+      color: #000;
+      position: relative;
+      z-index: 11000;
+    }
+body.dark-mode #search-bar {
+  background-color: #f4f4f8;  /* soft off-white */
+  color: #111;                /* dark text for readability */
+  border: 1px solid #aaa;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode #search-bar::placeholder {
+  color: #777; /* slightly dimmed hint text */
+}
+    #clear-search {
+      margin-left: -28px;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: black;
+      cursor: pointer;
+      z-index: 11002;
+      padding: 0 6px;
+      display: none;
+    }
+
+    body.dark-mode #clear-search {
+      color: black;
+    }
+
+    #search-funny {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      background: #333;
+      color: #ccc;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      display: none;
+      z-index: 11000;
+    }
+
+    body.dark-mode #search-funny {
+      background: #222;
+      color: #aaa;
+    }
+
+    /* ARTICLE PREVIEWS */
+    .articles-container {
+      text-align: center;
+      padding: 1em;
+    }
+
+    .article-preview {
+      max-width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1em;
+      margin: 1em;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .article-preview:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .preview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.8em;
+  min-height: 150px;
+  background: #ccc url('fallback.png') center center no-repeat;
+  background-size: cover;
+    }
+
+    .article-preview h3 {
+      margin: 0 0 0.5em;
+      font-family: 'Palatino Linotype', serif;
+      color: #333;
+    }
+
+    .article-preview p {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      padding: 10px;
+      margin: 10px auto 0;
+      max-width: 900px;
+      box-sizing: border-box;
+      min-height: 500px;
+    }
+
+    /* FOOTNOTE */
+    #footnote {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 12px;
+      color: #666;
+      background: rgba(245, 245, 245, 0.9);
+      padding: 6px 12px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      font-style: italic;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      z-index: 9998;
+    }
+
+    body.dark-mode #footnote {
+      color: #bbb;
+      background: rgba(18, 18, 18, 0.9);
+    }
   </style>
 </head>
 <body>
-  <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode" aria-pressed="false">
-<div class="torch">
-  <div class="handle"></div>
-  <div class="smoke"></div>
-</div>
-    </div>
-  </button>
+  <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
+  <div class="torch">
+    <div class="handle"></div>
+    <div class="smoke"></div>
+  </div>
+</button>
   <div id="header-toolbar-wrapper">
     <header>
       <h1>Ranture</h1>
     </header>
     <div id="motto">“I came, I saw, I ranted.”</div>
     <div id="search-container">
-      <button id="search-toggle" aria-label="Toggle Search" aria-expanded="false" aria-controls="search-bar">
+      <button id="search-toggle" aria-label="Toggle Search">
         <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM10 14a4 4 0 110-8 4 4 0 010 8z"/>
         </svg>
@@ -448,257 +419,343 @@
       <button class="toolbar-btn" data-page="legal">Legal</button>
     </nav>
   </div>
- <!-- Containers for dynamic content -->
+
+  <div class="articles-container" id="articles-container">
+    <div class="article-preview" onclick="loadArticle('ai-rights.html', this)">
+      <img src="myfolder/Banner.png" alt="AI Rights Banner" class="preview-image" loading="lazy" />
+      <h3>AI Consciousness and Rights</h3>
+      <p>An exploration of AI awareness.</p>
+    </div>
+  </div>
+
+  <div id="article-full-content" style="display:none; max-width: 900px; margin: 1em auto;"></div>
   <main id="main-content" tabindex="0" aria-live="polite"></main>
-<div id="article-content" tabindex="0" style="max-width: 900px; margin: 1em auto; display:none;"></div>
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
-  <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;font-size:24px;cursor:pointer;z-index:12000;">⬆</button>
-
-<script>
-  // ARTICLES DATA
-  const articles = [
-    {
-      title: "The Firebrand's Manifesto",
-      summary: "Why ranting isn't just venting but a revolution of the mind.",
-      previewImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=60",
-      content: `
-        <h2>The Firebrand's Manifesto</h2>
-        <p>Ranting is a spark to ignite critical thinking. It’s a way to challenge complacency, to light a fire under dull minds...</p>
-        <p><em>Read on and embrace the flame.</em></p>
-      `
-    },
-    {
-      title: "Why Silence is Dangerous",
-      summary: "The cost of holding back your voice in a world that needs change.",
-      previewImg: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=60",
-      content: `
-        <h2>Why Silence is Dangerous</h2>
-        <p>Silence can be complicity. In times of moral decay, speaking up is an act of courage...</p>
-        <p><em>Discover why your voice matters.</em></p>
-      `
-    },
-    {
-      title: "On the Absurdity of Modern Life",
-      summary: "A rant about technology, social media, and our collective distraction.",
-      previewImg: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=60",
-      content: `
-        <h2>On the Absurdity of Modern Life</h2>
-        <p>We live in a circus of endless notifications and distractions, forgetting what truly matters...</p>
-        <p><em>Step out of the chaos.</em></p>
-      `
-    }
-  ];
-
-  // Function to create article preview box
-  function createArticlePreview(article, index) {
-    const preview = document.createElement('div');
-    preview.classList.add('article-preview');
-    preview.tabIndex = 0;
-    preview.setAttribute('role', 'button');
-    preview.setAttribute('aria-pressed', 'false');
-    preview.setAttribute('aria-label', `Open article: ${article.title}`);
-
-    const img = document.createElement('div');
-    img.classList.add('preview-image');
-    img.style.backgroundImage = `url('${article.previewImg}')`;
-    preview.appendChild(img);
-
-    const title = document.createElement('h3');
-    title.textContent = article.title;
-    preview.appendChild(title);
-
-    const summary = document.createElement('p');
-    summary.textContent = article.summary;
-    preview.appendChild(summary);
-
-    preview.addEventListener('click', () => openArticle(index));
-    preview.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openArticle(index);
-      }
-    });
-    return preview;
+  <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
+  <script>
+    const forceRedraw = (el) => {
+  el.style.display = 'none';
+  void el.offsetHeight;
+  el.style.display = 'block';
+};
+    try {
+  const dm = localStorage.getItem('darkMode');
+  if (dm === '1') document.body.classList.add('dark-mode');
+} catch (e) {}
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('search-toggle');
+  const input = document.getElementById('search-bar');
+  const funny = document.getElementById('search-funny');
+  const clear = document.getElementById('clear-search');
+  toggle.addEventListener('click', () => {
+  const isVisible = window.getComputedStyle(input).display !== 'none';
+  if (isVisible) {
+    input.style.display = 'none';
+    clear.style.display = 'none';
+    funny.style.display = 'none';
+  } else {
+    input.style.display = 'block';
+    input.focus();
   }
-  function jitter() {
-  const f = document.querySelector('.flame');
-  const sx = 0.9 + Math.random()*0.2;
-  const sy = 0.9 + Math.random()*0.4;
-  const rot = (Math.random()*4 - 2) + 'deg';
-  f.style.transform = `translateX(-50%) scale(${sx},${sy}) rotate(${rot})`;
-}
-setInterval(jitter, 100 + Math.random()*200);
+});
+const torch = document.querySelector('.torch');
+for (let i = 0; i < 6; i++) {
+  const flame = document.createElement('div');
+  flame.classList.add('flame');
 
-function renderTorchFlame() {
-  const torch = document.querySelector('.torch');
-  torch.querySelectorAll('.flame').forEach(el => el.remove());
-
-  const clipShapes = [
-    'polygon(50% 0%, 60% 10%, 70% 25%, 75% 45%, 66% 70%, 55% 90%, 45% 90%, 35% 70%, 28% 45%, 33% 25%, 42% 10%)',
-    'polygon(50% 0%, 58% 12%, 68% 28%, 72% 48%, 64% 68%, 52% 88%, 42% 88%, 30% 70%, 26% 48%, 30% 28%, 40% 12%)',
-    'polygon(50% 0%, 60% 14%, 68% 30%, 70% 52%, 62% 70%, 50% 90%, 38% 88%, 28% 70%, 24% 48%, 30% 28%, 40% 14%)',
-    'polygon(50% 0%, 55% 14%, 64% 28%, 70% 50%, 60% 72%, 50% 90%, 36% 88%, 28% 68%, 26% 48%, 32% 26%, 42% 12%)'
-  ];
-
-  const colors = [
-    'rgba(255, 85, 0, 0.5)',   // Deep orange
-    'rgba(255, 120, 0, 0.45)', // Orange
-    'rgba(255, 180, 30, 0.35)',// Warm yellow
-    'rgba(255, 60, 10, 0.4)',  // Reddish orange
-    'rgba(255, 100, 20, 0.4)'  // Muted orange
-  ];
-
-  const flameCount = 7;
-
-  for (let i = 0; i < flameCount; i++) {
-    const flame = document.createElement('div');
-    flame.classList.add('flame');
-
-    const size = 20 + Math.floor(Math.random() * 18); // 20px–38px
-    flame.style.width = `${size}px`;
-    flame.style.height = `${size}px`;
-
-    flame.style.background = colors[i % colors.length];
-    flame.style.clipPath = clipShapes[i % clipShapes.length];
-
-    // Random offset to break perfect stacking
- const offsetY = 26 + Math.floor(Math.random() * 6); // 26px–32px
-
+  // Position above handle consistently
+  flame.style.bottom = '28px'; // aligns with top of handle
 flame.style.left = '50%';
-flame.style.bottom = `${offsetY}px`;
-flame.style.transform = `translateX(-50%)`; // Always center horizontally
-    flame.style.position = 'absolute';
+flame.style.transform = 'translateX(-50%)';
 
-    flame.style.animation = `flame-flicker ${1 + Math.random() * 0.6}s ease-in-out infinite`;
-    flame.style.animationDelay = `${Math.random() * 0.3}s`;
+  // More realistic flame size
+flame.style.width = `${6 + Math.random() * 6}px`;
+flame.style.height = `${10 + Math.random() * 10}px`;
 
-    torch.appendChild(flame);
-  }
+  // Softer animation and flicker
+  flame.style.animationDelay = `${Math.random() * 0.4}s`;
+
+  // Gentle orange hues
+  flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
+  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
+  flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
+
+  // Subtle randomness
+  flame.style.transformOrigin = '50% 100%';
+  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
+
+  torch.appendChild(flame);
 }
-  // Load articles tab content
-  function loadArticlesTab() {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = '';
-    const container = document.createElement('div');
-    container.className = 'articles-container';
-    articles.forEach((article, idx) => {
-      const preview = createArticlePreview(article, idx);
-      container.appendChild(preview);
-    });
-    mainContent.appendChild(container);
-  }
+let lastFlameUpdate = 0;
+const flameUpdateInterval = 85; // update every ~50ms (20 FPS)
 
-  // Load other tabs content (simple placeholder for now)
-  function loadOtherTab(pageName) {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = `<div class="textbed"><h2>${pageName.charAt(0).toUpperCase() + pageName.slice(1)}</h2><p>Content for the ${pageName} section will appear here soon.</p></div>`;
-  }
+function animateFlames(timestamp) {
+  if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
+    const flames = document.querySelectorAll('.flame');
+    flames.forEach(flame => {
+      const scaleX = 0.9 + Math.random() * 0.3;
+      const scaleY = 1.0 + Math.random() * 0.7;
+      const rotate = -10 + Math.random() * 20; // more subtle range
+      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
+      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
+      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 
-  // Open article content
-  function openArticle(index) {
-    const mainContent = document.getElementById('main-content');
-    const articleContent = document.getElementById('article-content');
-    articleContent.innerHTML = articles[index].content;
-    articleContent.style.display = 'block';
-    mainContent.style.display = 'none';
-    document.getElementById('search-funny').style.display = 'none';
-
-    // Focus the article content for accessibility
-    articleContent.focus();
-  }
-
-  // Close article and return to articles list
-  function closeArticle() {
-    const mainContent = document.getElementById('main-content');
-    const articleContent = document.getElementById('article-content');
-    articleContent.style.display = 'none';
-    mainContent.style.display = 'block';
-    mainContent.focus();
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    renderTorchFlame();
-    loadArticlesTab();
-
-    // Toolbar navigation buttons
-    const toolbarBtns = document.querySelectorAll('.toolbar-btn');
-    toolbarBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        toolbarBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const page = btn.getAttribute('data-page');
-
-        // Close any open article content
-        closeArticle();
-
-        if (page === 'articles') {
-          loadArticlesTab();
-        } else {
-          loadOtherTab(page);
-        }
-      });
+      flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+      flame.style.transform = `
+  translateX(-50%)
+  translate(${offsetX}px, ${offsetY}px)
+  rotate(${rotate}deg)
+  scale(${scaleX}, ${scaleY})
+`;
+      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
     });
 
-    // Search bar toggle
-    const searchToggle = document.getElementById('search-toggle');
-    const searchBar = document.getElementById('search-bar');
-    const clearSearch = document.getElementById('clear-search');
-    const searchFunny = document.getElementById('search-funny');
+    lastFlameUpdate = timestamp;
+  }
 
-    searchToggle.addEventListener('click', () => {
-      const expanded = searchToggle.getAttribute('aria-expanded') === 'true';
-      if (expanded) {
-        searchBar.style.display = 'none';
-        clearSearch.style.display = 'none';
-        searchFunny.style.display = 'none';
-        searchToggle.setAttribute('aria-expanded', 'false');
-      } else {
-        searchBar.style.display = 'inline-block';
-        searchBar.focus();
-        searchToggle.setAttribute('aria-expanded', 'true');
+  requestAnimationFrame(animateFlames);
+}
+
+requestAnimationFrame(animateFlames);
+
+// Start the flame update loop
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  let saved = null;
+  try {
+    saved = localStorage.getItem('lastView');
+  } catch (e) {
+    console.warn('localStorage not available:', e);
+  }
+
+  if (saved) {
+    try {
+      const view = JSON.parse(saved);
+      if (view.type === 'article') loadArticle(view.file);
+      else if (view.type === 'section') {
+        const btn = document.querySelector(`.toolbar-btn[data-page="${view.page}"]`);
+        if (btn) btn.click();
       }
-    });
+    } catch (e) {
+      console.warn('Invalid saved data:', e);
+    }
+  }
 
-    clearSearch.addEventListener('click', () => {
-      searchBar.value = '';
-      clearSearch.style.display = 'none';
-      searchFunny.style.display = 'none';
-      searchBar.focus();
-    });
+input.addEventListener('input', () => {
+  const val = input.value.trim().toLowerCase();
+  clear.style.display = val.length ? 'inline' : 'none';
 
-    searchBar.addEventListener('input', () => {
-      if (searchBar.value.trim().length > 0) {
-        clearSearch.style.display = 'inline';
-        searchFunny.style.display = 'block';
-        searchFunny.textContent = 'Searching... but not really.';
-      } else {
-        clearSearch.style.display = 'none';
-        searchFunny.style.display = 'none';
-      }
-    });
+  if (val.length === 0) {
+    funny.textContent = '';
+    funny.style.display = 'none';
+    return;
+  }
 
-    // Back to top button
-    const backToTop = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTop.style.display = 'block';
-      } else {
-        backToTop.style.display = 'none';
-      }
-    });
+  if (funnyResponses[val]) {
+    funny.textContent = funnyResponses[val];
+    funny.style.display = 'block';  // ← make sure it's shown
+    return;
+  }
 
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Dark mode toggle (torch button)
-    const modeToggle = document.getElementById('mode-toggle');
-    modeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      const pressed = modeToggle.getAttribute('aria-pressed') === 'true';
-      modeToggle.setAttribute('aria-pressed', String(!pressed));
-    });
+  const searchableArticles = Array.from(document.querySelectorAll('.article-preview')).map(preview => {
+    const titleElem = preview.querySelector('h3');
+    const snippetElem = preview.querySelector('p');
+    const fileMatch = preview.getAttribute('onclick')?.match(/loadArticle\(['"]([^'"]+)['"]/);
+    return {
+      title: titleElem?.textContent.trim() || '',
+      snippet: snippetElem?.textContent.trim() || '',
+      file: fileMatch ? fileMatch[1] : '',
+      keywords: (titleElem?.textContent.toLowerCase().split(/\s+/) || [])
+    };
   });
+
+  const match = searchableArticles.find(a => 
+    a.title.toLowerCase().includes(val) || 
+    a.keywords.some(k => k.startsWith(val))
+  );
+
+  if (match) {
+    funny.innerHTML = `<div class="search-suggestion" onclick="loadArticle('${match.file}'); document.getElementById('search-funny').style.display='none';">${match.title}</div>`;
+  } else {
+    funny.textContent = 'Searching... No results found.';
+  }
+
+  funny.style.display = 'block';  // ← ensure it's always visible
+});
+clear.addEventListener('click', () => {
+  input.value = '';
+  funny.textContent = '';
+  funny.style.display = 'none';  // ← make sure it hides
+  clear.style.display = 'none';
+  input.focus();
+});
+});
+  // Mode toggle setup
+  const modeToggle = document.getElementById('mode-toggle');
+  const darkActive = document.body.classList.contains('dark-mode');
+  modeToggle.setAttribute('aria-pressed', darkActive);
+
+modeToggle.addEventListener('click', () => {
+  const toggled = document.body.classList.toggle('dark-mode');
+  modeToggle.setAttribute('aria-pressed', toggled);
+  try {
+    localStorage.setItem('darkMode', toggled ? '1' : '0');
+  } catch (e) {}
+});
+
+  // Back to top visibility
+  const backToTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    const footnote = document.getElementById('footnote');
+   const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    footnote.style.opacity = nearBottom ? '1' : '0';
+    footnote.style.pointerEvents = nearBottom ? 'auto' : 'none';
+  });
+
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Home') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  // Konami Code Easter Egg
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let kPos = 0;
+  window.addEventListener('keydown', (e) => {
+    kPos = (e.keyCode === konami[kPos]) ? kPos + 1 : 0;
+    if (kPos === konami.length) {
+      const pop = document.createElement('div');
+      pop.id = 'konami-popup';
+      pop.textContent = 'They are watching!';
+      Object.assign(pop.style, {
+        position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        background: '#cc0000', color: '#fff', fontSize: '2rem', padding: '30px 50px',
+        borderRadius: '8px', fontWeight: 'bold', fontFamily: 'monospace',
+        boxShadow: '0 0 15px #ff0000', zIndex: 15000, textAlign: 'center'
+      });
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 4000);
+      kPos = 0;
+    }
+  });
+
+  // Toolbar nav
+  const buttons = document.querySelectorAll('.toolbar-btn');
+  const main = document.getElementById('main-content');
+  const full = document.getElementById('article-full-content');
+  const previews = document.getElementById('articles-container');
+
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const page = btn.dataset.page;
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+    full.style.display = 'none';
+    previews.style.display = (page === 'articles') ? 'block' : 'none';
+    main.style.display = 'block';
+    void previews.offsetHeight;
+
+    const content = {
+      about: `<div class="textbed"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p></div>`,
+      legal: `<div class="textbed"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
+          <ul>
+            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
+            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
+            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
+            <li>The owner is not responsible for any third-party links or external content.</li>
+            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
+            <li>The website does not collect personal data, and no input from users is accepted.</li>
+            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
+            <li>These terms apply globally and supersede any conflicting local laws.</li>
+          </ul>
+          <p><strong>Creative Commons License:</strong><br>
+            This work is licensed under the
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
+              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+            </a>.
+          </p>
+          <h2>Content Disclaimer</h2>
+          <p><strong>Disclaimer:</strong></p>
+          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
+          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
+          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
+          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
+          <p><strong>Copyright Notice:</strong><br>
+            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
+          </p> <!-- etc. Full legal text here --> </div>`
+    };
+
+if (content[page]) {
+  main.innerHTML = content[page];
+} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+  main.innerHTML = ''; // Do nothing for those tabs
+} else {
+  main.innerHTML = `<p>Unknown page: ${page}</p>`;
+}
+  }));
+
+  // Search logic
+  const funnyResponses = {
+    "aliens": "👽 Try Paris.",
+    "password": "🔐 Nice try. The password is not 'password'.",
+    // ... (other entries omitted for brevity)
+  };
+  document.addEventListener('click', e => {
+    if (!document.getElementById('search-container').contains(e.target)) {
+      input.style.display = 'none';
+      clear.style.display = 'none';
+      funny.style.display = 'none';
+    }
+  });
+  // Ranture - Script Logic
+// SHA-256 page hash generation
+  async function generatePageHash() {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(document.documentElement.outerHTML);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const shortHash = fullHash.substring(0, 6);
+  console.log("Full SHA-256 hash:", fullHash);
+  console.log("Short Proof Code: RAN-" + shortHash);
+  const hashDisplay = document.getElementById('page-hash');
+  if (hashDisplay) hashDisplay.textContent = `Proof Code: RAN-${shortHash}`;
+  const fullHashEl = document.getElementById('full-page-hash');
+  if (fullHashEl) fullHashEl.textContent = fullHash;
+}
+generatePageHash();
+// Load article
+function loadArticle(filename) {
+try {
+  localStorage.setItem('lastView', JSON.stringify({ type: 'article', file: filename }));
+} catch (e) {
+  console.warn('localStorage not available:', e);
+}
+  fetch(filename)
+    .then(res => res.text())
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.querySelector('.ai-rights-body');
+      if (!content) return alert('Article content not found.');
+      document.getElementById('articles-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'none';
+      const container = document.getElementById('article-full-content');
+      container.innerHTML = `<div class="textbed">${content.innerHTML}</div>`;
+      container.style.display = 'block';
+      document.getElementById('search-funny').style.display = 'none';
+      container.scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(err => alert('Failed to load article: ' + err));
+}
 </script>
-</body>
+  </body>
 </html>
