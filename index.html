@@ -467,9 +467,11 @@ for (let i = 0; i < 6; i++) {
   flame.classList.add('flame');
 
   // Position above handle consistently
-  flame.style.bottom = '28px';
-  flame.style.left = '50%';
-  flame.style.transform = 'translateX(-50%)';
+const baseX = 50; // percent, center
+const offsetXPercent = (Math.random() * 20) - 10; // ±10% horizontally
+flame.style.left = `${baseX + offsetXPercent}%`;
+flame.style.transform = 'translateX(-50%)';
+flame.style.bottom = '28px';
 
   // Bigger, fatter flames
 const width = 18 + Math.random() * 14;  // wider
@@ -481,31 +483,43 @@ flame.style.height = `${height}px`;
 // Define clip-path for natural flame shape with slender spikes and smooth base
 const basePoints = [
   '0% 100%',
-  '25% 85%',
-  '75% 85%',
+  '50% 85%',
   '100% 100%'
 ];
-const waistPoint = '50% 70%';
-const spikeCount = 4;
+
+const waistPoint = '50% 65%';  // raised higher for natural waist
+
+const spikeCount = 5;
 const topBaseY = 20;
 const spikes = [];
 
+// Add some subtle side points to soften sides, between base and spikes
+const sidePoints = [
+  '15% 90%',
+  '35% 80%',
+  '65% 80%',
+  '85% 90%'
+];
+
+// Generate slender spikes along center-top
 for (let i = 0; i < spikeCount; i++) {
   const x = 30 + i * (40 / (spikeCount - 1));
-  const peakY = topBaseY - Math.random() * 15;
-  spikes.push(`${x - 1}% ${topBaseY + 10}%`);
+  const peakY = topBaseY - Math.random() * 10;  // less vertical randomness for subtle spikes
+  spikes.push(`${x - 1}% ${topBaseY + 8}%`);
   spikes.push(`${x}% ${peakY}%`);
-  spikes.push(`${x + 1}% ${topBaseY + 10}%`);
+  spikes.push(`${x + 1}% ${topBaseY + 8}%`);
 }
 
 const clipPathPoints = [
   ...basePoints,
+  ...sidePoints,
   waistPoint,
   ...spikes,
-  '0% 40%'
+  '50% 100%' // rounded base center bottom point
 ];
 
 flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
+
 
   // Orange color palette, deeper and richer
   const colors = [
