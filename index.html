@@ -477,7 +477,15 @@ flame.style.height = `${10 + Math.random() * 10}px`;
   flame.style.animationDelay = `${Math.random() * 0.4}s`;
 
   // Gentle orange hues
-  flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
+const baseColors = [
+  'rgba(255, 102, 0, 0.6)',    // semi-transparent orange
+  'rgba(255, 153, 51, 0.5)',   // lighter orange with more transparency
+  'rgba(255, 204, 102, 0.4)'   // even lighter and more transparent
+];
+
+const chosenColor = baseColors[Math.floor(Math.random() * baseColors.length)];
+
+flame.style.background = `radial-gradient(circle at center, ${chosenColor} 30%, transparent 80%)`;
   flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
   flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
 
@@ -501,7 +509,15 @@ function animateFlames(timestamp) {
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 
-      flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+const colors = [
+  'rgba(255, 102, 0, 0.6)',
+  'rgba(255, 153, 51, 0.5)',
+  'rgba(255, 204, 102, 0.4)',
+  'rgba(255, 51, 0, 0.7)'
+];
+const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+flame.style.background = `radial-gradient(circle at center, ${chosenColor} 30%, transparent 80%)`;
+
       flame.style.transform = `
   translateX(-50%)
   translate(${offsetX}px, ${offsetY}px)
