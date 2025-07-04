@@ -668,7 +668,13 @@ try {
           </p> <!-- etc. Full legal text here --> </div>`
     };
 
-    main.innerHTML = content[page] || `<p>Unknown page: ${page}</p>`;
+if (content[page]) {
+  main.innerHTML = content[page];
+} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+  main.innerHTML = ''; // Do nothing for those tabs
+} else {
+  main.innerHTML = `<p>Unknown page: ${page}</p>`;
+}
   }));
 
   // Search logic
