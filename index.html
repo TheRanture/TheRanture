@@ -509,15 +509,28 @@ for (let i = 0; i < spikeCount; i++) {
   spikes.push(`${x}% ${peakY}%`);
   spikes.push(`${x + 1}% ${topBaseY + 8}%`);
 }
-
 const clipPathPoints = [
-  '0% 100%',        // bottom left
-  '20% 80%',        // left side lower
-  '35% 60%',        // left side upper
-  '50% 20%',        // top center spike
-  '65% 60%',        // right side upper
-  '80% 80%',        // right side lower
-  '100% 100%'       // bottom right
+  '0% 100%',     // bottom-left
+  '10% 85%',     // lower-left curve
+  '20% 70%',
+  '30% 55%',
+  '40% 40%',
+  '48% 30%',     // left side rising toward top
+
+  // central jagged top
+  '50% 15%',
+  '52% 25%',
+  '55% 18%',
+  '57% 28%',
+  '60% 20%',
+  '62% 32%',
+  '65% 25%',
+
+  '70% 40%',
+  '75% 55%',
+  '80% 70%',
+  '90% 85%',     // lower-right curve
+  '100% 100%'    // bottom-right
 ];
 
 
@@ -566,9 +579,9 @@ function animateFlames(timestamp) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
       const scaleX = 0.9 + Math.random() * 0.3;
-      const scaleY = 1.0 + Math.random() * 0.7;
+      const scaleY = 1.1 + Math.sin(timestamp / 120 + Math.random()) * 0.3;
       const rotate = -10 + Math.random() * 20; // more subtle range
-      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
+     const offsetX = -1.5 + Math.random() * 3;
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
 const chosenColor = colors[Math.floor(Math.random() * colors.length)];
