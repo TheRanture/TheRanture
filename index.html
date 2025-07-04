@@ -61,6 +61,19 @@
     height: 48px;
     padding: 0;
   }
+  .torch::before {
+  content: '';
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(rgba(255, 120, 20, 0.25), transparent 70%);
+  filter: blur(6px);
+  z-index: 0;
+}
   .torch {
     position: relative;
     width: 100%;
@@ -520,30 +533,44 @@
     return preview;
   }
 function renderTorchFlame() {
-  const clipShapes = [
-    'polygon(50% 0%, 60% 12%, 72% 28%, 78% 48%, 70% 70%, 58% 88%, 42% 88%, 30% 72%, 24% 50%, 28% 26%, 40% 12%)',
-    'polygon(50% 0%, 55% 10%, 68% 28%, 74% 48%, 66% 68%, 55% 90%, 45% 90%, 38% 72%, 30% 48%, 34% 20%, 44% 10%)',
-    'polygon(50% 0%, 62% 14%, 70% 30%, 72% 50%, 65% 70%, 52% 88%, 45% 88%, 32% 72%, 28% 50%, 32% 26%, 40% 14%)',
-    'polygon(50% 0%, 58% 14%, 65% 28%, 70% 46%, 66% 70%, 54% 88%, 42% 88%, 30% 70%, 26% 48%, 30% 24%, 40% 14%)',
-    'polygon(50% 0%, 60% 16%, 68% 30%, 72% 50%, 68% 68%, 56% 88%, 44% 88%, 32% 70%, 28% 48%, 32% 26%, 42% 14%)',
-    'polygon(50% 0%, 58% 12%, 64% 28%, 68% 48%, 60% 68%, 50% 88%, 38% 88%, 28% 70%, 24% 48%, 28% 28%, 38% 14%)'
-  ];
   const torch = document.querySelector('.torch');
   torch.querySelectorAll('.flame').forEach(el => el.remove());
 
-  for (let i = 0; i < 6; i++) {
+  const clipShapes = [
+    'polygon(50% 0%, 60% 10%, 70% 25%, 75% 45%, 66% 70%, 55% 90%, 45% 90%, 35% 70%, 28% 45%, 33% 25%, 42% 10%)',
+    'polygon(50% 0%, 58% 12%, 68% 28%, 72% 48%, 64% 68%, 52% 88%, 42% 88%, 30% 70%, 26% 48%, 30% 28%, 40% 12%)',
+    'polygon(50% 0%, 60% 14%, 68% 30%, 70% 52%, 62% 70%, 50% 90%, 38% 88%, 28% 70%, 24% 48%, 30% 28%, 40% 14%)',
+    'polygon(50% 0%, 55% 14%, 64% 28%, 70% 50%, 60% 72%, 50% 90%, 36% 88%, 28% 68%, 26% 48%, 32% 26%, 42% 12%)'
+  ];
+
+  const colors = [
+    { r: 255, g: 85, b: 0 },    // Deep orange
+    { r: 255, g: 100, b: 10 },  // Slightly brighter
+    { r: 255, g: 140, b: 20 },  // Soft orange
+    { r: 255, g: 180, b: 50 }   // Lighter blend
+  ];
+
+  for (let i = 0; i < 8; i++) {
     const flame = document.createElement('div');
     flame.classList.add('flame');
-    flame.style.width = `${8 + i * 2}px`;
-    flame.style.height = `${8 + i * 2}px`;
-    flame.style.background = `rgba(255,${165 + i * 15},0,${0.3 + i * 0.1})`;
-    flame.style.clipPath = clipShapes[i];
+
+    const c = colors[i % colors.length];
+    const opacity = 0.3 + (i * 0.07);
+    const size = 18 + i * 3;
+
+    flame.style.width = `${size}px`;
+    flame.style.height = `${size}px`;
+    flame.style.background = `rgba(${c.r}, ${c.g}, ${c.b}, ${opacity})`;
+    flame.style.clipPath = clipShapes[i % clipShapes.length];
+
     flame.style.position = 'absolute';
     flame.style.left = '50%';
     flame.style.bottom = '28px';
     flame.style.transform = 'translateX(-50%)';
-    flame.style.animation = `flame-flicker ${1 + Math.random() * 0.5}s ease-in-out infinite`;
+    flame.style.animation = `flame-flicker ${1.2 + Math.random() * 0.4}s ease-in-out infinite`;
     flame.style.animationDelay = `${i * 0.1}s`;
+    flame.style.filter = 'blur(0.4px)';
+
     torch.appendChild(flame);
   }
 }
