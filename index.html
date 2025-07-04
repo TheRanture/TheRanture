@@ -63,6 +63,7 @@
   }
 .torch { position: relative; width:32px; height:60px; }
 .flame {
+  z-index: 1;
   position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
   width:20px; height:40px;
   background: radial-gradient(circle at bottom, #ff0, #f80, #c00);
@@ -80,7 +81,8 @@
     width: 8px;
     height: 28px;
     background: linear-gradient(45deg, #5b3a29 0%, #7e5e45 50%, #4d3221 100%);
-    position: absolute;
+    z-index: 10;
+    position: relative;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
