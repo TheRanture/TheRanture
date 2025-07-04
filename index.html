@@ -41,13 +41,15 @@ body.dark-mode .textbed {
 }
 
 .torch .flame {
+  will-change: transform, opacity;
   position: absolute;
-  bottom: 28px; /* same as handle height so flames start right above */
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50%;
-  animation: flicker 0.5s infinite ease-in-out;
+  transition: transform 0.05s ease-out, opacity 0.05s ease-out, filter 0.05s ease-out;
 }
+
 .handle {
   width: 8px;
   height: 28px;
@@ -483,30 +485,35 @@ for (let i = 0; i < 6; i++) {
 
   torch.appendChild(flame);
 }
-  function updateFlames() {
-  const flames = document.querySelectorAll('.flame');
-  flames.forEach(flame => {
-    const scaleX = 0.9 + Math.random() * 0.3;
-    const scaleY = 1.0 + Math.random() * 0.7;
-    const rotate = -20 + Math.random() * 40 - 10; // -30 to +10
-    const offsetX = -3 + Math.random() * 6; // jitter side to side
-    const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
-    const offsetY = -1 + Math.random() * 2; // up/down jitter (±1px)
-    
-    flame.style.background = colors[Math.floor(Math.random() * colors.length)];
-    flame.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
-    flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-    flame.style.filter = `blur(${0.2 + Math.random() * 0.6}px)`;
-  });
+let lastFlameUpdate = 0;
+const flameUpdateInterval = 50; // update every ~50ms (20 FPS)
 
-  // Randomize next update interval for real-world irregularity
-  const next = 80 + Math.random() * 500;
-  setTimeout(updateFlames, next);
+function animateFlames(timestamp) {
+  if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
+    const flames = document.querySelectorAll('.flame');
+    flames.forEach(flame => {
+      const scaleX = 0.9 + Math.random() * 0.3;
+      const scaleY = 1.0 + Math.random() * 0.7;
+      const rotate = -10 + Math.random() * 20; // more subtle range
+      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
+      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
+      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
+
+      flame.style.background = colors[Math.floor(Math.random() * colors.length)];
+      flame.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
+      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
+    });
+
+    lastFlameUpdate = timestamp;
+  }
+
+  requestAnimationFrame(animateFlames);
 }
 
-// Start the flame update loop
-updateFlames();
+requestAnimationFrame(animateFlames);
 
+// Start the flame update loop
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
