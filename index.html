@@ -465,80 +465,57 @@ const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
   flame.classList.add('flame');
-  flame.style.position = 'absolute';
-  flame.style.bottom = '28px';
-  flame.style.left = '50%';
-  flame.style.transform = 'translateX(-50%)';
 
-  // Container size
-  const baseW = 20 + Math.random() * 10;
-  const baseH = baseW * 1.6;
-  flame.style.width = `${baseW}px`;
-  flame.style.height = `${baseH}px`;
+  // Position above handle consistently
+flame.style.bottom = '28px'; // aligns with top of handle
+flame.style.left = '50%';
+flame.style.transform = 'translateX(-50%)';
 
-  // Make inner structure
-  flame.innerHTML = `
-    <div class="flame-base"></div>
-    <div class="flame-jag"></div>
-  `;
+  // More realistic flame size
+flame.style.width = `${8 + Math.random() * 8}px`;
+flame.style.height = `${10 + Math.random() * 10}px`;
 
-  flame.style.pointerEvents = 'none';
+  // Softer animation and flicker
+  flame.style.animationDelay = `${Math.random() * 0.4}s`;
 
-  // Add styles via JS
-  const base = flame.querySelector('.flame-base');
-  base.style.position = 'absolute';
-  base.style.bottom = '0';
-  base.style.left = '50%';
-  base.style.transform = 'translateX(-50%)';
-  base.style.width = `${baseW * 0.9}px`;
-  base.style.height = `${baseH * 0.4}px`;
-  base.style.borderRadius = '50%';
-  base.style.background = 'radial-gradient(circle, rgba(255, 100, 0, 0.7) 0%, transparent 80%)';
-  base.style.opacity = '0.7';
-  base.style.filter = 'blur(1px)';
+  // Gentle orange hues
+  const baseColors = [
+  'rgba(255, 102, 0, 0.6)',    // semi-transparent orange
+  'rgba(255, 153, 51, 0.5)',   // lighter orange, more transparent
+  'rgba(255, 204, 102, 0.4)'   // pale orange, even more transparent
+];
+const chosenColor = baseColors[Math.floor(Math.random() * baseColors.length)];
+  flame.style.background = `radial-gradient(circle at center, ${chosenColor} 30%, transparent 80%)`;
+  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
+  flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
 
-  const jag = flame.querySelector('.flame-jag');
-  jag.style.position = 'absolute';
-  jag.style.bottom = `${baseH * 0.38}px`; // increase from 0.3 to lift the top flame slightly
-  jag.style.left = '50%';
-  jag.style.transform = 'translateX(-50%)';
-  jag.style.width = `${baseW}px`;
-  jag.style.height = `${baseH * 0.7}px`;
-  jag.style.background = 'radial-gradient(circle, rgba(255, 150, 50, 0.5), transparent 70%)';
- jag.style.clipPath = `
-  polygon(
-    50% 0%,
-    62% 8%, 72% 4%, 85% 18%, 68% 38%, 78% 60%,
-    50% 100%,
-    22% 60%, 32% 38%, 15% 18%, 28% 4%, 38% 8%
-  )
-  `;
-
-  jag.style.opacity = '0.6';
-  jag.style.filter = 'blur(0.6px)';
-
+  // Subtle randomness
+  flame.style.transformOrigin = '50% 100%';
+  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
   torch.appendChild(flame);
 }
-
 let lastFlameUpdate = 0;
 const flameUpdateInterval = 92; // update every ~50ms (20 FPS)
 
 function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
-    const jagFlames = document.querySelectorAll('.flame-jag');
-    jagFlames.forEach(jag => {
-      const scaleX = 0.9 + Math.random() * 0.4;
+    const flames = document.querySelectorAll('.flame');
+    flames.forEach(flame => {
+      const scaleX = 0.9 + Math.random() * 0.3;
       const scaleY = 1.0 + Math.random() * 0.7;
-      const rotate = -10 + Math.random() * 20;
-      const offsetX = -1.5 + Math.random() * 3;
-      const offsetY = -2 + Math.random() * 4;
-
-      jag.style.transform = `
-        translateX(-50%)
-        translate(${offsetX}px, ${offsetY}px)
-        rotate(${rotate}deg)
-        scale(${scaleX}, ${scaleY})
-      `;
+      const rotate = -10 + Math.random() * 20; // more subtle range
+      const offsetX = -1.5 + Math.random() * 3; // jitter side to side
+      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
+      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
+const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
+  flame.style.transform = `
+  translateX(-50%)
+  translate(${offsetX}px, ${offsetY}px)
+  rotate(${rotate}deg)
+  scale(${scaleX}, ${scaleY})
+`;
     });
 
     lastFlameUpdate = timestamp;
@@ -546,6 +523,7 @@ function animateFlames(timestamp) {
 
   requestAnimationFrame(animateFlames);
 }
+
 requestAnimationFrame(animateFlames);
 
 // Start the flame update loop
