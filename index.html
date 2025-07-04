@@ -474,8 +474,8 @@ flame.style.transform = 'translateX(-50%)';
 flame.style.bottom = '28px';
 
   // Bigger, fatter flames
-const width = 18 + Math.random() * 14;  // wider
-const height = 36 + Math.random() * 30; // taller
+const width = 20 + Math.random() * 10;  // 20-30 px width
+const height = 40 + Math.random() * 20; // 40-60 px height
 flame.style.width = `${width}px`;
 flame.style.height = `${height}px`;
 
@@ -511,16 +511,15 @@ for (let i = 0; i < spikeCount; i++) {
 }
 
 const clipPathPoints = [
-  '0% 100%',          // bottom-left base
-  '20% 80%',          // left lower side
-  '30% 60%',          // left upper side
-  '40% 40%',          // left spike base
-  '50% 20%',          // top center spike tip
-  '60% 40%',          // right spike base
-  '70% 60%',          // right upper side
-  '80% 80%',          // right lower side
-  '100% 100%'         // bottom-right base
+  '0% 100%',        // bottom left
+  '20% 80%',        // left side lower
+  '35% 60%',        // left side upper
+  '50% 20%',        // top center spike
+  '65% 60%',        // right side upper
+  '80% 80%',        // right side lower
+  '100% 100%'       // bottom right
 ];
+
 
 flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
 
