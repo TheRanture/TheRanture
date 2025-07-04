@@ -483,6 +483,7 @@ flame.style.height = `${10 + Math.random() * 10}px`;
   // Subtle randomness
   flame.style.transformOrigin = '50% 100%';
   flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
+  flame.style.clipPath = 'polygon(50% 0%, 60% 20%, 80% 30%, 60% 50%, 70% 80%, 50% 100%, 30% 80%, 40% 50%, 20% 30%, 40% 20%)';
 
   torch.appendChild(flame);
 }
@@ -499,11 +500,23 @@ function animateFlames(timestamp) {
       const offsetX = -1.5 + Math.random() * 3; // jitter side to side
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
+      const clipShapes = [
+  'polygon(50% 0%, 60% 20%, 80% 30%, 60% 50%, 70% 80%, 50% 100%, 30% 80%, 40% 50%, 20% 30%, 40% 20%)',
+  'polygon(50% 0%, 65% 25%, 80% 40%, 55% 50%, 75% 80%, 50% 100%, 25% 80%, 45% 50%, 20% 40%, 35% 25%)',
+  'polygon(50% 0%, 55% 15%, 70% 35%, 60% 55%, 65% 85%, 50% 100%, 35% 85%, 40% 55%, 30% 35%, 45% 15%)'
+];
 
+flame.style.clipPath = clipShapes[Math.floor(Math.random() * clipShapes.length)];
       flame.style.background = colors[Math.floor(Math.random() * colors.length)];
-      flame.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg) scale(${scaleX}, ${scaleY})`;
-      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
-      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
+      flame.style.transform = `
+  translateX(-50%)
+  translate(${offsetX}px, ${offsetY}px)
+  rotate(${rotate}deg)
+  scale(${scaleX}, ${scaleY})
+`;
+flame.style.opacity = 0.4 + Math.random() * 0.4;
+flame.style.filter = `blur(${0.5 + Math.random() * 1}px)`;
+
     });
 
     lastFlameUpdate = timestamp;
