@@ -33,13 +33,21 @@ body.dark-mode .textbed {
   height: 48px;
   padding: 0;
 }
-
 .torch {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 48px;
+  overflow: visible; /* change to hidden if you want clipping */
 }
 
+.torch .flame {
+  position: absolute;
+  bottom: 28px; /* same as handle height so flames start right above */
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  animation: flicker 0.5s infinite ease-in-out;
+}
 .handle {
   width: 8px;
   height: 28px;
@@ -453,33 +461,25 @@ for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
   flame.classList.add('flame');
 
-  // Slight horizontal jitter (left/right offset)
-  flame.style.left = `${47 + (Math.random() * 6 - 3)}%`;
+  // Position above handle consistently
+  flame.style.bottom = '28px'; // aligns with top of handle
+  flame.style.left = `${48 + (Math.random() * 4 - 2)}%`;
 
-  // Slight vertical offset to prevent stacking
-  flame.style.bottom = `${18 + Math.random() * 4}px`;
+  // More realistic flame size
+  flame.style.width = `${4 + Math.random() * 4}px`;
+  flame.style.height = `${6 + Math.random() * 6}px`;
 
-  // Random width and height
-  flame.style.width = `${6 + Math.random() * 8}px`;
-  flame.style.height = `${6 + Math.random() * 10}px`;
+  // Softer animation and flicker
+  flame.style.animationDelay = `${Math.random() * 0.4}s`;
 
-  // Delay flicker differently for each
-  flame.style.animationDelay = `${Math.random() * 0.6}s`;
+  // Gentle orange hues
+  flame.style.background = ['#ff6600', '#ff9933', '#ffcc66'][Math.floor(Math.random() * 3)];
+  flame.style.opacity = (0.6 + Math.random() * 0.3).toFixed(2);
+  flame.style.filter = `blur(${0.2 + Math.random() * 0.5}px)`;
 
-  // Vary flame colors slightly
-  flame.style.background = ['#ff6600', '#ff9933', '#ffd966', '#ff3300'][Math.floor(Math.random() * 4)];
-
-  // Random flame opacity for depth effect
-  flame.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-
-  // Subtle blur
-  flame.style.filter = `blur(${0.3 + Math.random() * 0.4}px)`;
-
-  // Slightly different pivot point for scale/rotate
-  flame.style.transformOrigin = `${40 + Math.random() * 20}% bottom`;
-
-  flame.style.borderRadius = `${30 + Math.random() * 20}% ${30 + Math.random() * 20}% ${40 + Math.random() * 20}% ${40 + Math.random() * 20}% / ${50 + Math.random() * 10}% ${50 + Math.random() * 10}% ${30 + Math.random() * 20}% ${30 + Math.random() * 20}%`;
-
+  // Subtle randomness
+  flame.style.transformOrigin = '50% 100%';
+  flame.style.borderRadius = '50% 50% 40% 40% / 60% 60% 40% 40%';
 
   torch.appendChild(flame);
 }
