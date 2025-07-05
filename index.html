@@ -488,21 +488,27 @@ document.addEventListener('DOMContentLoaded', () => {
     flame.style.willChange = 'transform, opacity';
 
     // Generate randomized natural flame spikes
-    const spikeCount = 5 + Math.floor(Math.random() * 4);
-    const topY = 15 + Math.random() * 5;
-    const clipPoints = ['50% 100%'];
+   const clipPoints = [];
 
-    for (let j = 0; j < spikeCount; j++) {
-      const x1 = 45 + j * (10 / spikeCount);
-      const x2 = x1 + 1.5 + Math.random();
-      const peakX = (x1 + x2) / 2 + (Math.random() * 4 - 2); // slight horizontal randomness
-      const peakY = topY + Math.random() * 10;
-      clipPoints.push(`${x1}% ${70 - Math.random() * 10}%`);
-      clipPoints.push(`${peakX}% ${peakY}%`);
-      clipPoints.push(`${x2}% ${70 - Math.random() * 10}%`);
-    }
+// Base: start wide and curve upward
+clipPoints.push('0% 100%');
+clipPoints.push('15% 85%');
+clipPoints.push('30% 70%');
 
-    clipPoints.push('50% 100%'); // close shape
+// Midsection + randomized spikes
+const spikeCount = 7 + Math.floor(Math.random() * 4);
+for (let j = 0; j < spikeCount; j++) {
+  const x = 35 + j * (30 / spikeCount); // spread spikes over 30%-65%
+  const peakX = x + (Math.random() * 4 - 2);  // wobble
+  const peakY = 20 + Math.random() * 10;      // chaotic height
+  clipPoints.push(`${peakX}% ${peakY}%`);
+}
+
+// Taper downward
+clipPoints.push('70% 70%');
+clipPoints.push('85% 85%');
+clipPoints.push('100% 100%');
+
     flame.style.clipPath = `polygon(${clipPoints.join(',')})`;
 
     // Pick one gradient palette
