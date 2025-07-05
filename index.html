@@ -509,20 +509,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Generate randomized natural flame spikes
 // Generate randomized natural flame spikes
-    const outerFlamePoints = [];
-const spikes = 10;
-for (let i = 0; i <= spikes; i++) {
-  const x = (i / spikes) * 100;
-  const y = 100 - Math.random() * 60 - 20;
-  outerFlamePoints.push(`${x}% ${y}%`);
-}
-// Add curvy base (bulge downward)
-for (let i = spikes; i >= 0; i--) {
-  const x = (i / spikes) * 100;
-  const y = 100 + Math.sin((i / spikes) * Math.PI) * 6;
-  outerFlamePoints.push(`${x}% ${y}%`);
-}
-outerFlame.style.clipPath = `polygon(${outerFlamePoints.join(',')})`;
+
+flame.style.clipPath = `polygon(${outerFlamePoints.join(',')})`;
 
 const clipPoints = [];
 const flameWidth = 100; // percent
