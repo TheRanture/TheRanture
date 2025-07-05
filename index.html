@@ -461,122 +461,91 @@ document.addEventListener('DOMContentLoaded', () => {
     input.focus();
   }
 });
-const torch = document.querySelector('.torch');
-for (let i = 0; i < 6; i++) {
-  const flame = document.createElement('div');
-  flame.classList.add('flame');
+  const torch = document.querySelector('.torch');
 
-  // Position above handle consistently
-const baseX = 50; // percent, center
-const offsetXPercent = (Math.random() * 20) - 10; // ±10% horizontally
-flame.style.left = `${baseX + offsetXPercent}%`;
-flame.style.transform = 'translateX(-50%)';
-flame.style.bottom = '28px';
+  const flameCount = 7;
+  const colorPalettes = [
+    ['#ffffff', '#ffff99', '#ffaa33', '#ff6600', 'transparent'],
+    ['#ffffff', '#ffe066', '#ff9933', '#cc3300', 'transparent'],
+    ['#ffffff', '#ffffcc', '#ffcc66', '#ff3300', 'transparent']
+  ];
 
-  // Bigger, fatter flames
-const width = 20 + Math.random() * 5;
-const height = 50 + Math.random() * 10;
-flame.style.width = `${width}px`;
-flame.style.height = `${height}px`;
+  for (let i = 0; i < flameCount; i++) {
+    const flame = document.createElement('div');
+    flame.classList.add('flame');
 
+    const width = 20 + Math.random() * 8;
+    const height = 50 + Math.random() * 20;
+    flame.style.width = `${width}px`;
+    flame.style.height = `${height}px`;
 
-// Define clip-path for natural flame shape with slender spikes and smooth base
-const basePoints = [
-  '0% 100%',
-  '50% 85%',
-  '100% 100%'
-];
+    flame.style.position = 'absolute';
+    flame.style.bottom = '28px';
+    flame.style.left = `${45 + Math.random() * 10}%`;
+    flame.style.transform = 'translateX(-50%)';
+    flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
+    flame.style.filter = `blur(${0.3 + Math.random() * 0.7}px)`;
+    flame.style.willChange = 'transform, opacity';
 
-const waistPoint = '50% 65%';  // raised higher for natural waist
+    // Generate randomized natural flame spikes
+    const spikeCount = 5 + Math.floor(Math.random() * 4);
+    const topY = 15 + Math.random() * 5;
+    const clipPoints = ['50% 100%'];
 
-const spikeCount = 5;
-const topBaseY = 20;
-const spikes = [];
+    for (let j = 0; j < spikeCount; j++) {
+      const x1 = 45 + j * (10 / spikeCount);
+      const x2 = x1 + 1.5 + Math.random();
+      const peakX = (x1 + x2) / 2 + (Math.random() * 4 - 2); // slight horizontal randomness
+      const peakY = topY + Math.random() * 10;
+      clipPoints.push(`${x1}% ${70 - Math.random() * 10}%`);
+      clipPoints.push(`${peakX}% ${peakY}%`);
+      clipPoints.push(`${x2}% ${70 - Math.random() * 10}%`);
+    }
 
-// Add some subtle side points to soften sides, between base and spikes
-const sidePoints = [
-  '15% 90%',
-  '35% 80%',
-  '65% 80%',
-  '85% 90%'
-];
+    clipPoints.push('50% 100%'); // close shape
+    flame.style.clipPath = `polygon(${clipPoints.join(',')})`;
 
-// Generate slender spikes along center-top
-for (let i = 0; i < spikeCount; i++) {
-  const x = 30 + i * (40 / (spikeCount - 1));
-  const peakY = topBaseY - Math.random() * 10;  // less vertical randomness for subtle spikes
-  spikes.push(`${x - 1}% ${topBaseY + 8}%`);
-  spikes.push(`${x}% ${peakY}%`);
-  spikes.push(`${x + 1}% ${topBaseY + 8}%`);
-}
-const clipPathPoints = [
-  '50% 100%',
-  '60% 80%',
-  '65% 60%',
-  '62% 40%',
-  '58% 25%',
-  '50% 15%',
-  '42% 25%',
-  '38% 40%',
-  '35% 60%',
-  '40% 80%',
-  '50% 100%'
-];
+    // Pick one gradient palette
+    const gradient = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+    flame.style.background = `
+      radial-gradient(circle at 50% 60%, 
+        ${gradient[0]} 0%, 
+        ${gradient[1]} 30%, 
+        ${gradient[2]} 60%, 
+        ${gradient[3]} 90%, 
+        ${gradient[4]} 100%)
+    `;
 
-
-flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
-
-
-  // Orange color palette, deeper and richer
-flame.style.background = `
-  radial-gradient(circle at 50% 65%, 
-    rgba(255,255,255,0.9) 0%, 
-    rgba(255,230,100,0.7) 30%, 
-    rgba(255,150,0,0.5) 60%, 
-    rgba(255,90,0,0.3) 90%, 
-    transparent 100%)
-`;
-// Add white "hot spot" occasionally near center to simulate hottest part
-
-  flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
-  flame.style.filter = `blur(${0.3 + Math.random() * 0.6}px)`;
-
-  flame.style.transformOrigin = '50% 100%';
-  flame.style.position = 'absolute'; // ensure positioning
-
-  torch.appendChild(flame);
-}
-let lastFlameUpdate = 0;
-const flameUpdateInterval = 110; // update every ~50ms (20 FPS)
-
-function animateFlames(timestamp) {
-  if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
-    const flames = document.querySelectorAll('.flame');
-    flames.forEach(flame => {
-const scaleX = 1 + Math.sin(timestamp / 200 + Math.random()) * 0.05;
-const scaleY = 1 + Math.cos(timestamp / 180 + Math.random()) * 0.05;
-const rotate = -2 + Math.random() * 4;
-     const offsetX = -1.5 + Math.random() * 3;
-      const offsetY = -1 + Math.random() * 2;   // slight vertical movement
-      const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
-const chosenColor = colors[Math.floor(Math.random() * colors.length)];
-      flame.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
-      flame.style.filter = `blur(${0.2 + Math.random() * 0.4}px)`;
-  flame.style.transform = `
-  translateX(-50%)
-  translate(${offsetX}px, ${offsetY}px)
-  rotate(${rotate}deg)
-  scale(${scaleX}, ${scaleY})
-`;
-    });
-
-    lastFlameUpdate = timestamp;
+    torch.appendChild(flame);
   }
 
-  requestAnimationFrame(animateFlames);
-}
+  // Animate flames
+  let lastFrame = 0;
+  const updateInterval = 70;
 
-requestAnimationFrame(animateFlames);
+  function animate(timestamp) {
+    if (timestamp - lastFrame > updateInterval) {
+      document.querySelectorAll('.flame').forEach(f => {
+        const offsetX = -2 + Math.random() * 4;
+        const offsetY = -2 + Math.random() * 4;
+        const rotate = -3 + Math.random() * 6;
+        const scaleX = 1 + Math.sin(timestamp / 150 + Math.random()) * 0.05;
+        const scaleY = 1 + Math.cos(timestamp / 180 + Math.random()) * 0.1;
+        f.style.transform = `
+          translateX(-50%) 
+          translate(${offsetX}px, ${offsetY}px) 
+          rotate(${rotate}deg) 
+          scale(${scaleX}, ${scaleY})
+        `;
+        f.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+        f.style.filter = `blur(${0.2 + Math.random() * 0.6}px)`;
+      });
+      lastFrame = timestamp;
+    }
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 
 // Start the flame update loop
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
