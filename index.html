@@ -498,14 +498,6 @@ function randomPath(xOffset, color) {
 
   return path;
 }
-
-const vineColors = ['#2e2b1a', '#3b2d1c', '#1f291f', '#253320', '#362718'];
-
-for (let i = 0; i < 12; i++) {
-  const offset = -4 + Math.random() * 8;
-  const color = vineColors[Math.floor(Math.random() * vineColors.length)];
-  torchHandle.appendChild(randomPath(offset, color));
-}
 const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
