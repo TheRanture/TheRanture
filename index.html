@@ -52,10 +52,22 @@ body.dark-mode .textbed {
 }
 .handle {
   width: 12px;
-  height: 44px;
-  background: linear-gradient(to bottom, #c57947 0%, #e0a063 20%, #b46b3d 80%, #864928 100%);
+background:
+  linear-gradient(to bottom, #d38b52, #b3693e) no-repeat,
+  repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.1) 1px,
+    transparent 1px,
+    transparent 4px
+    clip-path: polygon(
+  0% 0%, 100% 0%, 60% 100%, 50% 110%, 40% 100%,
+  20% 100%, 0% 100%
+);
+  );
   position: absolute;
-  bottom: 0;
+  bottom: -2px; /* drop it slightly below flame origin */
+  height: 30px; /* adjust so the bottom tapers without touching flame */
   left: 50%;
   transform: translateX(-50%);
   clip-path: polygon(0% 0%, 100% 0%, 88% 100%, 12% 100%);
