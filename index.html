@@ -24,104 +24,69 @@ body.dark-mode .textbed {
   color: #d0d0d0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
+/* 2) Handle wrapper */
 .torch-handle {
-  position: relative;
-  width: 50px;
-  height: 140px;
-  margin: 0 auto;
-  background: transparent;
-}
-
-/* Base vine style */
-.vine {
   position: absolute;
-  width: 14px;
-  height: 130px;
-  background: linear-gradient(135deg, #3a4b12 0%, #243107 80%);
-  border-radius: 10px;
-  box-shadow:
-    inset 0 3px 6px rgba(255,255,255,0.25),
-    inset 0 -5px 8px rgba(0,0,0,0.9);
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.6));
-  transform-origin: center bottom;
-  z-index: 1;
-}
-
-/* Vine 1 - twists front, left side */
-.vine1 {
-  left: 0;
-  top: 5px;
-  transform: rotate(20deg) translateX(0) translateY(0);
-  z-index: 4;
-  background: linear-gradient(135deg, #4a5e18 0%, #36430b 80%);
-  border-radius: 12px 10px 10px 12px;
-}
-
-/* Vine 2 - twists behind vine1, crossing to right */
-.vine2 {
-  left: 14px;
-  top: 0;
-  transform: rotate(-25deg) translateX(4px) translateY(20px);
-  z-index: 3;
-  background: linear-gradient(135deg, #385012 0%, #24380a 80%);
-  border-radius: 10px 14px 14px 10px;
-}
-
-/* Vine 3 - crosses front again, right side */
-.vine3 {
-  left: 26px;
-  top: 5px;
-  transform: rotate(15deg) translateX(-4px) translateY(40px);
-  z-index: 4;
-  background: linear-gradient(135deg, #425014 0%, #2d3b0b 80%);
-  border-radius: 12px 10px 10px 12px;
-}
-
-/* Vine 4 - behind all, left side */
-.vine4 {
-  left: 12px;
-  top: 15px;
-  transform: rotate(-20deg) translateX(8px) translateY(60px);
-  z-index: 2;
-  background: linear-gradient(135deg, #37440e 0%, #1e2b06 80%);
-  border-radius: 10px 14px 14px 10px;
-}
-
-/* Add some "knuckles" or bumps to simulate vine texture using pseudo-elements */
-
-.vine::before {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(135deg, #556e20 0%, #3a4c0e 100%);
-  border-radius: 50% / 60%;
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.3),
-    inset 0 -1px 2px rgba(0,0,0,0.7);
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.4));
+  bottom: 0;
   left: 50%;
+  width: 60px;
+  height: 120px;
   transform: translateX(-50%);
+  pointer-events: none;
 }
 
-/* Different vertical positions for each vine's bumps */
-
-.vine1::before {
-  top: 30px;
+/* 3) Base vine style */
+.torch-handle .vine {
+  position: absolute;
+  bottom: 0;
+  width: 16px;
+  height: 100px;
+  background: linear-gradient(135deg, #2e3a0a 0%, #1f2706 80%);
+  box-shadow:
+    inset 0 3px 6px rgba(255,255,255,0.2),
+    inset 0 -5px 10px rgba(0,0,0,0.9);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.6));
+  clip-path: polygon(
+    50% 100%,  60% 80%, 70% 65%, 60% 55%,
+    75% 45%, 65% 35%, 80% 25%, 70% 15%,
+    85% 5%,  90% 0%, 50% 20%, 10% 0%,
+    25% 10%, 15% 25%, 30% 35%, 20% 55%,
+    35% 65%, 25% 80%
+  );
+  border-radius: 30% 40% 20% 30% / 90% 90% 70% 60%;
 }
 
-.vine2::before {
-  top: 50px;
+/* 4) Position each vine to overlap and wrap */
+/* z-index chosen so they weave over/under each other */
+.vine1 {
+  left: 4px;
+  transform: rotate(-20deg);
+  z-index: 5;
 }
-
-.vine3::before {
-  top: 80px;
+.vine2 {
+  left: 18px;
+  transform: rotate(-5deg);
+  background: linear-gradient(135deg, #3a4a12 0%, #2d3b0a 80%);
+  z-index: 4;
 }
-
-.vine4::before {
-  top: 110px;
+.vine3 {
+  left: 32px;
+  transform: rotate(-30deg);
+  background: linear-gradient(135deg, #33430e 0%, #263408 80%);
+  z-index: 6;
 }
-
+.vine4 {
+  left: 46px;
+  transform: rotate(-12deg);
+  background: linear-gradient(135deg, #2c370b 0%, #1e2706 80%);
+  z-index: 3;
+}
+.vine5 {
+  left: 26px;
+  transform: rotate(-18deg);
+  background: linear-gradient(135deg, #425012 0%, #2f3a0a 80%);
+  z-index: 7;
+}
     .torch-mode {
   background: none;
   border: none;
@@ -475,6 +440,7 @@ body.dark-mode #search-bar::placeholder {
   <div class="vine vine2"></div>
   <div class="vine vine3"></div>
   <div class="vine vine4"></div>
+  <div class="vine vine5"></div>
 </div>
     <div class="smoke"></div>
   </div>
