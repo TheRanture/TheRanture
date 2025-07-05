@@ -509,15 +509,6 @@ for (let i = 0; i < 7; i++) {
 
   torch.appendChild(flame);
 }
-
-  flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
-  flame.style.filter = `blur(${0.3 + Math.random() * 0.6}px)`;
-
-  flame.style.transformOrigin = '50% 100%';
-  flame.style.position = 'absolute'; // ensure positioning
-
-  torch.appendChild(flame);
-}
 let lastFlameUpdate = 0;
 const flameUpdateInterval = 110; // update every ~50ms (20 FPS)
 function animateFlames(timestamp) {
