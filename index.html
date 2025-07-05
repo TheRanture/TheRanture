@@ -28,10 +28,11 @@ body.dark-mode .textbed {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 60px;
-  height: 160px;
   transform: translateX(-50%);
+  width: 60px;
+  height: 30px; /* keep minimal height, vines will extend up */
   pointer-events: none;
+  z-index: 1; /* keep under flame (default z of flame is 2) */
   overflow: visible;
 }
 
@@ -39,7 +40,8 @@ body.dark-mode .textbed {
 .torch-handle .vine {
   position: absolute;
   width: 16px;
-  height: 140px;
+  height: 60px;
+  bottom: 0;
   background: linear-gradient(135deg, #354a13, #1b2607);
   border-radius: 40% 40% 30% 30% / 60% 60% 20% 20%;
   clip-path: polygon(
@@ -48,40 +50,41 @@ body.dark-mode .textbed {
     40% 0%, 50% 5%, 60% 0%, 50% 10%
   );
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
-  animation: pulse-vine 5s ease-in-out infinite alternate;
+  animation: pulse-vine 4s ease-in-out infinite alternate;
 }
 
-/* Variants */
+/* Vine variants */
 .vine-left {
-  left: 4px;
-  transform: rotate(-20deg);
+  left: 0px;
+  transform: rotate(-25deg);
   z-index: 6;
   animation-delay: 0s;
 }
 .vine-right {
-  left: 36px;
-  transform: rotate(20deg);
+  left: 44px;
+  transform: rotate(25deg);
   z-index: 6;
-  animation-delay: 1s;
+  animation-delay: 0.5s;
 }
 .vine-back {
   left: 20px;
-  transform: rotate(0deg) scaleX(0.9);
+  transform: rotate(-5deg) scaleX(0.9);
   z-index: 5;
-  animation-delay: 2s;
+  animation-delay: 1s;
 }
 .vine-front {
-  left: 22px;
+  left: 24px;
   transform: rotate(5deg) scaleX(1.1);
   z-index: 7;
-  animation-delay: 3s;
+  animation-delay: 1.5s;
 }
 
-/* Subtle motion */
+/* Handle animation */
 @keyframes pulse-vine {
   0% { transform: translateY(0) rotate(var(--angle, 0deg)); }
-  100% { transform: translateY(4px) rotate(calc(var(--angle, 0deg) + 5deg)); }
+  100% { transform: translateY(2px) rotate(calc(var(--angle, 0deg) + 5deg)); }
 }
+
 
     .torch-mode {
   background: none;
