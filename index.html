@@ -483,7 +483,8 @@ for (let i = 0; i < 6; i++) {
   for (let j = 0; j < spikes; j++) {
     // x between 0% and 100%, y oscillates between 20% and 100%
     const x = (j / (spikes - 1)) * 100;
-    const y = 10 + Math.pow(Math.random(), 1.5) * 90;
+    const wave = Math.sin((j / (spikes - 1)) * Math.PI); // curved spike path
+const y = 40 + wave * (20 + Math.random() * 40); // lower base, curve upward
     clipPathPoints.push(`${x}% ${y}%`);
   }
   // Close the bottom polygon (bottom right and bottom left corners)
