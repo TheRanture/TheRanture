@@ -24,146 +24,91 @@ body.dark-mode .textbed {
   color: #d0d0d0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
-  .torch-handle {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 32px;
-  height: 48px;
-  transform: translateX(-50%);
-  z-index: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+/* Container for the entire handle */
+.torch-handle {
+  position: relative;
+  width: 40px;
+  height: 120px;
+  background: transparent;
+  margin: 0 auto;
 }
 
-/* Wood base with grain & cracks */
-.wood-grain {
+/* Base vine finger style */
+.torch-handle .vine {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: 22px;
-  height: 48px;
-  transform: translateX(-50%);
-  background:
-    linear-gradient(90deg,
-      #4b2e0f 0%, #5c3a13 10%,
-      #52340e 30%, #6a4518 50%,
-      #52340e 70%, #4b2e0f 90%, #5c3a13 100%);
-  border-radius: 6px / 40%;
+  width: 10px;
+  height: 50px;
+  background: linear-gradient(135deg, #3b4a11 0%, #2c3d08 80%);
   box-shadow:
-    inset 0 0 5px rgba(0,0,0,0.7),
-    inset 0 10px 6px rgba(255, 255, 255, 0.05);
-  filter: contrast(1.1) saturate(1.4);
+    inset 0 3px 5px rgba(255,255,255,0.25),
+    inset 0 -5px 8px rgba(0,0,0,0.9);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.6));
+  clip-path: polygon(
+    20% 100%, 30% 70%, 40% 90%, 55% 60%, 65% 80%, 75% 55%, 80% 75%, 90% 40%, 90% 100%
+  );
+  border-radius: 10% 30% 10% 20% / 70% 60% 80% 90%;
+  transform-origin: bottom center;
+  animation: vine-sway 5s ease-in-out infinite;
 }
 
-/* Cracks / splinters: thin irregular lines */
-.wood-grain::before,
-.wood-grain::after {
+/* Vine fingers — multiple with different rotations and heights to crowd the handle */
+.torch-handle .vine1 {
+  left: 4px;
+  height: 55px;
+  animation-delay: 0s;
+  transform: rotate(-20deg);
+}
+
+.torch-handle .vine2 {
+  left: 12px;
+  height: 60px;
+  animation-delay: 1.2s;
+  transform: rotate(-10deg);
+  background: linear-gradient(135deg, #4a5b1f 0%, #35400f 80%);
+}
+
+.torch-handle .vine3 {
+  left: 20px;
+  height: 58px;
+  animation-delay: 0.6s;
+  transform: rotate(-25deg);
+  background: linear-gradient(135deg, #425012 0%, #2f3a0a 80%);
+}
+
+.torch-handle .vine4 {
+  left: 28px;
+  height: 62px;
+  animation-delay: 1.8s;
+  transform: rotate(-15deg);
+  background: linear-gradient(135deg, #3c470e 0%, #283509 80%);
+}
+
+/* Small knuckle bulges on vines using pseudo-elements */
+.torch-handle .vine::before {
   content: "";
   position: absolute;
-  width: 2px;
-  height: 12px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 1px;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #5a6d23 0%, #32400e 100%);
+  border-radius: 60% 40% 40% 60% / 50% 60% 40% 50%;
   box-shadow:
-    1px 5px 1px rgba(255,255,255,0.1),
-    -1px 7px 0 rgba(0,0,0,0.15);
-  transform-origin: top left;
-}
-.wood-grain::before {
-  left: 6px;
-  top: 8px;
-  transform: rotate(12deg);
-}
-.wood-grain::after {
-  left: 14px;
-  top: 22px;
-  transform: rotate(-15deg);
-}
-
-/* Vine base style */
-.vine {
-  position: absolute;
-  border-radius: 10% 50% 10% 50% / 40% 30% 60% 50%;
-  background: linear-gradient(135deg, #3b4a11 0%, #2c3d08 80%);
-  box-shadow: inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.7);
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
-}
-
-/* Individual crooked vines (crooked fingers/tentacles) */
-/* Each with unique shape & rotation for randomness */
-.finger-tip {
-  position: absolute;
-  width: 6px;
-  height: 10px;
-  background: linear-gradient(135deg, #3b4a11 0%, #2c3d08 80%);
-  border-radius: 40% 30% 70% 50% / 60% 40% 70% 50%;
-  bottom: 100%;
+    inset 0 1px 1px rgba(255,255,255,0.3),
+    inset 0 -1px 2px rgba(0,0,0,0.7);
   left: 50%;
-  transform: translateX(-50%) rotate(20deg);
-  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), inset 0 -1px 2px rgba(0,0,0,0.6);
+  transform: translateX(-50%) rotate(-15deg);
+  top: 40%;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.4));
 }
 
-.vine1 {
-  width: 8px;
-  height: 20px;
-  bottom: 10px;
-  left: 4px;
-  transform: rotate(-25deg) skewY(-10deg);
-  border-radius: 6px 4px 6px 8px / 50% 60% 40% 50%;
-}
-
-.vine2 {
-  width: 6px;
-  height: 18px;
-  bottom: 18px;
-  left: 14px;
-  transform: rotate(15deg) skewY(8deg);
-  border-radius: 5px 7px 7px 5px / 40% 60% 60% 40%;
-}
-
-.vine3 {
-  width: 10px;
-  height: 25px;
-  bottom: 5px;
-  left: 20px;
-  transform: rotate(-10deg) skewY(-15deg);
-  border-radius: 8px 6px 6px 10px / 55% 40% 40% 55%;
-}
-
-.vine4 {
-  width: 6px;
-  height: 16px;
-  bottom: 30px;
-  left: 9px;
-  transform: rotate(30deg) skewY(12deg);
-  border-radius: 6px 6px 4px 8px / 60% 50% 40% 60%;
-}
-
-.vine5 {
-  width: 7px;
-  height: 22px;
-  bottom: 15px;
-  left: 24px;
-  transform: rotate(-35deg) skewY(-8deg);
-  border-radius: 7px 5px 6px 7px / 50% 45% 50% 55%;
-}
-
-
-/* Sway and pulse animations */
-@keyframes tentacle-sway {
-  0%, 100% { transform: translateX(-50%) rotate(-10deg); }
-  50% { transform: translateX(-48%) rotate(-5deg); }
-}
-
-@keyframes tentacle-sway-alt {
-  0%, 100% { transform: rotate(15deg); }
-  50% { transform: rotate(20deg); }
-}
-
-@keyframes finger-pulse {
-  0% { filter: brightness(1); }
-  100% { filter: brightness(1.3); }
+/* Animations to gently sway the crooked fingers */
+@keyframes vine-sway {
+  0%, 100% {
+    transform: rotate(var(--init-rot, -20deg));
+  }
+  50% {
+    transform: rotate(calc(var(--init-rot, -20deg) + 6deg));
+  }
 }
 
     .torch-mode {
@@ -514,14 +459,11 @@ body.dark-mode #search-bar::placeholder {
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
-  <div class="torch-handle">
-  <div class="wood-grain"></div>
-  <div class="vine vine1"></div>
-  <div class="vine vine2"></div>
-  <div class="vine vine3"></div>
-  <div class="vine vine4"></div>
-  <div class="vine vine5"></div>
-  <div class="finger-tip"></div>
+<div class="torch-handle">
+  <div class="vine vine1" style="--init-rot: -20deg;"></div>
+  <div class="vine vine2" style="--init-rot: -10deg;"></div>
+  <div class="vine vine3" style="--init-rot: -25deg;"></div>
+  <div class="vine vine4" style="--init-rot: -15deg;"></div>
 </div>
     <div class="smoke"></div>
   </div>
