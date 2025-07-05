@@ -67,25 +67,25 @@ body.dark-mode .textbed {
   filter: brightness(1.1);
   z-index: 2;
 }
-.handle-bundle {
+.torch-handle {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 16px;
-  height: 48px;
   transform: translateX(-50%);
-  pointer-events: none;
+  width: 24px;
+  height: 48px;
   z-index: 1;
+  pointer-events: none;
 }
 
-.handle-bundle .strand {
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(to top, #0a0a0a, #222);
-  border-radius: 2px;
-  opacity: 0.8;
+.torch-handle path {
+  fill: none;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.9;
 }
+
 
 .torch .flame:nth-child(1) {
   animation-delay: 0s;
@@ -404,7 +404,7 @@ body.dark-mode #search-bar::placeholder {
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
-    <div class="handle-bundle"></div>
+    <svg class="torch-handle" viewBox="0 0 40 80" preserveAspectRatio="xMidYMax meet"></svg>
     <div class="vine-claws"></div>
     <div class="smoke"></div>
   </div>
@@ -473,29 +473,38 @@ document.addEventListener('DOMContentLoaded', () => {
     input.focus();
   }
 });
-  const handleBundle = document.querySelector('.handle-bundle');
-const strandCount = 12;
+const torchHandle = document.querySelector('.torch-handle');
 
-for (let i = 0; i < strandCount; i++) {
-  const strand = document.createElement('div');
-  strand.classList.add('strand');
+function randomPath(xOffset, color) {
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
-  // Random position and slight curvature
-  const left = 6 + Math.random() * 4; // spread horizontally
-  const rotate = -10 + Math.random() * 20; // degrees
-  const skew = -10 + Math.random() * 20;
+  let d = `M ${20 + xOffset} 80`;
+  let x = 20 + xOffset;
+  let y = 80;
 
-  strand.style.left = `${left}px`;
-  strand.style.transform = `rotate(${rotate}deg) skewX(${skew}deg)`;
+  const segments = 5 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < segments; i++) {
+    const dx = -3 + Math.random() * 6;
+    const dy = -8 - Math.random() * 8;
+    x += dx;
+    y += dy;
+    d += ` Q ${x - dx / 2} ${y - dy / 2}, ${x} ${y}`;
+  }
 
-  // Random darkness
-  const darkness = 15 + Math.floor(Math.random() * 25);
-  strand.style.background = `linear-gradient(to top, rgb(${darkness},${darkness},${darkness}), #111)`;
-  
-  // Slightly stagger heights
-  strand.style.height = `${45 + Math.random() * 5}px`;
+  path.setAttribute('d', d);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', (0.6 + Math.random()).toFixed(2));
+  path.style.opacity = 0.5 + Math.random() * 0.4;
 
-  handleBundle.appendChild(strand);
+  return path;
+}
+
+const vineColors = ['#2e2b1a', '#3b2d1c', '#1f291f', '#253320', '#362718'];
+
+for (let i = 0; i < 12; i++) {
+  const offset = -4 + Math.random() * 8;
+  const color = vineColors[Math.floor(Math.random() * vineColors.length)];
+  torchHandle.appendChild(randomPath(offset, color));
 }
 const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
