@@ -25,8 +25,8 @@ body.dark-mode .textbed {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 .handle {
-  width: 10px;
-  height: 34px;
+  width: 12px;    /* a bit wider for organic shape */
+  height: 40px;   /* a bit taller */
   background: linear-gradient(
     to bottom,
     #5b2e1d 0%,
@@ -39,28 +39,15 @@ body.dark-mode .textbed {
   left: 50%;
   transform: translateX(-50%);
   clip-path: polygon(
-    0% 0%, 15% 10%, 30% 5%, 45% 8%, 60% 3%, 75% 6%, 90% 2%, 100% 0%,
-    100% 100%, 80% 100%, 20% 100%, 0% 100%
+    10% 0%, 20% 5%, 35% 2%, 45% 10%, 55% 8%, 65% 15%, 80% 10%, 85% 20%, 
+    90% 25%, 85% 50%, 75% 65%, 60% 85%, 50% 95%, 40% 85%, 25% 70%, 15% 50%, 10% 30%, 5% 15%, 10% 5%
   );
-  border-radius: 2px;
+  border-radius: 4px / 6px;  /* elliptical rounding for softness */
   box-shadow:
     inset 0 0 1px rgba(255,255,255,0.1),
     inset 0 0 6px rgba(0,0,0,0.4),
     0 1px 1px rgba(0,0,0,0.5);
   z-index: 1;
-}
-
-.handle::before,
-.handle::after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 16px;
-  background: radial-gradient(circle at 50% 100%, #4a2b1b 0%, #2c150c 100%);
-  border-radius: 50% 50% 0 0;
-  top: -12px;
-  transform-origin: bottom center;
-  z-index: 0;
 }
 
 .handle::before {
@@ -70,8 +57,21 @@ body.dark-mode .textbed {
   left: 0;
   right: 0;
   height: 10px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 60%),
-              radial-gradient(circle at 70% 40%, rgba(255,255,255,0.04), transparent 60%);
+ background:
+    linear-gradient(
+      to bottom,
+      #5b2e1d 0%,
+      #8b4f2e 30%,
+      #743a1f 70%,
+      #3e1e0f 100%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,0.05) 0,
+      rgba(0,0,0,0.05) 2px,
+      transparent 2px,
+      transparent 4px
+    );
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   pointer-events: none;
 }
