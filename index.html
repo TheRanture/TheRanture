@@ -507,11 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
     flame.style.filter = `blur(${0.3 + Math.random() * 0.7}px)`;
     flame.style.willChange = 'transform, opacity';
 
-    // Generate randomized natural flame spikes
-// Generate randomized natural flame spikes
-
-flame.style.clipPath = `polygon(${outerFlamePoints.join(',')})`;
-
 const clipPoints = [];
 const flameWidth = 100; // percent
 const baseY = 100;
