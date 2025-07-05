@@ -473,31 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
     input.focus();
   }
 });
-const torchHandle = document.querySelector('.torch-handle');
-
-function randomPath(xOffset, color) {
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
-  let d = `M ${20 + xOffset} 80`;
-  let x = 20 + xOffset;
-  let y = 80;
-
-  const segments = 5 + Math.floor(Math.random() * 3);
-  for (let i = 0; i < segments; i++) {
-    const dx = -3 + Math.random() * 6;
-    const dy = -8 - Math.random() * 8;
-    x += dx;
-    y += dy;
-    d += ` Q ${x - dx / 2} ${y - dy / 2}, ${x} ${y}`;
-  }
-
-  path.setAttribute('d', d);
-  path.setAttribute('stroke', color);
-  path.setAttribute('stroke-width', (0.6 + Math.random()).toFixed(2));
-  path.style.opacity = 0.5 + Math.random() * 0.4;
-
-  return path;
-}
 const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
