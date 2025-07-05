@@ -474,8 +474,8 @@ flame.style.transform = 'translateX(-50%)';
 flame.style.bottom = '28px';
 
   // Bigger, fatter flames
-const width = 20 + Math.random() * 10;  // 20-30 px width
-const height = 40 + Math.random() * 20; // 40-60 px height
+const width = 20 + Math.random() * 5;
+const height = 50 + Math.random() * 10;
 flame.style.width = `${width}px`;
 flame.style.height = `${height}px`;
 
@@ -510,27 +510,17 @@ for (let i = 0; i < spikeCount; i++) {
   spikes.push(`${x + 1}% ${topBaseY + 8}%`);
 }
 const clipPathPoints = [
-  '0% 100%',     // bottom-left
-  '10% 85%',     // lower-left curve
-  '20% 70%',
-  '30% 55%',
-  '40% 40%',
-  '48% 30%',     // left side rising toward top
-
-  // central jagged top
+  '50% 100%',
+  '60% 80%',
+  '65% 60%',
+  '62% 40%',
+  '58% 25%',
   '50% 15%',
-  '52% 25%',
-  '55% 18%',
-  '57% 28%',
-  '60% 20%',
-  '62% 32%',
-  '65% 25%',
-
-  '70% 40%',
-  '75% 55%',
-  '80% 70%',
-  '90% 85%',     // lower-right curve
-  '100% 100%'    // bottom-right
+  '42% 25%',
+  '38% 40%',
+  '35% 60%',
+  '40% 80%',
+  '50% 100%'
 ];
 
 
@@ -538,30 +528,18 @@ flame.style.clipPath = `polygon(${clipPathPoints.join(', ')})`;
 
 
   // Orange color palette, deeper and richer
-  const colors = [
-    'rgba(255, 130, 0, 0.8)',   // deep orange, stronger alpha
-    'rgba(255, 170, 0, 0.7)',   // bright orange
-    'rgba(255, 200, 80, 0.5)',  // yellowish-orange softer
-    'rgba(255, 255, 180, 0.4)'  // pale yellow for glow
-  ];
+flame.style.background = `
+  radial-gradient(circle at 50% 65%, 
+    rgba(255,255,255,0.9) 0%, 
+    rgba(255,230,100,0.7) 30%, 
+    rgba(255,150,0,0.5) 60%, 
+    rgba(255,90,0,0.3) 90%, 
+    transparent 100%)
+`;
   // Pick a base color and add a white highlight center sometimes
   const baseColor = colors[Math.floor(Math.random() * colors.length)];
-  flame.style.background = `radial-gradient(circle at 50% 60%, ${baseColor}, transparent 70%)`;
 
   // Add white "hot spot" occasionally near center to simulate hottest part
-  if (Math.random() < 0.3) {
-    const whiteSpot = document.createElement('div');
-    whiteSpot.style.position = 'absolute';
-    whiteSpot.style.width = `${width / 4}px`;
-    whiteSpot.style.height = `${height / 4}px`;
-    whiteSpot.style.borderRadius = '50%';
-    whiteSpot.style.background = 'rgba(255,255,255,0.8)';
-    whiteSpot.style.top = `${height * 0.4}px`;
-    whiteSpot.style.left = '50%';
-    whiteSpot.style.transform = 'translateX(-50%)';
-    whiteSpot.style.filter = 'blur(2px)';
-    flame.appendChild(whiteSpot);
-  }
 
   flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
   flame.style.filter = `blur(${0.3 + Math.random() * 0.6}px)`;
@@ -578,9 +556,9 @@ function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
-      const scaleX = 0.9 + Math.random() * 0.3;
-      const scaleY = 1.1 + Math.sin(timestamp / 120 + Math.random()) * 0.3;
-      const rotate = -10 + Math.random() * 20; // more subtle range
+const scaleX = 1 + Math.sin(timestamp / 200 + Math.random()) * 0.05;
+const scaleY = 1 + Math.cos(timestamp / 180 + Math.random()) * 0.05;
+const rotate = -2 + Math.random() * 4;
      const offsetX = -1.5 + Math.random() * 3;
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
       const colors = ['#ff6600', '#ff9933', '#ffcc66', '#ff3300'];
