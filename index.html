@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@ body.dark-mode .textbed {
 .torch .flame {
   will-change: transform, opacity;
   position: absolute;
-  bottom: 20px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   transition: transform 0.05s ease-out, opacity 0.05s ease-out, filter 0.05s ease-out;
@@ -473,7 +474,7 @@ for (let i = 0; i < 6; i++) {
 
   // Bigger, fatter flames
   const width = 12 + Math.random() * 14;  // slightly bigger
-  const height = 24 + Math.random() * 22;
+  const height = 16 + Math.random() * 18; // slightly taller
   flame.style.width = `${width}px`;
   flame.style.height = `${height}px`;
 
@@ -483,8 +484,7 @@ for (let i = 0; i < 6; i++) {
   for (let j = 0; j < spikes; j++) {
     // x between 0% and 100%, y oscillates between 20% and 100%
     const x = (j / (spikes - 1)) * 100;
-    const wave = Math.sin((j / (spikes - 1)) * Math.PI); // curved spike path
-const y = 40 + wave * (20 + Math.random() * 40); // lower base, curve upward
+    const y = 20 + Math.random() * 80;
     clipPathPoints.push(`${x}% ${y}%`);
   }
   // Close the bottom polygon (bottom right and bottom left corners)
@@ -524,7 +524,6 @@ const y = 40 + wave * (20 + Math.random() * 40); // lower base, curve upward
   flame.style.position = 'absolute'; // ensure positioning
 
   torch.appendChild(flame);
-  flame.style.boxShadow = '0 4px 12px rgba(255, 140, 0, 0.4)';
 }
 let lastFlameUpdate = 0;
 const flameUpdateInterval = 110; // update every ~50ms (20 FPS)
