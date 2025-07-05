@@ -67,32 +67,26 @@ body.dark-mode .textbed {
   filter: brightness(1.1);
   z-index: 2;
 }
-.handle {
-  width: 14px;
-  height: 40px;
+.handle-bundle {
   position: absolute;
   bottom: 0;
   left: 50%;
+  width: 16px;
+  height: 48px;
   transform: translateX(-50%);
-  background: linear-gradient(to bottom, #2b1c12 0%, #3a2a1a 40%, #1f140c 100%);
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(0, 0, 0, 0.05) 0px,
-    rgba(0, 0, 0, 0.05) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-  clip-path: polygon(
-    25% 0%, 35% 5%, 50% 2%, 65% 8%, 75% 0%, 
-    80% 15%, 70% 25%, 75% 35%, 60% 45%, 
-    62% 55%, 52% 70%, 55% 85%, 48% 100%, 35% 92%, 32% 78%, 28% 65%, 30% 50%, 25% 30%, 28% 15%
-  );
-  box-shadow:
-    inset 0 0 2px rgba(255,255,255,0.05),
-    0 1px 2px rgba(0,0,0,0.4),
-    0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
   z-index: 1;
 }
+
+.handle-bundle .strand {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to top, #0a0a0a, #222);
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
 .torch .flame:nth-child(1) {
   animation-delay: 0s;
 }
@@ -410,7 +404,7 @@ body.dark-mode #search-bar::placeholder {
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
-    <div class="handle"></div>
+    <div class="handle-bundle"></div>
     <div class="vine-claws"></div>
     <div class="smoke"></div>
   </div>
@@ -479,6 +473,30 @@ document.addEventListener('DOMContentLoaded', () => {
     input.focus();
   }
 });
+  const handleBundle = document.querySelector('.handle-bundle');
+const strandCount = 12;
+
+for (let i = 0; i < strandCount; i++) {
+  const strand = document.createElement('div');
+  strand.classList.add('strand');
+
+  // Random position and slight curvature
+  const left = 6 + Math.random() * 4; // spread horizontally
+  const rotate = -10 + Math.random() * 20; // degrees
+  const skew = -10 + Math.random() * 20;
+
+  strand.style.left = `${left}px`;
+  strand.style.transform = `rotate(${rotate}deg) skewX(${skew}deg)`;
+
+  // Random darkness
+  const darkness = 15 + Math.floor(Math.random() * 25);
+  strand.style.background = `linear-gradient(to top, rgb(${darkness},${darkness},${darkness}), #111)`;
+  
+  // Slightly stagger heights
+  strand.style.height = `${45 + Math.random() * 5}px`;
+
+  handleBundle.appendChild(strand);
+}
 const torch = document.querySelector('.torch');
 for (let i = 0; i < 6; i++) {
   const flame = document.createElement('div');
