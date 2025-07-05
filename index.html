@@ -29,94 +29,59 @@ body.dark-mode .textbed {
   bottom: 0;
   left: 50%;
   width: 60px;
-  height: 140px; /* taller so vines can climb */
+  height: 160px;
   transform: translateX(-50%);
   pointer-events: none;
   overflow: visible;
 }
 
-/* Base vine */
+/* Base vine style */
 .torch-handle .vine {
   position: absolute;
-  width: 18px;
-  height: 130px;
-  background: linear-gradient(135deg, #2e3a0a 0%, #1f2706 80%);
-  box-shadow:
-    inset 0 3px 6px rgba(255,255,255,0.2),
-    inset 0 -5px 10px rgba(0,0,0,0.9);
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.6));
-  border-radius: 40% 40% 60% 60% / 80% 80% 40% 40%;
+  width: 16px;
+  height: 140px;
+  background: linear-gradient(135deg, #354a13, #1b2607);
+  border-radius: 40% 40% 30% 30% / 60% 60% 20% 20%;
   clip-path: polygon(
-    50% 100%, 60% 85%, 65% 75%, 55% 70%, 70% 60%, 60% 50%, 
-    75% 40%, 65% 30%, 80% 20%, 70% 10%, 75% 0%, 50% 10%, 
-    30% 0%, 35% 20%, 25% 30%, 40% 40%, 30% 50%, 45% 60%, 
-    35% 70%, 40% 80%, 50% 85%
+    50% 100%, 55% 90%, 45% 80%, 60% 70%, 40% 60%, 
+    65% 50%, 35% 40%, 70% 30%, 30% 20%, 60% 10%, 
+    40% 0%, 50% 5%, 60% 0%, 50% 10%
   );
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
+  animation: pulse-vine 5s ease-in-out infinite alternate;
 }
 
-/* Each vine offset horizontally and vertically, rotated to twist */
-/* We'll also animate subtle vertical shifting for natural crawling */
-
-.vine1 {
-  left: 5px;
-  bottom: 0;
-  transform-origin: bottom center;
+/* Variants */
+.vine-left {
+  left: 4px;
   transform: rotate(-20deg);
   z-index: 6;
-  animation: vine-crawl 6s ease-in-out infinite alternate;
-  background: linear-gradient(135deg, #344b0e 0%, #233407 80%);
+  animation-delay: 0s;
 }
-
-.vine2 {
-  left: 18px;
-  bottom: 15px;
-  transform-origin: bottom center;
-  transform: rotate(15deg);
-  z-index: 8;
-  animation: vine-crawl 6s ease-in-out infinite alternate 1.5s;
-  background: linear-gradient(135deg, #2c3b0a 0%, #192805 80%);
+.vine-right {
+  left: 36px;
+  transform: rotate(20deg);
+  z-index: 6;
+  animation-delay: 1s;
 }
-
-.vine3 {
-  left: 32px;
-  bottom: 30px;
-  transform-origin: bottom center;
-  transform: rotate(-10deg);
-  z-index: 7;
-  animation: vine-crawl 6s ease-in-out infinite alternate 3s;
-  background: linear-gradient(135deg, #3a4a0d 0%, #253407 80%);
-}
-
-.vine4 {
-  left: 45px;
-  bottom: 45px;
-  transform-origin: bottom center;
-  transform: rotate(25deg);
+.vine-back {
+  left: 20px;
+  transform: rotate(0deg) scaleX(0.9);
   z-index: 5;
-  animation: vine-crawl 6s ease-in-out infinite alternate 4.5s;
-  background: linear-gradient(135deg, #1f2705 0%, #121900 80%);
+  animation-delay: 2s;
+}
+.vine-front {
+  left: 22px;
+  transform: rotate(5deg) scaleX(1.1);
+  z-index: 7;
+  animation-delay: 3s;
 }
 
-.vine5 {
-  left: 26px;
-  bottom: 60px;
-  transform-origin: bottom center;
-  transform: rotate(-15deg);
-  z-index: 9;
-  animation: vine-crawl 6s ease-in-out infinite alternate 5s;
-  background: linear-gradient(135deg, #425012 0%, #2f3a0a 80%);
+/* Subtle motion */
+@keyframes pulse-vine {
+  0% { transform: translateY(0) rotate(var(--angle, 0deg)); }
+  100% { transform: translateY(4px) rotate(calc(var(--angle, 0deg) + 5deg)); }
 }
-
-/* subtle vertical crawl animation */
-@keyframes vine-crawl {
-  0% {
-    transform: translateY(0) rotate(var(--start-rotate));
-  }
-  100% {
-    transform: translateY(8px) rotate(calc(var(--start-rotate) + 5deg));
-  }
-}
-
 
     .torch-mode {
   background: none;
@@ -466,12 +431,12 @@ body.dark-mode #search-bar::placeholder {
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
+<!-- Torch Handle Vines -->
 <div class="torch-handle">
-  <div class="vine vine1"></div>
-  <div class="vine vine2"></div>
-  <div class="vine vine3"></div>
-  <div class="vine vine4"></div>
-  <div class="vine vine5"></div>
+  <div class="vine vine-left"></div>
+  <div class="vine vine-right"></div>
+  <div class="vine vine-back"></div>
+  <div class="vine vine-front"></div>
 </div>
     <div class="smoke"></div>
   </div>
