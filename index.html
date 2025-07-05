@@ -488,26 +488,23 @@ document.addEventListener('DOMContentLoaded', () => {
     flame.style.willChange = 'transform, opacity';
 
     // Generate randomized natural flame spikes
-   const clipPoints = [];
+// Generate randomized natural flame spikes
+const clipPoints = [];
+const flameWidth = 100; // percent
+const baseY = 100;
+const tipMinY = 10;
+const tipMaxY = 30;
+const spikeCount = 8 + Math.floor(Math.random() * 5);
 
-// Base: start wide and curve upward
-clipPoints.push('0% 100%');
-clipPoints.push('15% 85%');
-clipPoints.push('30% 70%');
-
-// Midsection + randomized spikes
-const spikeCount = 7 + Math.floor(Math.random() * 4);
-for (let j = 0; j < spikeCount; j++) {
-  const x = 35 + j * (30 / spikeCount); // spread spikes over 30%-65%
-  const peakX = x + (Math.random() * 4 - 2);  // wobble
-  const peakY = 20 + Math.random() * 10;      // chaotic height
-  clipPoints.push(`${peakX}% ${peakY}%`);
+for (let i = 0; i <= spikeCount; i++) {
+  const x = (i / spikeCount) * flameWidth;
+  const y = baseY - (Math.random() * 60 + 20); // from 20% to 80% height
+  clipPoints.push(`${x.toFixed(1)}% ${y.toFixed(1)}%`);
 }
 
-// Taper downward
-clipPoints.push('70% 70%');
-clipPoints.push('85% 85%');
-clipPoints.push('100% 100%');
+// Close polygon at base
+clipPoints.push(`100% 100%`);
+clipPoints.push(`0% 100%`);
 
     flame.style.clipPath = `polygon(${clipPoints.join(',')})`;
 
