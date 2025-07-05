@@ -24,90 +24,122 @@ body.dark-mode .textbed {
   color: #d0d0d0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
-    .torch-handle {
+  .torch-handle {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 28px;
+  width: 32px;
   height: 48px;
   transform: translateX(-50%);
-  z-index: 1; /* behind flames but above background */
+  z-index: 1;
   pointer-events: none;
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
 }
 
-/* Main tentacle base */
-.torch-handle::before {
-  content: '';
+/* Wood base with grain & cracks */
+.wood-grain {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 14px;
-  height: 40px;
-  background: linear-gradient(180deg, #3a2a15 0%, #1f1308 100%);
-  border-radius: 10px 8px 8px 10px / 50% 70% 70% 50%;
-  transform: translateX(-50%) rotate(-10deg);
-  filter: brightness(0.9);
-  animation: tentacle-sway 3s ease-in-out infinite;
-  box-shadow: inset 0 4px 6px rgba(0,0,0,0.4);
+  width: 22px;
+  height: 48px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(90deg,
+      #4b2e0f 0%, #5c3a13 10%,
+      #52340e 30%, #6a4518 50%,
+      #52340e 70%, #4b2e0f 90%, #5c3a13 100%);
+  border-radius: 6px / 40%;
+  box-shadow:
+    inset 0 0 5px rgba(0,0,0,0.7),
+    inset 0 10px 6px rgba(255, 255, 255, 0.05);
+  filter: contrast(1.1) saturate(1.4);
 }
 
-/* Second tentacle */
-.torch-handle::after {
-  content: '';
+/* Cracks / splinters: thin irregular lines */
+.wood-grain::before,
+.wood-grain::after {
+  content: "";
   position: absolute;
-  bottom: 6px;
-  left: 45%;
-  width: 10px;
-  height: 30px;
-  background: linear-gradient(180deg, #4b341a 0%, #2a1909 100%);
-  border-radius: 8px 10px 10px 8px / 60% 50% 50% 60%;
-  transform: rotate(15deg);
-  filter: brightness(1.1);
-  animation: tentacle-sway-alt 4s ease-in-out infinite;
-  box-shadow: inset 0 3px 5px rgba(0,0,0,0.3);
-  z-index: 2;
+  width: 2px;
+  height: 12px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 1px;
+  box-shadow:
+    1px 5px 1px rgba(255,255,255,0.1),
+    -1px 7px 0 rgba(0,0,0,0.15);
+  transform-origin: top left;
 }
-
-/* Add crooked fingers as small absolutely positioned divs inside torch-handle */
-.torch-handle .finger {
-  position: absolute;
-  background: linear-gradient(180deg, #5a3e1e, #3c2610);
-  border-radius: 8px / 50%;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-  filter: brightness(1.1);
-  animation: finger-pulse 3s ease-in-out infinite alternate;
-  transform-origin: bottom center;
-}
-
-/* Crooked fingers (tentacle-like) */
-.torch-handle .finger:nth-child(1) {
-  width: 8px;
-  height: 18px;
-  bottom: 34px;
-  left: 2px;
-  border-radius: 10px 4px 4px 10px / 50% 80% 80% 50%;
-  transform: rotate(-25deg);
-  animation-delay: 0s;
-}
-.torch-handle .finger:nth-child(2) {
-  width: 7px;
-  height: 15px;
-  bottom: 38px;
-  left: 12px;
-  border-radius: 6px 8px 8px 6px / 70% 40% 40% 70%;
+.wood-grain::before {
+  left: 6px;
+  top: 8px;
   transform: rotate(12deg);
-  animation-delay: 0.3s;
 }
-.torch-handle .finger:nth-child(3) {
+.wood-grain::after {
+  left: 14px;
+  top: 22px;
+  transform: rotate(-15deg);
+}
+
+/* Vine base style */
+.vine {
+  position: absolute;
+  background: linear-gradient(135deg, #3b4a11 0%, #2c3d08 80%);
+  border-radius: 8px / 50%;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+/* Individual crooked vines (crooked fingers/tentacles) */
+/* Each with unique shape & rotation for randomness */
+
+.vine1 {
+  width: 8px;
+  height: 20px;
+  bottom: 10px;
+  left: 4px;
+  transform: rotate(-25deg) skewY(-10deg);
+  border-radius: 6px 4px 6px 8px / 50% 60% 40% 50%;
+}
+
+.vine2 {
   width: 6px;
-  height: 14px;
-  bottom: 40px;
-  left: 20px;
-  border-radius: 6px 10px 10px 6px / 80% 60% 60% 80%;
-  transform: rotate(-5deg);
-  animation-delay: 0.6s;
+  height: 18px;
+  bottom: 18px;
+  left: 14px;
+  transform: rotate(15deg) skewY(8deg);
+  border-radius: 5px 7px 7px 5px / 40% 60% 60% 40%;
 }
+
+.vine3 {
+  width: 10px;
+  height: 25px;
+  bottom: 5px;
+  left: 20px;
+  transform: rotate(-10deg) skewY(-15deg);
+  border-radius: 8px 6px 6px 10px / 55% 40% 40% 55%;
+}
+
+.vine4 {
+  width: 6px;
+  height: 16px;
+  bottom: 30px;
+  left: 9px;
+  transform: rotate(30deg) skewY(12deg);
+  border-radius: 6px 6px 4px 8px / 60% 50% 40% 60%;
+}
+
+.vine5 {
+  width: 7px;
+  height: 22px;
+  bottom: 15px;
+  left: 24px;
+  transform: rotate(-35deg) skewY(-8deg);
+  border-radius: 7px 5px 6px 7px / 50% 45% 50% 55%;
+}
+
 
 /* Sway and pulse animations */
 @keyframes tentacle-sway {
@@ -473,10 +505,13 @@ body.dark-mode #search-bar::placeholder {
 <body>
   <button id="mode-toggle" class="torch-mode" aria-label="Toggle dark mode">
   <div class="torch">
-    <div class="torch-handle">
-  <div class="finger"></div>
-  <div class="finger"></div>
-  <div class="finger"></div>
+  <div class="torch-handle">
+  <div class="wood-grain"></div>
+  <div class="vine vine1"></div>
+  <div class="vine vine2"></div>
+  <div class="vine vine3"></div>
+  <div class="vine vine4"></div>
+  <div class="vine vine5"></div>
 </div>
     <div class="smoke"></div>
   </div>
