@@ -54,7 +54,7 @@ body.dark-mode .textbed {
   width: 100%;
   height: 48px;
   overflow: visible; /* change to hidden if you want clipping */
-    left: -4px;  /* move 4px left */
+    left: -2px;  /* move 4px left */
   top: 4px;    /* move 4px down */
 }
 
@@ -501,7 +501,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     flame.style.position = 'absolute';
     flame.style.bottom = '28px';
-    flame.style.left = `${45 + Math.random() * 10}%`;
+const leftOffset = -5 + Math.random() * 10; // center ±5%
+flame.style.left = `calc(50% + ${-5 + Math.random() * 10}%)`;
     flame.style.transform = 'translateX(-50%)';
     flame.style.opacity = (0.7 + Math.random() * 0.3).toFixed(2);
     flame.style.filter = `blur(${0.3 + Math.random() * 0.7}px)`;
