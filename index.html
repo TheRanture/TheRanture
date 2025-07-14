@@ -46,8 +46,8 @@ background: linear-gradient(
     inset 0 2px 6px rgba(168, 134, 11, 0.7),
     0 0 10px 3px rgba(255, 215, 0, 0.7); /* golden glow */
   position: absolute;
-   top: 16px;
-  left: 61%;
+   top: 15.5px;
+  left: 62%;
   transform: translateX(-50%);
 clip-path: polygon(
   20% 99%, 18% 90%, 22% 85%, 18% 80%, 26% 75%, 24% 68%, 32% 65%, 28% 60%, 
@@ -593,8 +593,8 @@ function animateFlames(timestamp) {
   if (!lastFlameUpdate || timestamp - lastFlameUpdate > flameUpdateInterval) {
     const flames = document.querySelectorAll('.flame');
     flames.forEach(flame => {
-      const scaleX = 0.9 + Math.random() * 0.3;
-      const scaleY = 1.0 + Math.random() * 0.7;
+      const scaleX = 0.9 + Math.random() * 0.6;
+      const scaleY = 1.0 + Math.random() * 1;
       const rotate = -10 + Math.random() * 20; // more subtle range
       const offsetX = -1.5 + Math.random() * 3; // jitter side to side
       const offsetY = -1 + Math.random() * 2;   // slight vertical movement
