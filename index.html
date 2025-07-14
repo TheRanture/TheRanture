@@ -72,24 +72,25 @@ clip-path: polygon(
   left: 0;
   right: 0;
   height: 10px;
- background:
+  background:
     linear-gradient(
       to bottom,
-      #5b2e1d 0%,
-      #8b4f2e 30%,
-      #743a1f 70%,
-      #3e1e0f 100%
+      #fff8cc 0%,
+      #ffec66 30%,
+      #f0c419 70%,
+      #a77b0a 100%
     ),
     repeating-linear-gradient(
       45deg,
-      rgba(0,0,0,0.05) 0,
-      rgba(0,0,0,0.05) 2px,
+      rgba(255, 255, 255, 0.1) 0,
+      rgba(255, 255, 255, 0.1) 2px,
       transparent 2px,
       transparent 4px
     );
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   pointer-events: none;
 }
+
 .handle::after {
   content: '';
   position: absolute;
