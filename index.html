@@ -743,69 +743,56 @@ modeToggle.addEventListener('click', () => {
     }
   });
 
-  // Toolbar nav
-  const buttons = document.querySelectorAll('.toolbar-btn');
-  const main = document.getElementById('main-content');
-  const full = document.getElementById('article-full-content');
-  const previews = document.getElementById('articles-container');
+// Toolbar nav
+const buttons = document.querySelectorAll('.toolbar-btn');
+const main = document.getElementById('main-content');
+const full = document.getElementById('article-full-content');
+const previews = document.getElementById('articles-container');
 
-  buttons.forEach(btn => btn.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const page = btn.dataset.page;
-try {
-  localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
-} catch (e) {
-  console.warn('localStorage not available:', e);
-}
-    full.style.display = 'none';
-    previews.style.display = (page === 'articles') ? 'block' : 'none';
-    main.style.display = 'block';
-    void previews.offsetHeight;
+buttons.forEach(btn => btn.addEventListener('click', () => {
+  // Update active button
+  buttons.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 
-    const content = {
-      about: `<div class="textbed"><h2>About</h2><p>This website is written by <strong>Karlos Hayden</strong>, a self proclaimed synchromancer.</p><p>It is a repository of articles, shorticles, ideas, fragments, files, and forgotten knowledge. The purpose is not to convince but to preserve and provoke — not to lead but to hint.</p><p><strong>Ranture</strong> is a non-interactive, read-only resource. There is no comment section, no login, and no updates pushed for engagement. Everything you find here is intentional and deliberately placed.</p><p>Take what resonates, question what doesn’t, and leave the rest to the noise.</p><p style="margin-top: 2em;">
-  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAEbElEQVR4nG1VW2wUZRQ+58w/Ozu7O9Pd7XKJ0HIpl3IRLBCjQUggIgQSDV5ieMAQEH0QiPCq75r4KCZKlRAfxOgDJCaCBW0xFBEligkEqS1tt1Aqdbu3md2Z..." alt="Heart Icon" style="width:24px; vertical-align:middle; margin-right:8px;" />
-  Made with love (and a heart, for some reason).
-</p>
-</div>`,
-      legal: `<div class="textbed"><h2>Legal Disclaimer & Terms of Use</h2>          <p>This website and its content are provided 'as is' without warranties of any kind, express or implied. By accessing or using this site, you agree to the following terms:</p>
-          <ul>
-            <li>The content is for informational purposes only and does not constitute legal, financial, or professional advice.</li>
-            <li>The owner disclaims all liability for any errors, omissions, or damages arising from the use or inability to use the site.</li>
-            <li>Unauthorized use, copying, redistribution, or modification of the website content is prohibited.</li>
-            <li>The owner is not responsible for any third-party links or external content.</li>
-            <li>Visitors assume full responsibility for any consequences resulting from reliance on information provided here.</li>
-            <li>The website does not collect personal data, and no input from users is accepted.</li>
-            <li>By continuing to use the site, you waive any claims against the owner for damages arising from site usage.</li>
-            <li>These terms apply globally and supersede any conflicting local laws.</li>
-          </ul>
-          <p><strong>Creative Commons License:</strong><br>
-            This work is licensed under the
-            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">
-              Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-            </a>.
-          </p>
-          <h2>Content Disclaimer</h2>
-          <p><strong>Disclaimer:</strong></p>
-          <p>The views, opinions, and information expressed on this website are those of the author alone and do not necessarily reflect the views or positions of any organization, group, or community.</p>
-          <p>This website <strong>does not endorse, promote, or condone</strong> racism, homophobia, sexism, discrimination, hatred, violence, or any form of intolerance. Any controversial or sensitive topics discussed here are presented in the context of free speech, intellectual exploration, and societal critique — not as a means to offend, harm, or marginalize any individual or group.</p>
-          <p>Readers are encouraged to approach the content with an open mind and engage respectfully. If you find any content offensive, please consider the intent behind it and understand it is not meant to attack or demean any person or community.</p>
-          <p>By using this website, you agree that the author is not responsible for interpretations or misuse of the material, and you accept full responsibility for your own reactions and conclusions.</p>
-          <p><strong>Copyright Notice:</strong><br>
-            &copy; 2025 Ranture — Published at TheRanture. All rights reserved. No part of this website may be copied, reproduced, or republished without written permission.
-          </p> <!-- etc. Full legal text here --> </div>`
-    };
+  const page = btn.dataset.page;
 
-if (content[page]) {
-  main.innerHTML = content[page];
-} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
-  main.innerHTML = ''; // Do nothing for those tabs
-} else {
-  main.innerHTML = `<p>Unknown page: ${page}</p>`;
-}
-  }));
+  // Save state to localStorage
+  try {
+    localStorage.setItem('lastView', JSON.stringify({ type: 'section', page }));
+  } catch (e) {
+    console.warn('localStorage not available:', e);
+  }
 
+  // Hide full article view
+  full.style.display = 'none';
+
+  // Show/hide article previews
+  previews.style.display = (page === 'articles') ? 'block' : 'none';
+  main.style.display = 'block';
+
+  // Force reflow (optional but safe)
+  void previews.offsetHeight;
+
+  // Load content or clear main section
+  if (page === 'about' || page === 'legal') {
+    fetch(`${page}.html`)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.text();
+      })
+      .then(html => {
+        main.innerHTML = html;
+      })
+      .catch(err => {
+        console.error(err);
+        main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
+      });
+  } else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+    main.innerHTML = '';
+  } else {
+    main.innerHTML = `<p>Unknown page: <strong>${page}</strong></p>`;
+  }
+}));
   // Search logic
   const funnyResponses = {
     "aliens": "👽 Try Paris.",
