@@ -9,6 +9,9 @@
   <title>Ranture</title>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Lora&display=swap" rel="stylesheet">
   <style>
+    .textbed p {
+        margin-bottom: 1.4em;
+}
   .textbed {
   background: #fdfaf7;
   padding: 1.5em 2em;
@@ -18,7 +21,7 @@
   margin: 1.5em auto;
   color: #222;
   font-family: 'Crimson Text', 'Lora', serif;
-  line-height: 1.6;
+  line-height: 1.8;
   font-size: 1.1rem;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -781,7 +784,7 @@ buttons.forEach(btn => btn.addEventListener('click', () => {
         return res.text();
       })
       .then(html => {
-        main.innerHTML = html;
+        main.innerHTML = `<div class="textbed">${html}</div>`;
       })
       .catch(err => {
         console.error(err);
