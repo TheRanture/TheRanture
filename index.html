@@ -25,7 +25,7 @@
   font-size: 1.1rem;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-body.dark-mode .textbed {
+html.dark-mode .textbed {
   background: #1e1e1e;
   color: #d0d0d0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -157,7 +157,7 @@ clip-path: polygon(
   height: 6px;
 }
 
-body.dark-mode .smoke {
+html.dark-mode .smoke {
   animation: rise 1.5s infinite;
   opacity: 1;
 }
@@ -179,10 +179,10 @@ body.dark-mode .smoke {
   }
 }
 /* Link Darkmode Style */
-    body.dark-mode a {
+    html.dark-mode a {
   color: #dab76a;
 }
-body.dark-mode a:hover {
+html.dark-mode a:hover {
   color: #ffe5a3;
 }
     /* RESET & BASE STYLES */
@@ -196,7 +196,7 @@ body.dark-mode a:hover {
       transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    body.dark-mode {
+    html.dark-mode {
   background: linear-gradient(to bottom, 
     transparent 0px, 
     transparent 160px, 
@@ -205,7 +205,7 @@ body.dark-mode a:hover {
   color: #eee;
     }
 
-body.dark-mode #clear-search {
+html.dark-mode #clear-search {
   color: black; /* ← this fixes it permanently */
 }
     .search-suggestion {
@@ -219,7 +219,7 @@ body.dark-mode #clear-search {
   transition: background-color 0.2s ease, color 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-body.dark-mode .search-suggestion {
+html.dark-mode .search-suggestion {
   background: #f4f4f8;  /* soft light */
   color: #111;
   font-size: 15px;
@@ -230,7 +230,7 @@ body.dark-mode .search-suggestion {
   color: #000;
 }
 
-body.dark-mode .search-suggestion:hover {
+html.dark-mode .search-suggestion:hover {
   background: #e0e0e5;
   color: #000;
 }
@@ -329,14 +329,14 @@ body.dark-mode .search-suggestion:hover {
       position: relative;
       z-index: 11000;
     }
-body.dark-mode #search-bar {
+html.dark-mode #search-bar {
   background-color: #f4f4f8;  /* soft off-white */
   color: #111;                /* dark text for readability */
   border: 1px solid #aaa;
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
 }
 
-body.dark-mode #search-bar::placeholder {
+html.dark-mode #search-bar::placeholder {
   color: #777; /* slightly dimmed hint text */
 }
     #clear-search {
@@ -351,7 +351,7 @@ body.dark-mode #search-bar::placeholder {
       display: none;
     }
 
-    body.dark-mode #clear-search {
+    html.dark-mode #clear-search {
       color: black;
     }
 
@@ -369,7 +369,7 @@ body.dark-mode #search-bar::placeholder {
       z-index: 11000;
     }
 
-    body.dark-mode #search-funny {
+    html.dark-mode #search-funny {
       background: #222;
       color: #aaa;
     }
@@ -449,7 +449,7 @@ body.dark-mode #search-bar::placeholder {
       z-index: 9998;
     }
 
-    body.dark-mode #footnote {
+    html.dark-mode #footnote {
       color: #bbb;
       background: rgba(18, 18, 18, 0.9);
     }
@@ -499,15 +499,16 @@ body.dark-mode #search-bar::placeholder {
   <div id="footnote">© Count Rantula — All Rants Reserved</div>
   <button id="back-to-top" aria-label="Back to Top" style="display:none;position:fixed;bottom:60px;right:12px;">⬆</button>
   <script>
+        try {
+  const dm = localStorage.getItem('darkMode');
+  if (dm === '1') document.body.classList.add('dark-mode');
+} catch (e) {}
     const forceRedraw = (el) => {
   el.style.display = 'none';
   void el.offsetHeight;
   el.style.display = 'block';
 };
-    try {
-  const dm = localStorage.getItem('darkMode');
-  if (dm === '1') document.body.classList.add('dark-mode');
-} catch (e) {}
+
 const input = document.getElementById('search-bar');
 const funny = document.getElementById('search-funny');
 const clear = document.getElementById('clear-search');
