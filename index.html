@@ -501,7 +501,7 @@ html.dark-mode #search-bar::placeholder {
   <script>
         try {
   const dm = localStorage.getItem('darkMode');
-  if (dm === '1') document.body.classList.add('dark-mode');
+  if (dm === '1') document.documentElement.classList.add('dark-mode');
 } catch (e) {}
     const forceRedraw = (el) => {
   el.style.display = 'none';
@@ -701,13 +701,12 @@ clear.addEventListener('click', () => {
   modeToggle.setAttribute('aria-pressed', darkActive);
 
 modeToggle.addEventListener('click', () => {
-  const toggled = document.body.classList.toggle('dark-mode');
+  const toggled = document.documentElement.classList.toggle('dark-mode');
   modeToggle.setAttribute('aria-pressed', toggled);
   try {
     localStorage.setItem('darkMode', toggled ? '1' : '0');
   } catch (e) {}
 });
-
   // Back to top visibility
   const backToTop = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
