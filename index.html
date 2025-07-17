@@ -706,8 +706,8 @@ clear.addEventListener('click', () => {
 });
   // Mode toggle setup
   const modeToggle = document.getElementById('mode-toggle');
-  const darkActive = document.body.classList.contains('dark-mode');
-  modeToggle.setAttribute('aria-pressed', darkActive);
+const darkActive = document.documentElement.classList.contains('dark-mode');
+modeToggle.setAttribute('aria-pressed', darkActive);
 
 modeToggle.addEventListener('click', () => {
   const toggled = document.documentElement.classList.toggle('dark-mode');
@@ -786,7 +786,7 @@ buttons.forEach(btn => btn.addEventListener('click', () => {
   void previews.offsetHeight;
 
   // Load content or clear main section
-if (page === 'pages/about.html' || page === 'pages/legal.html') {
+if (page === 'about.html' || page === 'legal.html') {
   fetch(`${page}.html`)
     .then(res => {
       if (!res.ok) throw new Error(`HTTP error ${res.status}`);
@@ -794,7 +794,7 @@ if (page === 'pages/about.html' || page === 'pages/legal.html') {
     })
     .then(html => {
       // About gets the "textbed" wrapper, Legal does not
-      if (page === 'pages/about.html') {
+      if (page === 'about.html') {
         main.innerHTML = `<div class="textbed">${html}</div>`;
       } else {
         main.innerHTML = html; // plain, no wrapper for Legal
@@ -806,7 +806,7 @@ if (page === 'pages/about.html' || page === 'pages/legal.html') {
     });
 } else if (page === 'articles' || page === 'shorticles' || page === 'books') {
   // These all get the .textbed wrapper
-  fetch(`pages/${page}.html`)
+  fetch(`${page}.html`)
     .then(res => {
       if (!res.ok) throw new Error(`HTTP error ${res.status}`);
       return res.text();
