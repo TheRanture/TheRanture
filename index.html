@@ -785,25 +785,42 @@ buttons.forEach(btn => btn.addEventListener('click', () => {
   void previews.offsetHeight;
 
   // Load content or clear main section
-  if (page === 'about' || page === 'legal') {
-    fetch(`${page}.html`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-        return res.text();
-      })
-      .then(html => {
+if (page === 'pages/about.html' || page === 'pages/legal.html') {
+  fetch(`${page}.html`)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+      return res.text();
+    })
+    .then(html => {
+      // About gets the "textbed" wrapper, Legal does not
+      if (page === 'pages/about.html') {
         main.innerHTML = `<div class="textbed">${html}</div>`;
-      })
-      .catch(err => {
-        console.error(err);
-        main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
-      });
-  } else if (page === 'articles' || page === 'shorticles' || page === 'books') {
-    main.innerHTML = '';
-  } else {
-    main.innerHTML = `<p>Unknown page: <strong>${page}</strong></p>`;
-  }
-}));
+      } else {
+        main.innerHTML = html; // plain, no wrapper for Legal
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
+    });
+} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+  // These all get the .textbed wrapper
+  fetch(`pages/${page}.html`)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+      return res.text();
+    })
+    .then(html => {
+      main.innerHTML = `<div class="textbed">${html}</div>`;
+    })
+    .catch(err => {
+      console.error(err);
+      main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
+    });
+} else {
+  main.innerHTML = `<p>Unknown page: <strong>${page}</strong></p>`;
+}
+
   // Search logic
   const funnyResponses = {
     "aliens": "👽 Try Paris.",
