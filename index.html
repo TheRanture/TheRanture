@@ -786,10 +786,8 @@ buttons.forEach(btn => btn.addEventListener('click', () => {
   void previews.offsetHeight;
 
   // Load content or clear main section
-const safePage = `pages/${page}.html`;
-
 if (page === 'about' || page === 'legal') {
-  fetch(safePage)
+  fetch(`${page}.html`)  // ← no 'pages/' in front!
     .then(res => {
       if (!res.ok) throw new Error(`HTTP error ${res.status}`);
       return res.text();
@@ -803,6 +801,7 @@ if (page === 'about' || page === 'legal') {
       main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
     });
 }
+
 
  else if (page === 'articles' || page === 'shorticles' || page === 'books') {
   // These all get the .textbed wrapper
