@@ -786,25 +786,25 @@ buttons.forEach(btn => btn.addEventListener('click', () => {
   void previews.offsetHeight;
 
   // Load content or clear main section
-if (page === 'about.html' || page === 'legal.html') {
-  fetch(`${page}.html`)
+const safePage = `pages/${page}.html`;
+
+if (page === 'about' || page === 'legal') {
+  fetch(safePage)
     .then(res => {
       if (!res.ok) throw new Error(`HTTP error ${res.status}`);
       return res.text();
     })
     .then(html => {
-      // About gets the "textbed" wrapper, Legal does not
-      if (page === 'about.html') {
-        main.innerHTML = `<div class="textbed">${html}</div>`;
-      } else {
-        main.innerHTML = html; // plain, no wrapper for Legal
-      }
+      const containerClass = page === 'legal' ? 'legal' : 'textbed';
+      main.innerHTML = `<div class="${containerClass}">${html}</div>`;
     })
     .catch(err => {
       console.error(err);
       main.innerHTML = `<p>Failed to load <strong>${page}</strong> content.</p>`;
     });
-} else if (page === 'articles' || page === 'shorticles' || page === 'books') {
+}
+
+ else if (page === 'articles' || page === 'shorticles' || page === 'books') {
   // These all get the .textbed wrapper
   fetch(`${page}.html`)
     .then(res => {
